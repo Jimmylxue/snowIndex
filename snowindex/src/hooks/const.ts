@@ -78,8 +78,8 @@ export const shortcutList: ShortcutType[] = [
 		// action(e, terminal) {
 		// 	terminal.focusInput()
 		// },
-		action: () => {
-			console.log('回车')
+		action: (_, terminal) => {
+			terminal.enter()
 		},
 	},
 	{
@@ -90,8 +90,9 @@ export const shortcutList: ShortcutType[] = [
 		// 	e.preventDefault()
 		// 	terminal.showPrevCommand()
 		// },
-		action: () => {
+		action: (_, terminal) => {
 			console.log('上一条')
+			terminal.showPrevCommand()
 		},
 	},
 	{
@@ -102,8 +103,9 @@ export const shortcutList: ShortcutType[] = [
 		// 	e.preventDefault()
 		// 	terminal.showNextCommand()
 		// },
-		action: () => {
+		action: (_, terminal) => {
 			console.log('吓一条')
+			terminal.showNextCommand()
 		},
 	},
 ]
