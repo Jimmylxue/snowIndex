@@ -47,37 +47,24 @@ export const shortcutList: ShortcutType[] = [
 		code: 'KeyV',
 		keyDesc: 'Ctrl + V',
 		metaKey: true,
-		// action(e, terminal) {
-		// 	terminal.focusInput()
-		// },
 		action: () => {
 			console.log('粘贴一下')
 		},
 	},
 	{
 		code: 'Tab',
-		// action(e, terminal) {
-		// 	e.preventDefault()
-		// 	terminal.focusInput()
-		// },
 		action: () => {
 			console.log('tab~~')
 		},
 	},
 	{
 		code: 'Backspace',
-		// action(e, terminal) {
-		// 	terminal.focusInput()
-		// },
 		action: () => {
 			console.log('Backspace')
 		},
 	},
 	{
 		code: 'Enter',
-		// action(e, terminal) {
-		// 	terminal.focusInput()
-		// },
 		action: (_, terminal) => {
 			terminal.enter()
 		},
@@ -86,12 +73,7 @@ export const shortcutList: ShortcutType[] = [
 		desc: '查看上一条命令',
 		code: 'ArrowUp',
 		keyDesc: '↑',
-		// action(e, terminal) {
-		// 	e.preventDefault()
-		// 	terminal.showPrevCommand()
-		// },
 		action: (_, terminal) => {
-			console.log('上一条')
 			terminal.showPrevCommand()
 		},
 	},
@@ -99,12 +81,7 @@ export const shortcutList: ShortcutType[] = [
 		desc: '查看下一条命令',
 		code: 'ArrowDown',
 		keyDesc: '↓',
-		// action(e, terminal) {
-		// 	e.preventDefault()
-		// 	terminal.showNextCommand()
-		// },
 		action: (_, terminal) => {
-			console.log('吓一条')
 			terminal.showNextCommand()
 		},
 	},

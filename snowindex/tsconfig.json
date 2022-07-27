@@ -19,7 +19,8 @@
     "paths": {
       "types/*":["./src/types/*"],
       "@utils/*":["./src/utils/*"],
-      "@hooks/*":["./src/hooks/*"]
+      "@hooks/*":["./src/hooks/*"],
+      "@stores/*":["./src/stores/*"],
     }, 
   },
   "include": ["src"],

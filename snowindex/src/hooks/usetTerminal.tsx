@@ -1,47 +1,18 @@
 import { useReducer, useRef } from 'react'
-import {
-	TSnowTerminal,
-	TInstructRecordState,
-	TRecordAction,
-} from 'types/TSnowTerminal'
+import { TSnowTerminal } from 'types/TSnowTerminal'
 import { uuid } from '@utils/index'
-
-function reducer(
-	state: TInstructRecordState,
-	action: TRecordAction
-): TInstructRecordState {
-	switch (action.type) {
-		case 'ADD_RECORD':
-			return {
-				...state,
-				historyRecord: [...state.historyRecord, action.record!],
-				currentRecord: [...state.currentRecord, action.record!],
-			}
-
-		case 'CLEAR_CURRENT':
-			return {
-				...state,
-				currentRecord: [],
-			}
-
-		case 'CLEAR_ALL':
-			return {
-				...state,
-				historyRecord: [],
-				currentRecord: [],
-			}
-
-		default:
-			return state
-	}
-}
+import { recordReducer } from '@stores/reducer/record'
+import { doCommandExecute } from '@utils/commandExecute'
 
 export function useTerminal(): TSnowTerminal {
 	const inputRef = useRef<HTMLInputElement>(null)
-	const [{ historyRecord, currentRecord }, dispatch] = useReducer(reducer, {
-		historyRecord: [],
-		currentRecord: [],
-	})
+	const [{ historyRecord, currentRecord }, dispatch] = useReducer(
+		recordReducer,
+		{
+			historyRecord: [],
+			currentRecord: [],
+		}
+	)
 	let commandIndex = historyRecord.length
 	const terminalNode = (
 		<div className="mt-8">
@@ -63,7 +34,7 @@ export function useTerminal(): TSnowTerminal {
 		</div>
 	)
 
-	return {
+	const temp = {
 		terminalNode,
 		focusInput: () => {
 			inputRef.current?.focus()
@@ -79,6 +50,7 @@ export function useTerminal(): TSnowTerminal {
 			if (!instruct) {
 				return
 			}
+			doCommandExecute(instruct, temp)
 			dispatch({
 				type: 'ADD_RECORD',
 				record: { id: uuid(), instruct },
@@ -101,4 +73,6 @@ export function useTerminal(): TSnowTerminal {
 			commandIndex++
 		},
 	}
+
+	return temp
 }
