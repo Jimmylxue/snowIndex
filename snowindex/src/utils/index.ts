@@ -6,3 +6,13 @@ let UID = {
 }
 
 export const uuid = () => UID.get()
+
+export function subStrBetween(str: string, start: string, end: string) {
+	// console.log(str,st)
+	const split1 = str.split(start)[1]
+	if (!split1) {
+		return ''
+	}
+	const split2 = split1.split(end)[0]
+	return split2
+}
