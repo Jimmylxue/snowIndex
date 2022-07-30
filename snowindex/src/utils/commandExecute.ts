@@ -22,11 +22,6 @@ export function doCommandExecute(instruct: string, terminal: TSnowTerminal) {
 					subStrBetween(instrTemp, '-f', '-s') ||
 					commandItem?.options?.[1].default,
 			}
-			// let searchText: string = ''
-			// let isSelf = false
-			// let fromWay =
-			// 	subStrBetween(instrTemp, '-f', '-s') ||
-			// 	commandItem?.options?.[1].default
 			if (instrTemp.includes('-f')) {
 				matchParams._ = instrTemp.split('-f')[0]
 				// searchText = instrTemp.split('-f')[0]
@@ -42,6 +37,7 @@ export function doCommandExecute(instruct: string, terminal: TSnowTerminal) {
 					matchParams.self ? '-s' : ''
 				}`
 			)
+			window.open(`https://www.baidu.com/s?wd=${matchParams._}`)
 			return
 		case 'help':
 			console.log('帮助文档')
