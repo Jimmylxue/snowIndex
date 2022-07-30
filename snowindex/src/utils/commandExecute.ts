@@ -1,4 +1,5 @@
 import { commandList } from '@hooks/commandList'
+import { searchPlatformList } from '@hooks/const'
 import { TSnowTerminal } from 'types/TSnowTerminal'
 import { subStrBetween } from '.'
 
@@ -19,15 +20,21 @@ export function doCommandExecute(instruct: string, terminal: TSnowTerminal) {
 				_: '',
 				self: false,
 				fromWay:
-					subStrBetween(instrTemp, '-f', '-s') ||
+					subStrBetween(instrTemp, '-f', '-s').trim() ||
 					commandItem?.options?.[1].default,
 			}
-			if (instrTemp.includes('-f')) {
-				matchParams._ = instrTemp.split('-f')[0]
+			if (instrTemp.includes('-f') && instrTemp.includes('-s')) {
+				matchParams._ = instrTemp.split('-f')[0].trimStart()
+				matchParams.self = true
+			} else if (instrTemp.includes('-f')) {
+				matchParams._ = instrTemp.split('-f')[0].trimStart()
 				// searchText = instrTemp.split('-f')[0]
 			} else if (instrTemp.includes('-s')) {
-				matchParams._ = instrTemp.split('-s')[0]
+				matchParams._ = instrTemp.split('-s')[0].trimStart()
+				console.log('is -s')
 				matchParams.self = true
+			} else {
+				matchParams._ = instrTemp.trimStart()
 			}
 
 			console.log('instruct--------', instruct)
@@ -37,7 +44,20 @@ export function doCommandExecute(instruct: string, terminal: TSnowTerminal) {
 					matchParams.self ? '-s' : ''
 				}`
 			)
-			window.open(`https://www.baidu.com/s?wd=${matchParams._}`)
+			const searchTarget = searchPlatformList.find(
+				platform => platform.key === matchParams.fromWay
+			)?.target
+			if (!searchTarget) {
+				// todo terminal 显示错误
+				return
+			}
+			console.log(matchParams._)
+			window.open(
+				`${searchTarget}${matchParams._}`,
+				// `${searchTarget}${matchParams._}`
+				// `_self`
+				`${matchParams.self ? '_self' : searchTarget + matchParams}`
+			)
 			return
 		case 'help':
 			console.log('帮助文档')

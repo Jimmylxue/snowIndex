@@ -86,3 +86,30 @@ export const shortcutList: ShortcutType[] = [
 		},
 	},
 ]
+
+export const searchPlatformList = [
+	{
+		key: 'baidu',
+		target: 'https://www.baidu.com/s?wd=',
+	},
+	{
+		key: 'google',
+		target: 'https://www.google.com/search?q=',
+	},
+	{
+		key: 'github',
+		target: 'https://github.com/search?q=',
+	},
+	{
+		key: 'github',
+		target: 'https://github.com/search?q=',
+	},
+	{
+		key: 'zhihu',
+		target: 'https://www.zhihu.com/search?q=',
+	},
+	{
+		key: 'juejin',
+		target: 'https://juejin.cn/search?query=',
+	},
+]
