@@ -7,6 +7,7 @@ export type TSnowTerminal = {
 	enter: () => void
 	showPrevCommand: () => void
 	showNextCommand: () => void
+	showError: (msg: string) => void
 }
 
 export type TInputRecord = {
@@ -17,10 +18,14 @@ export type TInputRecord = {
 export type TInstructRecordState = {
 	historyRecord: TInputRecord[]
 	currentRecord: TInputRecord[]
+	hintText: string
+	errorText: string
 }
 
 export type TRecordAction = {
-	type: 'ADD_RECORD' | 'CLEAR_CURRENT' | 'CLEAR_ALL'
+	type: 'ADD_RECORD' | 'CLEAR_CURRENT' | 'CLEAR_ALL' | 'SET_HINT' | 'SET_ERROR'
 } & Partial<TInstructRecordState> & {
 		record?: TInputRecord
+		hintText?: string
+		errorText?: string
 	}

@@ -1,35 +1,32 @@
-import { useMemo, useReducer, useRef, useState } from "react";
-import { TSnowTerminal } from "types/TSnowTerminal";
-import { uuid } from "@utils/index";
-import { recordReducer } from "@stores/reducer/record";
-import { doCommandExecute } from "@utils/commandExecute";
-import { matchHint } from "@utils/hintExecute";
+import { useMemo, useReducer, useRef, useState } from 'react'
+import { TSnowTerminal } from 'types/TSnowTerminal'
+import { uuid } from '@utils/index'
+import { recordReducer } from '@stores/reducer/record'
+import { doCommandExecute } from '@utils/commandExecute'
+import { matchHint } from '@utils/hintExecute'
 
 export function useTerminal(): TSnowTerminal {
-	const inputRef = useRef<HTMLInputElement>(null);
-	const [{ historyRecord, currentRecord }, dispatch] = useReducer(
-		recordReducer,
-		{
+	const inputRef = useRef<HTMLInputElement>(null)
+	const [{ historyRecord, currentRecord, hintText, errorText }, dispatch] =
+		useReducer(recordReducer, {
 			historyRecord: [],
 			currentRecord: [],
-		}
-	);
-	const [hintText, setHintText] = useState("");
-	let commandIndex = useMemo(
-		() => historyRecord.length,
-		[historyRecord.length]
-	);
+			hintText: '',
+			errorText: '',
+		})
+	let commandIndex = useMemo(() => historyRecord.length, [historyRecord.length])
 
 	const changeInput = (e: React.ChangeEvent<HTMLInputElement>) => {
-		console.log(e.target.value);
-		const instruct = e.target.value;
-		const instr = instruct.trim().split(" ");
+		const instruct = e.target.value
+		const instr = instruct.trim().split(' ')
 		if (instr.length === 0) {
-			return;
+			return
 		}
-		setHintText(matchHint(instr[0])!);
-		// matchHint(instr[0])
-	};
+		dispatch({
+			type: 'SET_HINT',
+			hintText: matchHint(instr[0])!,
+		})
+	}
 
 	const terminalNode = (
 		<div className="mt-8">
@@ -39,6 +36,12 @@ export function useTerminal(): TSnowTerminal {
 					<span>{rec.instruct}</span>
 				</p>
 			))}
+			{errorText && (
+				<div className=" text-white flex items-center my-1">
+					<div className=" bg-red-600 px-2 text-white mr-2">error</div>{' '}
+					{errorText}
+				</div>
+			)}
 			<p>
 				<span>[local]$ </span>
 				<input
@@ -51,47 +54,56 @@ export function useTerminal(): TSnowTerminal {
 			</p>
 			{hintText && <p className=" text-gray-400">hint: {hintText}</p>}
 		</div>
-	);
+	)
 
 	const temp = {
 		terminalNode,
 		focusInput: () => {
-			inputRef.current?.focus();
+			inputRef.current?.focus()
 		},
 		clear: () => {
-			inputRef.current!.value = "";
+			inputRef.current!.value = ''
 			dispatch({
-				type: "CLEAR_CURRENT",
-			});
+				type: 'CLEAR_CURRENT',
+			})
 		},
 		enter: () => {
-			const instruct = inputRef.current?.value;
+			const instruct = inputRef.current?.value
 			if (!instruct) {
-				return;
+				return
 			}
-			doCommandExecute(instruct, temp);
+			doCommandExecute(instruct, temp)
 			dispatch({
-				type: "ADD_RECORD",
+				type: 'ADD_RECORD',
 				record: { id: uuid(), instruct },
-			});
-			inputRef.current!.value = "";
-			inputRef.current?.focus();
+				hintText: '',
+			})
+			// alert('cc')
+			inputRef.current!.value = ''
+			inputRef.current?.focus()
 		},
 		showPrevCommand: () => {
 			if (commandIndex === 0) {
-				return;
+				return
 			}
-			inputRef.current!.value = historyRecord[commandIndex - 1].instruct;
-			commandIndex--;
+			inputRef.current!.value = historyRecord[commandIndex - 1].instruct
+			commandIndex--
 		},
 		showNextCommand: () => {
 			if (commandIndex === historyRecord.length - 1) {
-				return;
+				return
 			}
-			inputRef.current!.value = historyRecord[commandIndex + 1].instruct;
-			commandIndex++;
+			inputRef.current!.value = historyRecord[commandIndex + 1].instruct
+			commandIndex++
 		},
-	};
 
-	return temp;
+		showError: (text: string) => {
+			dispatch({
+				type: 'SET_ERROR',
+				errorText: text,
+			})
+		},
+	}
+
+	return temp
 }

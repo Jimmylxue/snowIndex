@@ -11,30 +11,32 @@ export function doCommandExecute(instruct: string, terminal: TSnowTerminal) {
 		terminal.focusInput()
 		return
 	}
-
+	const commandItem = commandList.find(str => str.start === instr[0])
+	if (!commandItem) {
+		terminal.showError('找不到命令（输入 help 查看命令列表）')
+		return
+	}
+	const instrTemps = instruct.split(instr[0]).join(' ')
 	switch (instr[0]) {
 		case 'search':
-			const commandItem = commandList.find(str => str.start === instr[0])
-			const instrTemp = instruct.split('search').join(' ')
 			const matchParams = {
 				_: '',
 				self: false,
 				fromWay:
-					subStrBetween(instrTemp, '-f', '-s').trim() ||
+					subStrBetween(instrTemps, '-f', '-s').trim() ||
 					commandItem?.options?.[1].default,
 			}
-			if (instrTemp.includes('-f') && instrTemp.includes('-s')) {
-				matchParams._ = instrTemp.split('-f')[0].trimStart()
+			if (instrTemps.includes('-f') && instrTemps.includes('-s')) {
+				matchParams._ = instrTemps.split('-f')[0].trimStart()
 				matchParams.self = true
-			} else if (instrTemp.includes('-f')) {
-				matchParams._ = instrTemp.split('-f')[0].trimStart()
-				// searchText = instrTemp.split('-f')[0]
-			} else if (instrTemp.includes('-s')) {
-				matchParams._ = instrTemp.split('-s')[0].trimStart()
+			} else if (instrTemps.includes('-f')) {
+				matchParams._ = instrTemps.split('-f')[0].trimStart()
+			} else if (instrTemps.includes('-s')) {
+				matchParams._ = instrTemps.split('-s')[0].trimStart()
 				console.log('is -s')
 				matchParams.self = true
 			} else {
-				matchParams._ = instrTemp.trimStart()
+				matchParams._ = instrTemps.trimStart()
 			}
 
 			console.log('instruct--------', instruct)
@@ -48,22 +50,51 @@ export function doCommandExecute(instruct: string, terminal: TSnowTerminal) {
 				platform => platform.key === matchParams.fromWay
 			)?.target
 			if (!searchTarget) {
+				terminal.showError('找不到搜索源')
 				// todo terminal 显示错误
 				return
 			}
 			console.log(matchParams._)
 			window.open(
 				`${searchTarget}${matchParams._}`,
-				// `${searchTarget}${matchParams._}`
-				// `_self`
 				`${matchParams.self ? '_self' : searchTarget + matchParams}`
 			)
 			return
 		case 'help':
 			console.log('帮助文档')
 			return
+		case 'baidu':
+			const baiduParams = {
+				_: '',
+				self: false,
+				photo: false,
+			}
+			console.log('instrTemps', instrTemps)
+			if (instrTemps.includes('-s') && instrTemps.includes('-p')) {
+				baiduParams._ = instrTemps.split('-s')[0]
+				baiduParams.self = true
+				baiduParams.photo = true
+			} else if (instrTemps.includes('-s')) {
+				baiduParams._ = instrTemps.split('-s')[0]
+				baiduParams.self = true
+			} else if (instrTemps.includes('-p')) {
+				baiduParams._ = instrTemps.split('-p')[0]
+				// console.log('ddidi'
+				// alert(222)
+				baiduParams.photo = true
+			}
+			console.log('instruct--------', instruct)
+			console.log('analyze-------------------↓', baiduParams)
+			const baiduTarget = searchPlatformList.find(
+				plat => plat.key === (baiduParams.photo ? 'baiduImage' : 'baidu')
+			)?.target
+			window.open(
+				`${baiduTarget}${baiduParams._}`,
+				`${baiduParams.self ? '_self' : baiduTarget! + baiduParams}`
+			)
+			return
 		default:
-			console.log('指令错误')
+			// console.log('指令错误')
 			terminal.focusInput()
 			break
 	}

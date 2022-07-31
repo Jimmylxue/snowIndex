@@ -93,6 +93,10 @@ export const searchPlatformList = [
 		target: 'https://www.baidu.com/s?wd=',
 	},
 	{
+		key: 'baiduImage',
+		target: 'https://image.baidu.com/search/index?tn=baiduimage&word=',
+	},
+	{
 		key: 'google',
 		target: 'https://www.google.com/search?q=',
 	},
@@ -111,5 +115,9 @@ export const searchPlatformList = [
 	{
 		key: 'juejin',
 		target: 'https://juejin.cn/search?query=',
+	},
+	{
+		key: 'bili',
+		target: 'https://search.bilibili.com/all?keyword=',
 	},
 ]

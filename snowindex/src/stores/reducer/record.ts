@@ -10,12 +10,15 @@ export function recordReducer(
 				...state,
 				historyRecord: [...state.historyRecord, action.record!],
 				currentRecord: [...state.currentRecord, action.record!],
+				hintText: action.hintText!,
 			}
 
 		case 'CLEAR_CURRENT':
 			return {
 				...state,
 				currentRecord: [],
+				errorText: '',
+				hintText: '',
 			}
 
 		case 'CLEAR_ALL':
@@ -23,6 +26,20 @@ export function recordReducer(
 				...state,
 				historyRecord: [],
 				currentRecord: [],
+				hintText: '',
+				errorText: '',
+			}
+
+		case 'SET_HINT':
+			return {
+				...state,
+				hintText: action.hintText!,
+			}
+
+		case 'SET_ERROR':
+			return {
+				...state,
+				errorText: action.errorText!,
 			}
 
 		default:
