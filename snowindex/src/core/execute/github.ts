@@ -52,7 +52,7 @@ export const githubCommand = {
 		},
 		{
 			key: 'user',
-			desc: '是否搜索作者',
+			desc: '是否搜索作者~',
 			alias: ['-u'],
 			type: 'boolean',
 			default: false,
