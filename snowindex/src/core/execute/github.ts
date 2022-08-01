@@ -37,3 +37,25 @@ export function githubExecute(instruct: string) {
 		`${githubParams.self ? '_self' : searchTarget! + githubParams}`
 	)
 }
+
+export const githubCommand = {
+	start: 'github',
+	hint: 'github <搜索内容> [-u 是否搜索作者] [-s 是否当前页面打开]',
+	desc: '百度搜索引擎搜索',
+	options: [
+		{
+			key: 'self',
+			desc: '是否在当前页面打开',
+			alias: ['-s'],
+			type: 'boolean',
+			default: false,
+		},
+		{
+			key: 'user',
+			desc: '是否搜索作者',
+			alias: ['-u'],
+			type: 'boolean',
+			default: false,
+		},
+	],
+}

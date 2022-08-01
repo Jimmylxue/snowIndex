@@ -101,6 +101,10 @@ export const searchPlatformList = [
 		target: 'https://www.google.com/search?q=',
 	},
 	{
+		key: 'googleImage',
+		target: 'https://www.google.co.jp/search?source=lnms&tbm=isch&q=',
+	},
+	{
 		key: 'github',
 		target: 'https://github.com/search?q=',
 	},
@@ -113,11 +117,23 @@ export const searchPlatformList = [
 		target: 'https://www.zhihu.com/search?q=',
 	},
 	{
+		key: 'zhihuUser',
+		target: 'https://www.zhihu.com/search?type=people&q=',
+	},
+	{
 		key: 'juejin',
 		target: 'https://juejin.cn/search?query=',
 	},
 	{
+		key: 'juejinUser',
+		target: 'https://juejin.cn/search?type=1&query=',
+	},
+	{
 		key: 'bili',
 		target: 'https://search.bilibili.com/all?keyword=',
+	},
+	{
+		key: 'biliUser',
+		target: 'https://search.bilibili.com/upuser?keyword=',
 	},
 ]
