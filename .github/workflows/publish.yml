@@ -43,7 +43,7 @@ jobs:
           # SCP参数
           ARGS: '-avzr --delete'
           # 源目录
-          SOURCE: 'docs/.vitepress/dist'
+          SOURCE: 'dist'
           # 服务器ip
           REMOTE_HOST: '1.116.204.114'
           # 用户
