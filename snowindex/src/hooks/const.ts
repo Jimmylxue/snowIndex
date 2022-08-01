@@ -105,8 +105,8 @@ export const searchPlatformList = [
 		target: 'https://github.com/search?q=',
 	},
 	{
-		key: 'github',
-		target: 'https://github.com/search?q=',
+		key: 'githubUser',
+		target: 'https://github.com/',
 	},
 	{
 		key: 'zhihu',

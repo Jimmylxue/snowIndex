@@ -2,6 +2,7 @@ import { commandList } from '@hooks/commandList'
 import { searchPlatformList } from '@hooks/const'
 import { TSnowTerminal } from 'types/TSnowTerminal'
 import { subStrBetween } from '.'
+import { githubExecute } from '@core/execute'
 
 export function doCommandExecute(instruct: string, terminal: TSnowTerminal) {
 	// console.log('ccc', terminal)
@@ -79,8 +80,6 @@ export function doCommandExecute(instruct: string, terminal: TSnowTerminal) {
 				baiduParams.self = true
 			} else if (instrTemps.includes('-p')) {
 				baiduParams._ = instrTemps.split('-p')[0]
-				// console.log('ddidi'
-				// alert(222)
 				baiduParams.photo = true
 			}
 			console.log('instruct--------', instruct)
@@ -92,6 +91,9 @@ export function doCommandExecute(instruct: string, terminal: TSnowTerminal) {
 				`${baiduTarget}${baiduParams._}`,
 				`${baiduParams.self ? '_self' : baiduTarget! + baiduParams}`
 			)
+			return
+		case 'github':
+			githubExecute(instrTemps)
 			return
 		default:
 			// console.log('指令错误')

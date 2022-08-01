@@ -23,6 +23,10 @@ export default defineConfig({
 				find: '@stores',
 				replacement: resolve(__dirname, 'src/stores'),
 			},
+			{
+				find: '@core',
+				replacement: resolve(__dirname, 'src/core'),
+			},
 		],
 	},
 })
