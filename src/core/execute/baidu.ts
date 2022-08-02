@@ -6,16 +6,21 @@ export function baiduExecute(instruct: string) {
 		self: false,
 		photo: false,
 	}
-	if (instruct.includes('-s') && instruct.includes('-p')) {
-		baiduParams._ = instruct.split('-s')[0]
+	if (
+		instruct.trimStart().includes(' -s') &&
+		instruct.trimEnd().endsWith(' -p')
+	) {
+		baiduParams._ = instruct.split(' -s')[0]
 		baiduParams.self = true
 		baiduParams.photo = true
-	} else if (instruct.includes('-s')) {
-		baiduParams._ = instruct.split('-s')[0]
+	} else if (instruct.trimStart().includes(' -s')) {
+		baiduParams._ = instruct.split(' -s')[0]
 		baiduParams.self = true
-	} else if (instruct.includes('-p')) {
-		baiduParams._ = instruct.split('-p')[0]
+	} else if (instruct.trimEnd().endsWith(' -p')) {
+		baiduParams._ = instruct.split(' -p')[0]
 		baiduParams.photo = true
+	} else {
+		baiduParams._ = instruct.trimStart()
 	}
 	console.log('instruct--------', instruct)
 	console.log('analyze-------------------↓', baiduParams)

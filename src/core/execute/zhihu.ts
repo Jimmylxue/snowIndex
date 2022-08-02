@@ -6,15 +6,18 @@ export function zhihuExecute(instruct: string) {
 		self: false,
 		user: false,
 	}
-	if (instruct.includes('-u') && instruct.includes('-s')) {
-		zhihuParams._ = instruct.split('-u')[0].trimStart()
+	if (
+		instruct.trimStart().includes(' -u') &&
+		instruct.trimEnd().endsWith(' -s')
+	) {
+		zhihuParams._ = instruct.split(' -u')[0].trimStart()
 		zhihuParams.self = true
 		zhihuParams.user = true
-	} else if (instruct.includes('-u')) {
-		zhihuParams._ = instruct.split('-u')[0].trimStart()
+	} else if (instruct.trimStart().includes(' -u')) {
+		zhihuParams._ = instruct.split(' -u')[0].trimStart()
 		zhihuParams.user = true
-	} else if (instruct.includes('-s')) {
-		zhihuParams._ = instruct.split('-s')[0].trimStart()
+	} else if (instruct.trimEnd().endsWith(' -s')) {
+		zhihuParams._ = instruct.split(' -s')[0].trimStart()
 		zhihuParams.self = true
 	} else {
 		zhihuParams._ = instruct.trimStart()

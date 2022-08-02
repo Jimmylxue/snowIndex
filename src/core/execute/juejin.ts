@@ -6,15 +6,18 @@ export function juejinExecute(instruct: string) {
 		self: false,
 		user: false,
 	}
-	if (instruct.includes('-u') && instruct.includes('-s')) {
-		juejinParams._ = instruct.split('-u')[0].trimStart()
+	if (
+		instruct.trimStart().includes(' -u') &&
+		instruct.trimEnd().endsWith(' -s')
+	) {
+		juejinParams._ = instruct.split(' -u')[0].trimStart()
 		juejinParams.self = true
 		juejinParams.user = true
-	} else if (instruct.includes('-u')) {
-		juejinParams._ = instruct.split('-u')[0].trimStart()
+	} else if (instruct.trimStart().includes(' -u')) {
+		juejinParams._ = instruct.split(' -u')[0].trimStart()
 		juejinParams.user = true
-	} else if (instruct.includes('-s')) {
-		juejinParams._ = instruct.split('-s')[0].trimStart()
+	} else if (instruct.trimEnd().endsWith(' -s')) {
+		juejinParams._ = instruct.split(' -s')[0].trimStart()
 		juejinParams.self = true
 	} else {
 		juejinParams._ = instruct.trimStart()

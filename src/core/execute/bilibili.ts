@@ -6,15 +6,18 @@ export function biliExecute(instruct: string) {
 		self: false,
 		user: false,
 	}
-	if (instruct.includes('-u') && instruct.includes('-s')) {
-		biliParams._ = instruct.split('-u')[0].trimStart()
+	if (
+		instruct.trimStart().includes(' -u') &&
+		instruct.trimEnd().endsWith(' -s')
+	) {
+		biliParams._ = instruct.split(' -u')[0].trimStart()
 		biliParams.self = true
 		biliParams.user = true
-	} else if (instruct.includes('-u')) {
-		biliParams._ = instruct.split('-u')[0].trimStart()
+	} else if (instruct.trimStart().includes(' -u')) {
+		biliParams._ = instruct.split(' -u')[0].trimStart()
 		biliParams.user = true
-	} else if (instruct.includes('-s')) {
-		biliParams._ = instruct.split('-s')[0].trimStart()
+	} else if (instruct.trimEnd().endsWith(' -s')) {
+		biliParams._ = instruct.split(' -s')[0].trimStart()
 		biliParams.self = true
 	} else {
 		biliParams._ = instruct.trimStart()

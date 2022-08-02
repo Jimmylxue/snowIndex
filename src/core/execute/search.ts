@@ -14,14 +14,13 @@ export function searchExecute(
 			subStrBetween(instruct, '-f', '-s').trim() ||
 			commandItem?.options?.[1].default,
 	}
-	if (instruct.includes('-f') && instruct.includes('-s')) {
-		matchParams._ = instruct.split('-f')[0].trimStart()
+	if (instruct.includes(' -f ') && instruct.trimEnd().endsWith(' -s')) {
+		matchParams._ = instruct.split(' -f ')[0].trimStart()
 		matchParams.self = true
-	} else if (instruct.includes('-f')) {
-		matchParams._ = instruct.split('-f')[0].trimStart()
-	} else if (instruct.includes('-s')) {
-		matchParams._ = instruct.split('-s')[0].trimStart()
-		console.log('is -s')
+	} else if (instruct.includes(' -f ')) {
+		matchParams._ = instruct.split(' -f ')[0].trimStart()
+	} else if (instruct.trimEnd().endsWith(' -s')) {
+		matchParams._ = instruct.split(' -s')[0].trimStart()
 		matchParams.self = true
 	} else {
 		matchParams._ = instruct.trimStart()
@@ -42,7 +41,6 @@ export function searchExecute(
 		// todo terminal 显示错误
 		return
 	}
-	console.log(matchParams._)
 	window.open(
 		`${searchTarget}${matchParams._}`,
 		`${matchParams.self ? '_self' : searchTarget + matchParams}`

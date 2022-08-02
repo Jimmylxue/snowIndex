@@ -6,15 +6,18 @@ export function githubExecute(instruct: string) {
 		self: false,
 		user: false,
 	}
-	if (instruct.includes('-u') && instruct.includes('-s')) {
-		githubParams._ = instruct.split('-u')[0].trimStart()
+	if (
+		instruct.trimStart().includes(' -u') &&
+		instruct.trimEnd().endsWith(' -s')
+	) {
+		githubParams._ = instruct.split(' -u')[0].trimStart()
 		githubParams.self = true
 		githubParams.user = true
-	} else if (instruct.includes('-u')) {
-		githubParams._ = instruct.split('-u')[0].trimStart()
+	} else if (instruct.trimStart().includes(' -u')) {
+		githubParams._ = instruct.split(' -u')[0].trimStart()
 		githubParams.user = true
-	} else if (instruct.includes('-s')) {
-		githubParams._ = instruct.split('-s')[0].trimStart()
+	} else if (instruct.trimEnd().endsWith(' -s')) {
+		githubParams._ = instruct.split(' -s')[0].trimStart()
 		githubParams.self = true
 	} else {
 		githubParams._ = instruct.trimStart()

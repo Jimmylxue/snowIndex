@@ -6,16 +6,21 @@ export function googleExecute(instruct: string) {
 		self: false,
 		photo: false,
 	}
-	if (instruct.includes('-s') && instruct.includes('-p')) {
-		googleParams._ = instruct.split('-s')[0]
+	if (
+		instruct.trimStart().includes(' -s') &&
+		instruct.trimEnd().endsWith(' -p')
+	) {
+		googleParams._ = instruct.split(' -s')[0]
 		googleParams.self = true
 		googleParams.photo = true
-	} else if (instruct.includes('-s')) {
-		googleParams._ = instruct.split('-s')[0]
+	} else if (instruct.trimStart().includes(' -s')) {
+		googleParams._ = instruct.split(' -s')[0]
 		googleParams.self = true
-	} else if (instruct.includes('-p')) {
-		googleParams._ = instruct.split('-p')[0]
+	} else if (instruct.trimEnd().endsWith(' -p')) {
+		googleParams._ = instruct.split(' -p')[0]
 		googleParams.photo = true
+	} else {
+		googleParams._ = instruct.trimStart()
 	}
 	console.log('instruct--------', instruct)
 	console.log('analyze-------------------↓', googleParams)
