@@ -8,6 +8,7 @@ export type TSnowTerminal = {
 	showPrevCommand: () => void
 	showNextCommand: () => void
 	showError: (msg: string) => void
+	changeBackGround: (url: string) => void
 }
 
 export type TInputRecord = {

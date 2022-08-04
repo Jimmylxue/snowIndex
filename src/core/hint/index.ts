@@ -5,6 +5,7 @@ import { githubCommand } from '@core/execute/github'
 import { juejinCommand } from '@core/execute/juejin'
 import { zhihuCommand } from '@core/execute/zhihu'
 import { biliCommand } from '@core/execute/bilibili'
+import { bgCommand } from '@core/execute/bg'
 
 export const commandList = [
 	searchCommand,
@@ -14,4 +15,5 @@ export const commandList = [
 	juejinCommand,
 	zhihuCommand,
 	biliCommand,
+	bgCommand,
 ]

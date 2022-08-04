@@ -14,8 +14,8 @@ export function useTerminal(): TSnowTerminal {
 			hintText: '',
 			errorText: '',
 		})
+	const [background, setBackground] = useState('')
 	let commandIndex = useMemo(() => historyRecord.length, [historyRecord.length])
-
 	const changeInput = (e: React.ChangeEvent<HTMLInputElement>) => {
 		const instruct = e.target.value
 		const instr = instruct.trim().split(' ')
@@ -29,31 +29,41 @@ export function useTerminal(): TSnowTerminal {
 	}
 
 	const terminalNode = (
-		<div className="mt-8">
-			{currentRecord.map(rec => (
-				<p key={rec.id}>
-					<span>[local]$ </span>
-					<span>{rec.instruct}</span>
-				</p>
-			))}
-			{errorText && (
-				<div className=" text-white flex items-center my-1">
-					<div className=" bg-red-600 px-2 text-white mr-2">error</div>{' '}
-					{errorText}
-				</div>
-			)}
-			<p>
-				<span>[local]$ </span>
-				<input
-					ref={inputRef}
-					className=" bg-none outline-none bg-transparent  w-80"
-					type="text"
-					autoFocus
-					onChange={changeInput}
+		<>
+			{background && (
+				<img
+					src={background}
+					alt="背景图片"
+					className=" absolute left-0 top-0 z-0 w-full h-full opacity-50"
 				/>
-			</p>
-			{hintText && <p className=" text-gray-400">hint: {hintText}</p>}
-		</div>
+			)}
+
+			<div className="mt-8 relative z-10">
+				{currentRecord.map(rec => (
+					<p key={rec.id}>
+						<span onClick={() => temp.changeBackGround('11')}>[local]$ </span>
+						<span>{rec.instruct}</span>
+					</p>
+				))}
+				{errorText && (
+					<div className=" text-white flex items-center my-1">
+						<div className=" bg-red-600 px-2 text-white mr-2">error</div>{' '}
+						{errorText}
+					</div>
+				)}
+				<p>
+					<span>[local]$ </span>
+					<input
+						ref={inputRef}
+						className=" bg-none outline-none bg-transparent  w-80"
+						type="text"
+						autoFocus
+						onChange={changeInput}
+					/>
+				</p>
+				{hintText && <p className=" text-gray-400">hint: {hintText}</p>}
+			</div>
+		</>
 	)
 
 	const temp = {
@@ -102,6 +112,11 @@ export function useTerminal(): TSnowTerminal {
 				type: 'SET_ERROR',
 				errorText: text,
 			})
+		},
+
+		changeBackGround: (url: string) => {
+			console.log('url', url)
+			setBackground(url)
 		},
 	}
 

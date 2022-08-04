@@ -2,6 +2,7 @@ import { commandList } from '@core/hint'
 import { TSnowTerminal } from 'types/TSnowTerminal'
 import {
 	baiduExecute,
+	bgExecute,
 	biliExecute,
 	githubExecute,
 	googleExecute,
@@ -47,6 +48,8 @@ export function doCommandExecute(instruct: string, terminal: TSnowTerminal) {
 		case 'bili':
 			biliExecute(instrTemps)
 			return
+		case 'bg':
+			bgExecute(instrTemps, terminal)
 		default:
 			terminal.focusInput()
 			break
