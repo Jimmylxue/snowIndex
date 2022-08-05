@@ -4,6 +4,7 @@ import { uuid } from '@utils/index'
 import { recordReducer } from '@stores/reducer/record'
 import { doCommandExecute } from '@utils/commandExecute'
 import { matchHint } from '@utils/hintExecute'
+import useLocalStorage from './useLocalStorage'
 
 export function useTerminal(): TSnowTerminal {
 	const inputRef = useRef<HTMLInputElement>(null)
@@ -14,7 +15,7 @@ export function useTerminal(): TSnowTerminal {
 			hintText: '',
 			errorText: '',
 		})
-	const [background, setBackground] = useState('')
+	const [background, setBackground] = useLocalStorage('snowIndex_bg', '')
 	let commandIndex = useMemo(() => historyRecord.length, [historyRecord.length])
 	const changeInput = (e: React.ChangeEvent<HTMLInputElement>) => {
 		const instruct = e.target.value
