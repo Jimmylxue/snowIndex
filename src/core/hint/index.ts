@@ -18,4 +18,8 @@ export const commandList = [
 	biliCommand,
 	bgCommand,
 	helpCommand,
-]
+] as {
+	start: string
+	hint: string
+	desc: string
+}[]

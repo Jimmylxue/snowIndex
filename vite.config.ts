@@ -27,6 +27,10 @@ export default defineConfig({
 				find: '@core',
 				replacement: resolve(__dirname, 'src/core'),
 			},
+			{
+				find: '@components',
+				replacement: resolve(__dirname, 'src/components'),
+			},
 		],
 	},
 })

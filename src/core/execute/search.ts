@@ -37,7 +37,7 @@ export function searchExecute(
 		platform => platform.key === matchParams.fromWay
 	)?.target
 	if (!searchTarget) {
-		terminal.showError('找不到搜索源')
+		terminal.showError('找不到搜索源', 'search ' + instruct.trim())
 		// todo terminal 显示错误
 		return
 	}

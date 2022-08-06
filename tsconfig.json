@@ -22,6 +22,7 @@
       "@hooks/*":["./src/hooks/*"],
       "@stores/*":["./src/stores/*"],
       "@core/*":["./src/core/*"],
+      "@components/*":["./src/components/*"],
     }, 
   },
   "include": ["src", "src/hooks/.ts"],

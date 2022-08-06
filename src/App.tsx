@@ -1,5 +1,5 @@
 import { useShotCut } from './hooks/useShotCut'
-import { useTerminal } from './hooks/usetTerminal'
+import { useTerminal } from './components/useTerminal'
 
 function App() {
 	const terminal = useTerminal()
@@ -10,17 +10,12 @@ function App() {
 		<div
 			className="bg-black h-screen overflow-auto font-sans p-5 relative"
 			onClick={() => {
-				terminal.focusInput()
+				setTimeout(() => {
+					// terminal.focusInput()
+				}, 0)
 			}}
 		>
-			<div className=" text-white">
-				<p>Welcome to SnowIndex, This is awesome!</p>
-				<p>
-					Author Jimmyxuexue, reference from{' '}
-					<a className=" text-blue-500">coder_yupi</a>
-				</p>
-				{terminalNode}
-			</div>
+			{terminalNode}
 		</div>
 	)
 }

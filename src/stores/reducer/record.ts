@@ -52,6 +52,7 @@ export function recordReducer(
 				currentRecord: [...state.currentRecord, action.record!, record],
 				historyRecord: [...state.historyRecord, action.record!, record],
 				errorText: action.errorText!,
+				hintText: '',
 			}
 
 		case 'ADD_HELP':

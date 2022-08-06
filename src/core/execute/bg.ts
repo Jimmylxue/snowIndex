@@ -14,4 +14,5 @@ export function bgExecute(instruct: string, terminal: TSnowTerminal) {
 export const bgCommand = {
 	start: 'bg',
 	hint: 'background [图片地址（不填则随机）]',
+	desc: '背景设置',
 }

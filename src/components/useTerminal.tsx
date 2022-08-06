@@ -1,4 +1,4 @@
-import { useMemo, useReducer, useRef, useState } from 'react'
+import { useEffect, useMemo, useReducer, useRef } from 'react'
 import {
 	TAddRecordItem,
 	TInputRecord,
@@ -8,12 +8,13 @@ import { uuid } from '@utils/index'
 import { recordReducer } from '@stores/reducer/record'
 import { doCommandExecute } from '@utils/commandExecute'
 import { matchHint } from '@utils/hintExecute'
-import useLocalStorage from './useLocalStorage'
-import { useHelp } from './useHelp'
+import useLocalStorage from '../hooks/useLocalStorage'
+import { useHelp } from '@components/useHelp'
 
 export function useTerminal(): TSnowTerminal {
 	const { helpNode } = useHelp()
 	const inputRef = useRef<HTMLInputElement>(null)
+	const recordContainer = useRef<HTMLInputElement>(null)
 	const [{ historyRecord, currentRecord, hintText }, dispatch] = useReducer(
 		recordReducer,
 		{
@@ -40,8 +41,31 @@ export function useTerminal(): TSnowTerminal {
 		})
 	}
 
+	useEffect(() => {
+		recordContainer.current!.scrollTop = recordContainer.current!.scrollHeight
+	}, [currentRecord.length])
+
 	const terminalNode = (
 		<>
+			<div className=" text-white z-10 relative">
+				<p>Welcome to SnowIndex, This is awesome!</p>
+				<p>
+					Author{' '}
+					<a
+						className=" text-blue-500 ml-1"
+						href="https://github.com/Jimmylxue"
+					>
+						Jimmyxuexue
+					</a>
+					, reference from coder_yupi, github:
+					<a
+						href="https://github.com/Jimmylxue/snowIndex"
+						className=" text-blue-500 ml-1"
+					>
+						SnowIndex
+					</a>
+				</p>
+			</div>
 			{background && (
 				<img
 					src={background}
@@ -50,7 +74,13 @@ export function useTerminal(): TSnowTerminal {
 				/>
 			)}
 
-			<div className="mt-8 relative z-10">
+			<div
+				className="mt-8 relative z-10 overflow-auto text-white"
+				ref={recordContainer}
+				style={{
+					height: 'calc(100vh - 130px)',
+				}}
+			>
 				{currentRecord.map(rec => (
 					<div key={rec.id}>
 						{rec.type === 'INSTRUCT' ? (
@@ -101,7 +131,8 @@ export function useTerminal(): TSnowTerminal {
 			}
 			doCommandExecute(instruct, temp)
 			inputRef.current!.value = ''
-			inputRef.current?.focus()
+
+			temp.focusInput()
 		},
 		showPrevCommand: () => {
 			if (commandIndex === 0) {
