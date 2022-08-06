@@ -1,4 +1,9 @@
-import { TInstructRecordState, TRecordAction } from 'types/TSnowTerminal'
+import { uuid } from '@utils/index'
+import {
+	TInputRecord,
+	TInstructRecordState,
+	TRecordAction,
+} from 'types/TSnowTerminal'
 
 export function recordReducer(
 	state: TInstructRecordState,
@@ -37,9 +42,28 @@ export function recordReducer(
 			}
 
 		case 'SET_ERROR':
+			const record: TInputRecord = {
+				id: uuid(),
+				instruct: action.errorText!,
+				type: 'ERROR_TEXT',
+			}
 			return {
 				...state,
+				currentRecord: [...state.currentRecord, action.record!, record],
+				historyRecord: [...state.historyRecord, action.record!, record],
 				errorText: action.errorText!,
+			}
+
+		case 'ADD_HELP':
+			const records: TInputRecord = {
+				id: uuid(),
+				instruct: action.instruct!,
+				type: 'INSTRUCT',
+			}
+			return {
+				...state,
+				currentRecord: [...state.currentRecord, records, action.record!],
+				historyRecord: [...state.historyRecord, records, action.record!],
 			}
 
 		default:

@@ -6,6 +6,7 @@ import { juejinCommand } from '@core/execute/juejin'
 import { zhihuCommand } from '@core/execute/zhihu'
 import { biliCommand } from '@core/execute/bilibili'
 import { bgCommand } from '@core/execute/bg'
+import { helpCommand } from '@core/execute/help'
 
 export const commandList = [
 	searchCommand,
@@ -16,4 +17,5 @@ export const commandList = [
 	zhihuCommand,
 	biliCommand,
 	bgCommand,
+	helpCommand,
 ]

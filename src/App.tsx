@@ -8,7 +8,7 @@ function App() {
 
 	return (
 		<div
-			className="bg-black h-screen overflow-hidden font-sans p-5 relative"
+			className="bg-black h-screen overflow-auto font-sans p-5 relative"
 			onClick={() => {
 				terminal.focusInput()
 			}}

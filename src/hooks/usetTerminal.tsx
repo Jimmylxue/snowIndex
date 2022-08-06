@@ -1,22 +1,33 @@
 import { useMemo, useReducer, useRef, useState } from 'react'
-import { TSnowTerminal } from 'types/TSnowTerminal'
+import {
+	TAddRecordItem,
+	TInputRecord,
+	TSnowTerminal,
+} from 'types/TSnowTerminal'
 import { uuid } from '@utils/index'
 import { recordReducer } from '@stores/reducer/record'
 import { doCommandExecute } from '@utils/commandExecute'
 import { matchHint } from '@utils/hintExecute'
 import useLocalStorage from './useLocalStorage'
+import { useHelp } from './useHelp'
 
 export function useTerminal(): TSnowTerminal {
+	const { helpNode } = useHelp()
 	const inputRef = useRef<HTMLInputElement>(null)
-	const [{ historyRecord, currentRecord, hintText, errorText }, dispatch] =
-		useReducer(recordReducer, {
+	const [{ historyRecord, currentRecord, hintText }, dispatch] = useReducer(
+		recordReducer,
+		{
 			historyRecord: [],
 			currentRecord: [],
 			hintText: '',
 			errorText: '',
-		})
+		}
+	)
 	const [background, setBackground] = useLocalStorage('snowIndex_bg', '')
-	let commandIndex = useMemo(() => historyRecord.length, [historyRecord.length])
+	const commandRecord = useMemo(() => {
+		return historyRecord.filter(cur => cur.type === 'INSTRUCT')
+	}, [historyRecord.length])
+	let commandIndex = useMemo(() => commandRecord.length, [commandRecord.length])
 	const changeInput = (e: React.ChangeEvent<HTMLInputElement>) => {
 		const instruct = e.target.value
 		const instr = instruct.trim().split(' ')
@@ -41,17 +52,22 @@ export function useTerminal(): TSnowTerminal {
 
 			<div className="mt-8 relative z-10">
 				{currentRecord.map(rec => (
-					<p key={rec.id}>
-						<span onClick={() => temp.changeBackGround('11')}>[local]$ </span>
-						<span>{rec.instruct}</span>
-					</p>
-				))}
-				{errorText && (
-					<div className=" text-white flex items-center my-1">
-						<div className=" bg-red-600 px-2 text-white mr-2">error</div>{' '}
-						{errorText}
+					<div key={rec.id}>
+						{rec.type === 'INSTRUCT' ? (
+							<p key={rec.id}>
+								<span>[local]$ </span>
+								<span>{rec.instruct}</span>
+							</p>
+						) : rec.type === 'ERROR_TEXT' ? (
+							<div className=" text-white flex items-center my-1">
+								<div className=" bg-red-600 px-2 text-white mr-2">error</div>{' '}
+								{rec.instruct}
+							</div>
+						) : rec.type === 'HELP' ? (
+							helpNode
+						) : null}
 					</div>
-				)}
+				))}
 				<p>
 					<span>[local]$ </span>
 					<input
@@ -84,12 +100,6 @@ export function useTerminal(): TSnowTerminal {
 				return
 			}
 			doCommandExecute(instruct, temp)
-			dispatch({
-				type: 'ADD_RECORD',
-				record: { id: uuid(), instruct },
-				hintText: '',
-			})
-			// alert('cc')
 			inputRef.current!.value = ''
 			inputRef.current?.focus()
 		},
@@ -97,27 +107,57 @@ export function useTerminal(): TSnowTerminal {
 			if (commandIndex === 0) {
 				return
 			}
-			inputRef.current!.value = historyRecord[commandIndex - 1].instruct
+			inputRef.current!.value = commandRecord[commandIndex - 1]
+				.instruct as string
 			commandIndex--
 		},
 		showNextCommand: () => {
-			if (commandIndex === historyRecord.length - 1) {
+			if (commandIndex === commandRecord.length - 1) {
 				return
 			}
-			inputRef.current!.value = historyRecord[commandIndex + 1].instruct
+			inputRef.current!.value = commandRecord[commandIndex + 1]
+				.instruct as string
 			commandIndex++
 		},
 
-		showError: (text: string) => {
+		showError: (text: string, instruct: string) => {
 			dispatch({
 				type: 'SET_ERROR',
 				errorText: text,
+				record: { id: uuid(), instruct, type: 'INSTRUCT' }, // 原指令
 			})
 		},
 
 		changeBackGround: (url: string) => {
-			console.log('url', url)
 			setBackground(url)
+		},
+
+		addInstructRecord: ({ type, instruct }: TAddRecordItem) => {
+			switch (type) {
+				case 'INSTRUCT':
+					const record: TInputRecord = {
+						id: uuid(),
+						instruct: instruct,
+						type: 'INSTRUCT',
+					}
+					dispatch({
+						type: 'ADD_RECORD',
+						record: record,
+					})
+					return
+				case 'HELP':
+					const records: TInputRecord = {
+						id: uuid(),
+						instruct: helpNode,
+						type: 'HELP',
+					}
+					dispatch({
+						type: 'ADD_HELP',
+						record: records,
+						instruct,
+					})
+					return
+			}
 		},
 	}
 

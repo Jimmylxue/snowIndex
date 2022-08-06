@@ -7,13 +7,22 @@ export type TSnowTerminal = {
 	enter: () => void
 	showPrevCommand: () => void
 	showNextCommand: () => void
-	showError: (msg: string) => void
+	showError: (msg: string, instruct: string) => void
 	changeBackGround: (url: string) => void
+	addInstructRecord: (params: TAddRecordItem) => void
 }
+
+export type TAddRecordItem = {
+	type: TInstructType
+	instruct?: string
+}
+
+export type TInstructType = 'INSTRUCT' | 'ERROR_TEXT' | 'HELP'
 
 export type TInputRecord = {
 	id: number
-	instruct: string
+	instruct: string | ReactNode
+	type: TInstructType
 }
 
 export type TInstructRecordState = {
@@ -24,9 +33,16 @@ export type TInstructRecordState = {
 }
 
 export type TRecordAction = {
-	type: 'ADD_RECORD' | 'CLEAR_CURRENT' | 'CLEAR_ALL' | 'SET_HINT' | 'SET_ERROR'
+	type:
+		| 'ADD_RECORD'
+		| 'CLEAR_CURRENT'
+		| 'CLEAR_ALL'
+		| 'SET_HINT'
+		| 'SET_ERROR'
+		| 'ADD_HELP'
 } & Partial<TInstructRecordState> & {
 		record?: TInputRecord
 		hintText?: string
 		errorText?: string
+		instruct?: string
 	}
