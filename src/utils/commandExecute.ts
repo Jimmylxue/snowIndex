@@ -65,7 +65,7 @@ export function doCommandExecute(instruct: string, terminal: TSnowTerminal) {
 		case 'bg':
 			bgExecute(instrTemps, terminal)
 			terminal.addInstructRecord({ type: 'INSTRUCT', instruct })
-
+			return
 		default:
 			terminal.addInstructRecord({ type: 'INSTRUCT', instruct })
 			terminal.focusInput()

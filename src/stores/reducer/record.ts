@@ -65,6 +65,7 @@ export function recordReducer(
 				...state,
 				currentRecord: [...state.currentRecord, records, action.record!],
 				historyRecord: [...state.historyRecord, records, action.record!],
+				hintText: '',
 			}
 
 		default:

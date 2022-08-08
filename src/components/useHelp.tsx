@@ -1,9 +1,7 @@
 import { commandList } from '@core/hint'
-import { useState } from 'react'
+// import { useState } from 'react'
 
 export function useHelp() {
-	const [show, setShow] = useState(true)
-
 	const helpNode = (
 		<div className="mt-1">
 			<div className=" mb-2">⭐️ 命令列表：</div>
