@@ -10,6 +10,7 @@ export type TSnowTerminal = {
 	showError: (msg: string, instruct: string) => void
 	changeBackGround: (url: string) => void
 	addInstructRecord: (params: TAddRecordItem) => void
+	reset: () => void
 }
 
 export type TAddRecordItem = {

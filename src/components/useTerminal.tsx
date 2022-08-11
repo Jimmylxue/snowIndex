@@ -190,6 +190,10 @@ export function useTerminal(): TSnowTerminal {
 					return
 			}
 		},
+
+		reset: () => {
+			setBackground('')
+		},
 	}
 
 	return temp

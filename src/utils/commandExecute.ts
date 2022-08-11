@@ -7,6 +7,7 @@ import {
 	githubExecute,
 	googleExecute,
 	juejinExecute,
+	resetExecute,
 	searchExecute,
 } from '@core/execute'
 import { zhihuExecute } from '@core/execute/zhihu'
@@ -64,6 +65,10 @@ export function doCommandExecute(instruct: string, terminal: TSnowTerminal) {
 			return
 		case 'bg':
 			bgExecute(instrTemps, terminal)
+			terminal.addInstructRecord({ type: 'INSTRUCT', instruct })
+			return
+		case 'reset':
+			resetExecute(instrTemps, terminal)
 			terminal.addInstructRecord({ type: 'INSTRUCT', instruct })
 			return
 		default:

@@ -7,6 +7,7 @@ import { zhihuCommand } from '@core/execute/zhihu'
 import { biliCommand } from '@core/execute/bilibili'
 import { bgCommand } from '@core/execute/bg'
 import { helpCommand } from '@core/execute/help'
+import { resetCommand } from '@core/execute/reset'
 
 export const commandList = [
 	searchCommand,
@@ -18,6 +19,7 @@ export const commandList = [
 	biliCommand,
 	bgCommand,
 	helpCommand,
+	resetCommand,
 ] as {
 	start: string
 	hint: string
