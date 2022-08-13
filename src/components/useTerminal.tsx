@@ -4,15 +4,17 @@ import {
 	TInputRecord,
 	TSnowTerminal,
 } from 'types/TSnowTerminal'
-import { uuid } from '@utils/index'
+import { getNodeByType, uuid } from '@utils/index'
 import { recordReducer } from '@stores/reducer/record'
 import { doCommandExecute } from '@utils/commandExecute'
 import { matchHint } from '@utils/hintExecute'
 import useLocalStorage from '../hooks/useLocalStorage'
 import { useHelp } from '@components/useHelp'
+import { useNode } from './useNode'
 
 export function useTerminal(): TSnowTerminal {
 	const { helpNode } = useHelp()
+	const { infoNode } = useNode()
 	const inputRef = useRef<HTMLInputElement>(null)
 	const recordContainer = useRef<HTMLInputElement>(null)
 	const [{ historyRecord, currentRecord, hintText }, dispatch] = useReducer(
@@ -95,6 +97,8 @@ export function useTerminal(): TSnowTerminal {
 							</div>
 						) : rec.type === 'HELP' ? (
 							helpNode
+						) : rec.type === 'INFO' ? (
+							infoNode
 						) : null}
 					</div>
 				))}
@@ -176,14 +180,16 @@ export function useTerminal(): TSnowTerminal {
 						record: record,
 					})
 					return
+				case 'INFO':
 				case 'HELP':
 					const records: TInputRecord = {
 						id: uuid(),
-						instruct: helpNode,
-						type: 'HELP',
+						// instruct: helpNode,
+						instruct: getNodeByType(type),
+						type: type,
 					}
 					dispatch({
-						type: 'ADD_HELP',
+						type: 'ADD_NODE',
 						record: records,
 						instruct,
 					})

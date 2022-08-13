@@ -18,7 +18,7 @@ export type TAddRecordItem = {
 	instruct?: string
 }
 
-export type TInstructType = 'INSTRUCT' | 'ERROR_TEXT' | 'HELP'
+export type TInstructType = 'INSTRUCT' | 'ERROR_TEXT' | 'HELP' | 'INFO'
 
 export type TInputRecord = {
 	id: number
@@ -40,7 +40,7 @@ export type TRecordAction = {
 		| 'CLEAR_ALL'
 		| 'SET_HINT'
 		| 'SET_ERROR'
-		| 'ADD_HELP'
+		| 'ADD_NODE'
 } & Partial<TInstructRecordState> & {
 		record?: TInputRecord
 		hintText?: string

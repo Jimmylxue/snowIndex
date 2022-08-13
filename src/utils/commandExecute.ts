@@ -6,6 +6,7 @@ import {
 	biliExecute,
 	githubExecute,
 	googleExecute,
+	infoExecute,
 	juejinExecute,
 	resetExecute,
 	searchExecute,
@@ -70,6 +71,10 @@ export function doCommandExecute(instruct: string, terminal: TSnowTerminal) {
 		case 'reset':
 			resetExecute(instrTemps, terminal)
 			terminal.addInstructRecord({ type: 'INSTRUCT', instruct })
+			return
+
+		case 'info':
+			terminal.addInstructRecord({ type: 'INFO', instruct })
 			return
 		default:
 			terminal.addInstructRecord({ type: 'INSTRUCT', instruct })

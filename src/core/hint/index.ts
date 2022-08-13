@@ -8,6 +8,7 @@ import { biliCommand } from '@core/execute/bilibili'
 import { bgCommand } from '@core/execute/bg'
 import { helpCommand } from '@core/execute/help'
 import { resetCommand } from '@core/execute/reset'
+import { infoCommand } from '@core/execute/info'
 
 export const commandList = [
 	searchCommand,
@@ -20,6 +21,7 @@ export const commandList = [
 	bgCommand,
 	helpCommand,
 	resetCommand,
+	infoCommand,
 ] as {
 	start: string
 	hint: string

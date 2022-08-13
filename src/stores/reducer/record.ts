@@ -55,7 +55,7 @@ export function recordReducer(
 				hintText: '',
 			}
 
-		case 'ADD_HELP':
+		case 'ADD_NODE':
 			const records: TInputRecord = {
 				id: uuid(),
 				instruct: action.instruct!,
