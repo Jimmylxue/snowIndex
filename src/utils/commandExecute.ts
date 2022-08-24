@@ -76,6 +76,11 @@ export function doCommandExecute(instruct: string, terminal: TSnowTerminal) {
 		case 'info':
 			terminal.addInstructRecord({ type: 'INFO', instruct })
 			return
+		case 'clear':
+			terminal.addInstructRecord({ type: 'INSTRUCT', instruct })
+			terminal.clear()
+			return
+
 		default:
 			terminal.addInstructRecord({ type: 'INSTRUCT', instruct })
 			terminal.focusInput()

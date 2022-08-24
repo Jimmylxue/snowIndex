@@ -9,6 +9,7 @@ import { bgCommand } from '@core/execute/bg'
 import { helpCommand } from '@core/execute/help'
 import { resetCommand } from '@core/execute/reset'
 import { infoCommand } from '@core/execute/info'
+import { clearCommand } from '@core/execute/clear'
 
 export const commandList = [
 	searchCommand,
@@ -22,6 +23,7 @@ export const commandList = [
 	helpCommand,
 	resetCommand,
 	infoCommand,
+	clearCommand,
 ] as {
 	start: string
 	hint: string
