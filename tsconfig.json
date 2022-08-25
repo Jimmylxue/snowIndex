@@ -23,6 +23,8 @@
       "@stores/*":["./src/stores/*"],
       "@core/*":["./src/core/*"],
       "@components/*":["./src/components/*"],
+      "@config/*":["./src/config/*"],
+      "@api/*":["./src/api/*"],
     }, 
   },
   "include": ["src", "src/hooks/.ts"],

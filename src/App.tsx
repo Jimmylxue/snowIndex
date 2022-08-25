@@ -1,22 +1,20 @@
 import { useShotCut } from './hooks/useShotCut'
 import { useTerminal } from './components/useTerminal'
+import { config } from '@config/react-query'
 
 function App() {
 	const terminal = useTerminal()
 	const { terminalNode } = terminal
 	useShotCut(terminal)
 
+	const { queryClient, QueryClientProvider } = config()
+
 	return (
-		<div
-			className="bg-black h-screen overflow-auto font-sans p-5 relative"
-			onClick={() => {
-				setTimeout(() => {
-					// terminal.focusInput()
-				}, 0)
-			}}
-		>
-			{terminalNode}
-		</div>
+		<QueryClientProvider client={queryClient}>
+			<div className="bg-black h-screen overflow-auto font-sans p-5 relative">
+				{terminalNode}
+			</div>
+		</QueryClientProvider>
 	)
 }
 
