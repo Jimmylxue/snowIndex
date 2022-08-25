@@ -2,20 +2,21 @@ import { get } from '@api/index'
 // import { useChangeBackground } from '@api/background'
 import { TSnowTerminal } from 'types/TSnowTerminal'
 
-export function bgExecute(instruct: string, terminal: TSnowTerminal) {
-	// const { mutateAsync } = useChangeBackground()
+type TBgType = {
+	code: string
+	height: string
+	imgurl: string
+	width: string
+}
 
+export async function bgExecute(instruct: string, terminal: TSnowTerminal) {
 	if (instruct.trim()) {
 		// 有地址
 		terminal.changeBackGround(instruct.trim())
 		return
 	}
-
-	get('background/base')
-
-	// terminal.changeBackGround(
-	// 	'https://tva2.sinaimg.cn/large/9bd9b167gy1g2qkr9uavvj21hc0u01kx.jpg'
-	// )
+	const res = await get<TBgType>('background/base')
+	terminal.changeBackGround(res.result?.imgurl!)
 }
 
 export const bgCommand = {

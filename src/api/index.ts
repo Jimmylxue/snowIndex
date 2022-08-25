@@ -14,9 +14,9 @@ interface Result {
 
 // 请求响应参数，包含data
 interface ResultData<T = any> extends Result {
-	data?: T
+	result?: T
 }
-const URL: string = 'http://www.jimmyxuexue.top:9999'
+const URL: string = import.meta.env.VITE_APP_API_BASE_URL
 enum RequestEnums {
 	TIMEOUT = 20000,
 	OVERDUE = 600, // 登录失效
@@ -29,7 +29,7 @@ const config = {
 	// 设置超时时间
 	timeout: RequestEnums.TIMEOUT as number,
 	// 跨域时候允许携带凭证
-	withCredentials: true,
+	// withCredentials: true,
 }
 
 class RequestHttp {
@@ -46,16 +46,19 @@ class RequestHttp {
 
 		this.service.interceptors.request.use(
 			(config: AxiosRequestConfig) => {
+				console.log(1111)
 				const token = localStorage.getItem('token') || ''
 				return {
 					...config,
-					headers: {
-						'x-access-token': token, // 请求头中携带token信息
-					},
+					// headers: {
+					// 	'x-access-token': token, // 请求头中携带token信息
+					// },
 				}
 			},
 			(error: AxiosError) => {
 				// 请求报错
+				console.log(2222)
+
 				Promise.reject(error)
 			}
 		)
@@ -118,6 +121,6 @@ class RequestHttp {
 // 导出一个实例对象
 const request = new RequestHttp(config)
 
-export function get(url: string) {
-	return request.get(url)
+export function get<T>(url: string) {
+	return request.get<T>(url)
 }
