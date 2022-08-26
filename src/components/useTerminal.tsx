@@ -102,11 +102,11 @@ export function useTerminal(): TSnowTerminal {
 						) : null}
 					</div>
 				))}
-				<p>
+				<p className="flex items-center">
 					<span>[local]$ </span>
 					<input
 						ref={inputRef}
-						className=" bg-none outline-none bg-transparent  w-80"
+						className=" bg-none outline-none bg-transparent flex-grow pl-2"
 						type="text"
 						autoFocus
 						onChange={changeInput}
