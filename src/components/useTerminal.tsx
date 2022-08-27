@@ -142,8 +142,12 @@ export function useTerminal(): TSnowTerminal {
 			if (commandIndex === 0) {
 				return
 			}
-			inputRef.current!.value = commandRecord[commandIndex - 1]
-				.instruct as string
+			const element = inputRef.current!
+			element.value = commandRecord[commandIndex - 1].instruct as string
+			const length = (commandRecord[commandIndex - 1].instruct as string).length
+			setTimeout(() => {
+				element.selectionStart = element.selectionEnd = length
+			})
 			commandIndex--
 		},
 		showNextCommand: () => {
