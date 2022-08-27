@@ -13,6 +13,7 @@ export type TSnowTerminal = {
 	addInstructRecord: (params: TAddRecordItem) => void
 	reset: () => void
 	setSystemShow: (flag: 'AUTHOR_SHOW_ON' | 'AUTHOR_SHOW_OFF') => void
+	setWelcomeText: (text: string) => void
 }
 
 export type TAddRecordItem = {

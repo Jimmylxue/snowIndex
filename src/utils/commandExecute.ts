@@ -11,6 +11,7 @@ import {
 	resetExecute,
 	searchExecute,
 	authorShowExecute,
+	welcomeExecute,
 } from '@core/execute'
 import { zhihuExecute } from '@core/execute/zhihu'
 
@@ -70,8 +71,7 @@ export function doCommandExecute(instruct: string, terminal: TSnowTerminal) {
 			terminal.addInstructRecord({ type: 'INSTRUCT', instruct })
 			return
 		case 'reset':
-			resetExecute(instrTemps, terminal)
-			terminal.addInstructRecord({ type: 'INSTRUCT', instruct })
+			resetExecute(instrTemps, terminal, instruct)
 			return
 
 		case 'info':
@@ -84,7 +84,10 @@ export function doCommandExecute(instruct: string, terminal: TSnowTerminal) {
 
 		case 'authorShow':
 			authorShowExecute(instrTemps, terminal, instruct)
-			// terminal.addInstructRecord({ type: 'INSTRUCT', instruct })
+			return
+
+		case 'welcome':
+			welcomeExecute(instrTemps, terminal, instruct)
 			return
 
 		default:

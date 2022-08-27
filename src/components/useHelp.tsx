@@ -3,7 +3,7 @@ import { commandList } from '@core/hint'
 
 export function useHelp() {
 	const helpNode = (
-		<div className="mt-1">
+		<div className="mt-1 mb-2">
 			<div className=" mb-2">⭐️ 命令列表：</div>
 			{/* <p className="mb-2">
 				⭐️ 使用 [help 命令英文名] 可以查询某命令的具体用法，如：help search

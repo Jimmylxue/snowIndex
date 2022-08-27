@@ -11,7 +11,7 @@ import { matchHint } from '@utils/hintExecute'
 import { useHelp } from '@components/useHelp'
 import { useNode } from './useNode'
 import Welcome from './Welcome'
-import { useSystemState } from 'types/TSystem'
+import { useSystemState } from '@stores/index'
 
 export function useTerminal(): TSnowTerminal {
 	const { helpNode } = useHelp()
@@ -148,20 +148,26 @@ export function useTerminal(): TSnowTerminal {
 			switch (flag) {
 				case 'AUTHOR_SHOW_ON':
 					setWelcome({
+						...welcome,
 						authorShow: true,
-						welcomeText: 'Welcome to SnowIndex, This is awesome!',
 					})
 					break
 				case 'AUTHOR_SHOW_OFF':
-					console.log('sss')
 					setWelcome({
+						...welcome,
 						authorShow: false,
-						welcomeText: 'Welcome to SnowIndex, This is awesome!',
 					})
 					break
 				default:
 					break
 			}
+		},
+
+		setWelcomeText: (text: string) => {
+			setWelcome({
+				...welcome,
+				welcomeText: text,
+			})
 		},
 	}
 
