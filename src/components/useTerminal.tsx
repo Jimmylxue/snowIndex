@@ -8,9 +8,10 @@ import { getNodeByType, uuid } from '@utils/index'
 import { recordReducer } from '@stores/reducer/record'
 import { doCommandExecute } from '@utils/commandExecute'
 import { matchHint } from '@utils/hintExecute'
-import useLocalStorage from '../hooks/useLocalStorage'
 import { useHelp } from '@components/useHelp'
 import { useNode } from './useNode'
+import Welcome from './Welcome'
+import { useSystemState } from 'types/TSystem'
 
 export function useTerminal(): TSnowTerminal {
 	const { helpNode } = useHelp()
@@ -24,9 +25,11 @@ export function useTerminal(): TSnowTerminal {
 			currentRecord: [],
 			hintText: '',
 			errorText: '',
+			successText: '',
 		}
 	)
-	const [background, setBackground] = useLocalStorage('snowIndex_bg', '')
+	const { background, setBackground, reset, setWelcome, welcome } =
+		useSystemState()
 	const commandRecord = useMemo(() => {
 		return historyRecord.filter(cur => cur.type === 'INSTRUCT')
 	}, [historyRecord.length])
@@ -47,78 +50,7 @@ export function useTerminal(): TSnowTerminal {
 		recordContainer.current!.scrollTop = recordContainer.current!.scrollHeight
 	}, [currentRecord.length])
 
-	const terminalNode = (
-		<>
-			<div className=" text-white z-10 relative">
-				<p>Welcome to SnowIndex, This is awesome!</p>
-				<p>
-					Author{' '}
-					<a
-						className=" text-blue-500 ml-1"
-						href="https://github.com/Jimmylxue"
-					>
-						Jimmyxuexue
-					</a>
-					, reference from coder_yupi, github:
-					<a
-						href="https://github.com/Jimmylxue/snowIndex"
-						className=" text-blue-500 ml-1"
-					>
-						SnowIndex
-					</a>
-				</p>
-			</div>
-			{background && (
-				<img
-					src={background}
-					alt="背景图片"
-					className=" absolute left-0 top-0 z-0 w-full h-full opacity-50"
-				/>
-			)}
-
-			<div
-				className="mt-8 relative z-10 overflow-auto text-white"
-				ref={recordContainer}
-				style={{
-					height: 'calc(100vh - 130px)',
-				}}
-			>
-				{currentRecord.map(rec => (
-					<div key={rec.id}>
-						{rec.type === 'INSTRUCT' ? (
-							<p key={rec.id}>
-								<span>[local]$ </span>
-								<span>{rec.instruct}</span>
-							</p>
-						) : rec.type === 'ERROR_TEXT' ? (
-							<div className=" text-white flex items-center my-1">
-								<div className=" bg-red-600 px-2 text-white mr-2">error</div>{' '}
-								{rec.instruct}
-							</div>
-						) : rec.type === 'HELP' ? (
-							helpNode
-						) : rec.type === 'INFO' ? (
-							infoNode
-						) : null}
-					</div>
-				))}
-				<p className="flex items-center">
-					<span>[local]$ </span>
-					<input
-						ref={inputRef}
-						className=" bg-none outline-none bg-transparent flex-grow pl-2"
-						type="text"
-						autoFocus
-						onChange={changeInput}
-					/>
-				</p>
-				{hintText && <p className=" text-gray-400">hint: {hintText}</p>}
-			</div>
-		</>
-	)
-
-	const temp = {
-		terminalNode,
+	const scheduler = {
 		focusInput: () => {
 			inputRef.current?.focus()
 		},
@@ -133,10 +65,10 @@ export function useTerminal(): TSnowTerminal {
 			if (!instruct) {
 				return
 			}
-			doCommandExecute(instruct, temp)
+			doCommandExecute(instruct, scheduler)
 			inputRef.current!.value = ''
 
-			temp.focusInput()
+			scheduler.focusInput()
 		},
 		showPrevCommand: () => {
 			if (commandIndex === 0) {
@@ -162,6 +94,14 @@ export function useTerminal(): TSnowTerminal {
 		showError: (text: string, instruct: string) => {
 			dispatch({
 				type: 'SET_ERROR',
+				errorText: text,
+				record: { id: uuid(), instruct, type: 'INSTRUCT' }, // 原指令
+			})
+		},
+
+		showSuccess: (text: string, instruct: string) => {
+			dispatch({
+				type: 'SET_SUCCESS',
 				errorText: text,
 				record: { id: uuid(), instruct, type: 'INSTRUCT' }, // 原指令
 			})
@@ -200,11 +140,89 @@ export function useTerminal(): TSnowTerminal {
 					return
 			}
 		},
-
 		reset: () => {
-			setBackground('')
+			reset()
+		},
+
+		setSystemShow: (flag: 'AUTHOR_SHOW_ON' | 'AUTHOR_SHOW_OFF') => {
+			switch (flag) {
+				case 'AUTHOR_SHOW_ON':
+					setWelcome({
+						authorShow: true,
+						welcomeText: 'Welcome to SnowIndex, This is awesome!',
+					})
+					break
+				case 'AUTHOR_SHOW_OFF':
+					console.log('sss')
+					setWelcome({
+						authorShow: false,
+						welcomeText: 'Welcome to SnowIndex, This is awesome!',
+					})
+					break
+				default:
+					break
+			}
 		},
 	}
 
-	return temp
+	const terminalNode = (
+		<>
+			<Welcome scheduler={scheduler} welcome={welcome} />
+			{background && (
+				<img
+					src={background}
+					alt="背景图片"
+					className=" absolute left-0 top-0 z-0 w-full h-full opacity-50"
+				/>
+			)}
+
+			<div
+				className="mt-8 relative z-10 overflow-auto text-white"
+				ref={recordContainer}
+				style={{
+					height: 'calc(100vh - 130px)',
+				}}
+			>
+				{currentRecord.map(rec => (
+					<div key={rec.id}>
+						{rec.type === 'INSTRUCT' ? (
+							<p key={rec.id}>
+								<span>[local]$ </span>
+								<span>{rec.instruct}</span>
+							</p>
+						) : rec.type === 'ERROR_TEXT' ? (
+							<div className=" text-white flex items-center my-1">
+								<div className=" bg-red-600 px-2 text-white mr-2">error</div>{' '}
+								{rec.instruct}
+							</div>
+						) : rec.type === 'SUCCESS_TEXT' ? (
+							<div className=" text-white flex items-center my-1">
+								<div className=" bg-green-600 px-2 text-white mr-2">
+									success
+								</div>{' '}
+								{rec.instruct}
+							</div>
+						) : rec.type === 'HELP' ? (
+							helpNode
+						) : rec.type === 'INFO' ? (
+							infoNode
+						) : null}
+					</div>
+				))}
+				<p className="flex items-center">
+					<span>[local]$ </span>
+					<input
+						ref={inputRef}
+						className=" bg-none outline-none bg-transparent flex-grow pl-2"
+						type="text"
+						autoFocus
+						onChange={changeInput}
+					/>
+				</p>
+				{hintText && <p className=" text-gray-400">hint: {hintText}</p>}
+			</div>
+		</>
+	)
+
+	return { ...scheduler, terminalNode }
 }

@@ -10,6 +10,7 @@ import { helpCommand } from '@core/execute/help'
 import { resetCommand } from '@core/execute/reset'
 import { infoCommand } from '@core/execute/info'
 import { clearCommand } from '@core/execute/clear'
+import { authorShowCommand } from '@core/execute/authorShow'
 
 export const commandList = [
 	searchCommand,
@@ -24,6 +25,7 @@ export const commandList = [
 	resetCommand,
 	infoCommand,
 	clearCommand,
+	authorShowCommand,
 ] as {
 	start: string
 	hint: string

@@ -1,16 +1,18 @@
 import { ReactNode } from 'react'
 
 export type TSnowTerminal = {
-	terminalNode: ReactNode
+	terminalNode?: ReactNode
 	clear: () => void
 	focusInput: () => void
 	enter: () => void
 	showPrevCommand: () => void
 	showNextCommand: () => void
 	showError: (msg: string, instruct: string) => void
+	showSuccess: (msg: string, instruct: string) => void
 	changeBackGround: (url: string) => void
 	addInstructRecord: (params: TAddRecordItem) => void
 	reset: () => void
+	setSystemShow: (flag: 'AUTHOR_SHOW_ON' | 'AUTHOR_SHOW_OFF') => void
 }
 
 export type TAddRecordItem = {
@@ -18,7 +20,12 @@ export type TAddRecordItem = {
 	instruct?: string
 }
 
-export type TInstructType = 'INSTRUCT' | 'ERROR_TEXT' | 'HELP' | 'INFO'
+export type TInstructType =
+	| 'INSTRUCT'
+	| 'ERROR_TEXT'
+	| 'HELP'
+	| 'INFO'
+	| 'SUCCESS_TEXT'
 
 export type TInputRecord = {
 	id: number
@@ -31,6 +38,7 @@ export type TInstructRecordState = {
 	currentRecord: TInputRecord[]
 	hintText: string
 	errorText: string
+	successText: string
 }
 
 export type TRecordAction = {
@@ -40,6 +48,7 @@ export type TRecordAction = {
 		| 'CLEAR_ALL'
 		| 'SET_HINT'
 		| 'SET_ERROR'
+		| 'SET_SUCCESS'
 		| 'ADD_NODE'
 } & Partial<TInstructRecordState> & {
 		record?: TInputRecord

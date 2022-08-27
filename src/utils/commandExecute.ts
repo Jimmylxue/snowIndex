@@ -10,6 +10,7 @@ import {
 	juejinExecute,
 	resetExecute,
 	searchExecute,
+	authorShowExecute,
 } from '@core/execute'
 import { zhihuExecute } from '@core/execute/zhihu'
 
@@ -79,6 +80,11 @@ export function doCommandExecute(instruct: string, terminal: TSnowTerminal) {
 		case 'clear':
 			terminal.addInstructRecord({ type: 'INSTRUCT', instruct })
 			terminal.clear()
+			return
+
+		case 'authorShow':
+			authorShowExecute(instrTemps, terminal, instruct)
+			// terminal.addInstructRecord({ type: 'INSTRUCT', instruct })
 			return
 
 		default:

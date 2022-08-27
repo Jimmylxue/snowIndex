@@ -55,20 +55,6 @@ export function recordReducer(
 				hintText: '',
 			}
 
-		case 'SET_SUCCESS':
-			const success_record: TInputRecord = {
-				id: uuid(),
-				instruct: action.errorText!,
-				type: 'SUCCESS_TEXT',
-			}
-			return {
-				...state,
-				currentRecord: [...state.currentRecord, action.record!, success_record],
-				historyRecord: [...state.historyRecord, action.record!, success_record],
-				successText: action.successText!,
-				hintText: '',
-			}
-
 		case 'ADD_NODE':
 			const records: TInputRecord = {
 				id: uuid(),
