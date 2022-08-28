@@ -25,7 +25,6 @@ export const shortcutList: ShortcutType[] = [
 		// },
 		// @ts-ignore
 		action: (e, terminal) => {
-			// console.log('清空屏幕')
 			terminal.clear()
 		},
 	},

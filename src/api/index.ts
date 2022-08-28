@@ -46,7 +46,6 @@ class RequestHttp {
 
 		this.service.interceptors.request.use(
 			(config: AxiosRequestConfig) => {
-				console.log(1111)
 				const token = localStorage.getItem('token') || ''
 				return {
 					...config,
@@ -57,8 +56,6 @@ class RequestHttp {
 			},
 			(error: AxiosError) => {
 				// 请求报错
-				console.log(2222)
-
 				Promise.reject(error)
 			}
 		)

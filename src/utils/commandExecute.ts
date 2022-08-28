@@ -12,6 +12,7 @@ import {
 	searchExecute,
 	authorShowExecute,
 	welcomeExecute,
+	weatherExecute,
 } from '@core/execute'
 import { zhihuExecute } from '@core/execute/zhihu'
 
@@ -32,8 +33,6 @@ export function doCommandExecute(instruct: string, terminal: TSnowTerminal) {
 			searchExecute(instrTemps, terminal, commandItem)
 			return
 		case 'help':
-			// console.log('帮助文档')
-			// terminal.addRecord()
 			terminal.addInstructRecord({ type: 'HELP', instruct })
 			return
 		case 'baidu':
@@ -88,6 +87,10 @@ export function doCommandExecute(instruct: string, terminal: TSnowTerminal) {
 
 		case 'welcome':
 			welcomeExecute(instrTemps, terminal, instruct)
+			return
+
+		case 'weather':
+			weatherExecute(instrTemps, terminal, instruct)
 			return
 
 		default:

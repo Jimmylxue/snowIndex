@@ -20,6 +20,7 @@ export type TSnowTerminal = {
 export type TAddRecordItem = {
 	type: TInstructType
 	instruct?: string
+	result?: any
 }
 
 export type TInstructType =
@@ -28,11 +29,14 @@ export type TInstructType =
 	| 'HELP'
 	| 'INFO'
 	| 'SUCCESS_TEXT'
+	| 'WEATHER'
 
 export type TInputRecord = {
 	id: number
-	instruct: string | ReactNode
+	instruct: string
 	type: TInstructType
+	result?: any // 接口的返回值 如天气接口返回值
+	// result
 }
 
 export type TInstructRecordState = {
@@ -57,4 +61,5 @@ export type TRecordAction = {
 		hintText?: string
 		errorText?: string
 		instruct?: string
+		result?: any
 	}

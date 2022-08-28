@@ -1,6 +1,8 @@
 import { useHelp } from '@components/useHelp'
 import { useNode } from '@components/useNode'
 import { TInstructType } from 'types/TSnowTerminal'
+// const dayjs = require('dayjs')
+import dayjs from 'dayjs'
 
 let UID = {
 	_nextID: 0,
@@ -30,6 +32,31 @@ export function getNodeByType(type: TInstructType) {
 			return helpNode
 		case 'INFO':
 			return infoNode
+		// case 'WEATHER':
+		// 	return <Weather />
 	}
 	// return
 }
+
+export function getToday() {
+	return dayjs().format('YYYY-MM-DD')
+}
+
+type TWeak = '1' | '2' | '3' | '4' | '5' | '6' | '7'
+
+export function getWeekByDate(date: string): string {
+	const week: TWeak = String(dayjs(date).get('day')) as unknown as TWeak
+
+	const map = {
+		'1': '周一',
+		'2': '周二',
+		'3': '周三',
+		'4': '周四',
+		'5': '周五',
+		'6': '周六',
+		'7': '周日',
+	}
+	return map[week]
+}
+
+// getWeekByDate('2022-08-28')

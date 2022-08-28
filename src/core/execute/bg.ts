@@ -1,13 +1,6 @@
 import { get } from '@api/index'
-// import { useChangeBackground } from '@api/background'
+import { TBgType } from 'types/TBackground'
 import { TSnowTerminal } from 'types/TSnowTerminal'
-
-type TBgType = {
-	code: string
-	height: string
-	imgurl: string
-	width: string
-}
 
 export async function bgExecute(instruct: string, terminal: TSnowTerminal) {
 	if (instruct.trim()) {

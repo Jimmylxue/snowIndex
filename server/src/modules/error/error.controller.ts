@@ -29,9 +29,6 @@ export class ErrorController {
 
 	@Post('all-user')
 	async getPostUser(@Body() body, @Req() req, @Query() query) {
-		console.log(req.query.id)
-		console.log(body)
-		console.log(query)
 		let obj: any = {}
 		obj.code = 200
 		obj.result = await this.weatherService.findAll()

@@ -4,7 +4,7 @@ import {
 	TInputRecord,
 	TSnowTerminal,
 } from 'types/TSnowTerminal'
-import { getNodeByType, uuid } from '@utils/index'
+import { uuid } from '@utils/index'
 import { recordReducer } from '@stores/reducer/record'
 import { doCommandExecute } from '@utils/commandExecute'
 import { matchHint } from '@utils/hintExecute'
@@ -12,6 +12,7 @@ import { useHelp } from '@components/useHelp'
 import { useNode } from './useNode'
 import Welcome from './Welcome'
 import { useSystemState } from '@stores/index'
+import Weather from './Weather'
 
 export function useTerminal(): TSnowTerminal {
 	const { helpNode } = useHelp()
@@ -124,12 +125,12 @@ export function useTerminal(): TSnowTerminal {
 			setBackground(url)
 		},
 
-		addInstructRecord: ({ type, instruct }: TAddRecordItem) => {
+		addInstructRecord: ({ type, instruct, result }: TAddRecordItem) => {
 			switch (type) {
 				case 'INSTRUCT':
 					const record: TInputRecord = {
 						id: uuid(),
-						instruct: instruct,
+						instruct: instruct!,
 						type: 'INSTRUCT',
 					}
 					dispatch({
@@ -142,7 +143,7 @@ export function useTerminal(): TSnowTerminal {
 					const records: TInputRecord = {
 						id: uuid(),
 						// instruct: helpNode,
-						instruct: getNodeByType(type),
+						instruct: 'aaa',
 						type: type,
 					}
 					dispatch({
@@ -151,6 +152,19 @@ export function useTerminal(): TSnowTerminal {
 						instruct,
 					})
 					return
+				case 'WEATHER':
+					const weatherRecord: TInputRecord = {
+						id: uuid(),
+						instruct: instruct!,
+						type: type,
+						result: result!,
+					}
+					dispatch({
+						type: 'ADD_NODE',
+						record: weatherRecord,
+						instruct,
+						// result: result!,
+					})
 			}
 		},
 		reset: () => {
@@ -219,12 +233,14 @@ export function useTerminal(): TSnowTerminal {
 								<div className=" bg-green-600 px-2 text-white mr-2">
 									success
 								</div>{' '}
-								{rec.instruct}
+								{/* {rec.instruct} */}
 							</div>
 						) : rec.type === 'HELP' ? (
 							helpNode
 						) : rec.type === 'INFO' ? (
 							infoNode
+						) : rec.type === 'WEATHER' ? (
+							<Weather weather={rec.result} />
 						) : null}
 					</div>
 				))}
