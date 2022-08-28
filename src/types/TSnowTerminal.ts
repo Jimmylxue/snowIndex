@@ -4,6 +4,7 @@ export type TSnowTerminal = {
 	terminalNode?: ReactNode
 	clear: () => void
 	focusInput: () => void
+	clearInput: () => void
 	enter: () => void
 	showPrevCommand: () => void
 	showNextCommand: () => void

@@ -34,10 +34,6 @@ export const shortcutList: ShortcutType[] = [
 		code: 'KeyO',
 		keyDesc: 'Ctrl + O',
 		ctrlKey: true,
-		// action(e, terminal) {
-		// 	e.preventDefault()
-		// 	terminal.toggleAllCollapse()
-		// },
 		action: () => {
 			console.log('折叠啊')
 		},
@@ -83,6 +79,19 @@ export const shortcutList: ShortcutType[] = [
 		keyDesc: '↓',
 		action: (_, terminal) => {
 			terminal.showNextCommand()
+		},
+	},
+	{
+		desc: '查看下一条命令',
+		code: 'KeyC',
+		keyDesc: 'Ctrl + C',
+		ctrlKey: true,
+		action: (_, terminal) => {
+			terminal.clearInput()
+			terminal.addInstructRecord({
+				type: 'INSTRUCT',
+				instruct: '',
+			})
 		},
 	},
 ]

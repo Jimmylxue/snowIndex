@@ -60,6 +60,9 @@ export function useTerminal(): TSnowTerminal {
 				type: 'CLEAR_CURRENT',
 			})
 		},
+		clearInput: () => {
+			inputRef.current!.value = ''
+		},
 		enter: () => {
 			const instruct = inputRef.current?.value
 			if (!instruct) {
@@ -75,20 +78,30 @@ export function useTerminal(): TSnowTerminal {
 				return
 			}
 			const element = inputRef.current!
-			element.value = commandRecord[commandIndex - 1].instruct as string
-			const length = (commandRecord[commandIndex - 1].instruct as string).length
-			setTimeout(() => {
-				element.selectionStart = element.selectionEnd = length
-			})
+			const textValue = commandRecord[commandIndex - 1].instruct as string
 			commandIndex--
+			if (!textValue) {
+				scheduler.showPrevCommand()
+			} else {
+				element.value = textValue
+				const length = textValue.length
+				setTimeout(() => {
+					element.selectionStart = element.selectionEnd = length
+				})
+			}
 		},
 		showNextCommand: () => {
 			if (commandIndex === commandRecord.length - 1) {
 				return
 			}
-			inputRef.current!.value = commandRecord[commandIndex + 1]
-				.instruct as string
+			const element = inputRef.current!
+			const textValue = commandRecord[commandIndex + 1].instruct as string
 			commandIndex++
+			if (!textValue) {
+				scheduler.showNextCommand()
+			} else {
+				element.value = textValue
+			}
 		},
 
 		showError: (text: string, instruct: string) => {
