@@ -44,7 +44,7 @@ export function biliExecute(instruct: string) {
 export const biliCommand = {
 	start: 'bili',
 	hint: 'bilibili <搜索内容> [-u 是否搜索作者] [-s 是否当前页面打开]',
-	desc: '知乎搜索引擎',
+	desc: 'bilibili搜索引擎',
 	options: [
 		{
 			key: 'self',
