@@ -11,10 +11,10 @@ import { matchHint } from '@utils/hintExecute'
 import { useHelp } from '@components/useHelp'
 import { useNode } from './useNode'
 import Welcome from './Welcome'
-import { useSystemState } from '@stores/index'
 import Weather from './Weather'
 import { usePosition } from '@hooks/useLocation'
-import { useDispatch } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
+import store from '@stores/store'
 
 export function useTerminal(): TSnowTerminal {
 	const { helpNode } = useHelp()
@@ -32,9 +32,10 @@ export function useTerminal(): TSnowTerminal {
 			successText: '',
 		}
 	)
-	const { background, setBackground, reset, setWelcome, welcome } =
-		useSystemState()
-
+	const state = store.getState()
+	const { background } = useSelector<typeof state, typeof state.background>(
+		state => state.background
+	)
 	const storeDispatch = useDispatch()
 	const commandRecord = useMemo(() => {
 		return historyRecord.filter(cur => cur.type === 'INSTRUCT')
@@ -127,7 +128,12 @@ export function useTerminal(): TSnowTerminal {
 		},
 
 		changeBackGround: (url: string) => {
-			setBackground(url)
+			storeDispatch({
+				type: 'set_background',
+				data: {
+					background: url,
+				},
+			})
 		},
 
 		addInstructRecord: ({ type, instruct, result }: TAddRecordItem) => {
@@ -147,7 +153,6 @@ export function useTerminal(): TSnowTerminal {
 				case 'HELP':
 					const records: TInputRecord = {
 						id: uuid(),
-						// instruct: helpNode,
 						instruct: 'aaa',
 						type: type,
 					}
@@ -173,7 +178,9 @@ export function useTerminal(): TSnowTerminal {
 			}
 		},
 		reset: () => {
-			reset()
+			storeDispatch({
+				type: 'clear',
+			})
 		},
 
 		setSystemShow: (flag: 'AUTHOR_SHOW_ON' | 'AUTHOR_SHOW_OFF') => {
@@ -200,10 +207,6 @@ export function useTerminal(): TSnowTerminal {
 		},
 
 		setWelcomeText: (welcomeText: string) => {
-			// setWelcome({
-			// 	...welcome,
-			// 	welcomeText: text,
-			// })
 			storeDispatch({
 				type: 'set_welcome',
 				data: {
@@ -215,7 +218,7 @@ export function useTerminal(): TSnowTerminal {
 
 	const terminalNode = (
 		<>
-			<Welcome scheduler={scheduler} welcome={welcome} />
+			<Welcome />
 			{background && (
 				<img
 					src={background}

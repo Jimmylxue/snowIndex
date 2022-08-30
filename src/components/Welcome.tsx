@@ -1,33 +1,18 @@
 import { TWelcomeType } from '@stores/reducer/welcome'
-import { memo, useState } from 'react'
-import { useDispatch, useSelector } from 'react-redux'
-import { TSnowTerminal } from 'types/TSnowTerminal'
+import { memo } from 'react'
+import { useSelector } from 'react-redux'
 
-type TProps = {
-	scheduler: TSnowTerminal
-	welcome: {
-		authorShow: boolean
-		welcomeText: string
-	}
-}
-
-export default memo(({ scheduler, welcome }: TProps) => {
+export default memo(() => {
 	const { welcomeText, authorShow } = useSelector<
 		{
 			welcome: TWelcomeType
 		},
 		TWelcomeType
 	>(state => state.welcome)
-	const dispatch = useDispatch()
+
 	return (
 		<div className=" text-white z-10 relative">
-			<p
-				onClick={() => {
-					dispatch({ type: 'set_welcome', data: 'hello world' })
-				}}
-			>
-				{welcomeText}
-			</p>
+			<p>{welcomeText}</p>
 			{authorShow && (
 				<p>
 					Author{' '}
