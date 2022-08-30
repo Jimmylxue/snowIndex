@@ -3,6 +3,8 @@ import ReactDOM from 'react-dom/client'
 import App from './App'
 import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom'
 import './index.css'
+import { Provider } from 'react-redux'
+import store from '@stores/store'
 
 function Home() {
 	return <div>hello world</div>
@@ -10,12 +12,13 @@ function Home() {
 
 ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
 	<React.StrictMode>
-		{/* <App /> */}
-		<Router>
-			<Routes>
-				<Route path="/" element={<App />} />
-				<Route path="/home" element={<Home />} />
-			</Routes>
-		</Router>
+		<Provider store={store}>
+			<Router>
+				<Routes>
+					<Route path="/" element={<App />} />
+					<Route path="/home" element={<Home />} />
+				</Routes>
+			</Router>
+		</Provider>
 	</React.StrictMode>
 )

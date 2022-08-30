@@ -5,6 +5,7 @@ export function useSystemState() {
 	const [background, setBackground] = useLocalStorageState('snowIndex_bg', {
 		defaultValue: '',
 	})
+
 	const [welcome, setWelcome] = useLocalStorageState('snowIndex_welcome', {
 		defaultValue: {
 			authorShow: true,

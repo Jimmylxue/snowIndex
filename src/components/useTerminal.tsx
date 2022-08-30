@@ -13,10 +13,13 @@ import { useNode } from './useNode'
 import Welcome from './Welcome'
 import { useSystemState } from '@stores/index'
 import Weather from './Weather'
+import { usePosition } from '@hooks/useLocation'
+import { useDispatch } from 'react-redux'
 
 export function useTerminal(): TSnowTerminal {
 	const { helpNode } = useHelp()
 	const { infoNode } = useNode()
+	usePosition()
 	const inputRef = useRef<HTMLInputElement>(null)
 	const recordContainer = useRef<HTMLInputElement>(null)
 	const [{ historyRecord, currentRecord, hintText }, dispatch] = useReducer(
@@ -31,6 +34,8 @@ export function useTerminal(): TSnowTerminal {
 	)
 	const { background, setBackground, reset, setWelcome, welcome } =
 		useSystemState()
+
+	const storeDispatch = useDispatch()
 	const commandRecord = useMemo(() => {
 		return historyRecord.filter(cur => cur.type === 'INSTRUCT')
 	}, [historyRecord.length])
@@ -174,15 +179,19 @@ export function useTerminal(): TSnowTerminal {
 		setSystemShow: (flag: 'AUTHOR_SHOW_ON' | 'AUTHOR_SHOW_OFF') => {
 			switch (flag) {
 				case 'AUTHOR_SHOW_ON':
-					setWelcome({
-						...welcome,
-						authorShow: true,
+					storeDispatch({
+						type: 'set_auth_show',
+						data: {
+							authorShow: true,
+						},
 					})
 					break
 				case 'AUTHOR_SHOW_OFF':
-					setWelcome({
-						...welcome,
-						authorShow: false,
+					storeDispatch({
+						type: 'set_auth_show',
+						data: {
+							authorShow: false,
+						},
 					})
 					break
 				default:
@@ -190,10 +199,16 @@ export function useTerminal(): TSnowTerminal {
 			}
 		},
 
-		setWelcomeText: (text: string) => {
-			setWelcome({
-				...welcome,
-				welcomeText: text,
+		setWelcomeText: (welcomeText: string) => {
+			// setWelcome({
+			// 	...welcome,
+			// 	welcomeText: text,
+			// })
+			storeDispatch({
+				type: 'set_welcome',
+				data: {
+					welcomeText,
+				},
 			})
 		},
 	}
@@ -233,7 +248,6 @@ export function useTerminal(): TSnowTerminal {
 								<div className=" bg-green-600 px-2 text-white mr-2">
 									success
 								</div>{' '}
-								{/* {rec.instruct} */}
 							</div>
 						) : rec.type === 'HELP' ? (
 							helpNode
