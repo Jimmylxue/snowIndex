@@ -144,4 +144,12 @@ export const searchPlatformList = [
 		key: 'biliUser',
 		target: 'https://search.bilibili.com/upuser?keyword=',
 	},
+	{
+		key: 'wangyiyun',
+		target: 'https://music.163.com/#/search/m/?type=1&s=',
+	},
+	{
+		key: 'wangyiyunUser',
+		target: 'https://music.163.com/#/search/m/?type=100&s=',
+	},
 ]

@@ -13,6 +13,7 @@ import { clearCommand } from '@core/execute/clear'
 import { authorShowCommand } from '@core/execute/authorShow'
 import { welcomeCommand } from '@core/execute/welcome'
 import { weatherCommand } from '@core/execute/weather'
+import { wangYiYunCommand } from '@core/execute/wangyiyun'
 
 export const commandList = [
 	searchCommand,
@@ -30,6 +31,7 @@ export const commandList = [
 	authorShowCommand,
 	welcomeCommand,
 	weatherCommand,
+	wangYiYunCommand,
 ] as {
 	start: string
 	hint: string

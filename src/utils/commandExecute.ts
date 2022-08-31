@@ -13,6 +13,7 @@ import {
 	authorShowExecute,
 	welcomeExecute,
 	weatherExecute,
+	wangYiYunExecute,
 } from '@core/execute'
 import { zhihuExecute } from '@core/execute/zhihu'
 
@@ -64,6 +65,9 @@ export function doCommandExecute(instruct: string, terminal: TSnowTerminal) {
 			biliExecute(instrTemps)
 			terminal.addInstructRecord({ type: 'INSTRUCT', instruct })
 
+		case 'wangyiyun':
+			wangYiYunExecute(instrTemps)
+			terminal.addInstructRecord({ type: 'INSTRUCT', instruct })
 			return
 		case 'bg':
 			bgExecute(instrTemps, terminal)
