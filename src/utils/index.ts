@@ -42,7 +42,7 @@ export function getToday() {
 	return dayjs().format('YYYY-MM-DD')
 }
 
-type TWeak = '1' | '2' | '3' | '4' | '5' | '6' | '7'
+type TWeak = '1' | '2' | '3' | '4' | '5' | '6' | '0'
 
 export function getWeekByDate(date: string): string {
 	const week: TWeak = String(dayjs(date).get('day')) as unknown as TWeak
@@ -54,7 +54,7 @@ export function getWeekByDate(date: string): string {
 		'4': '周四',
 		'5': '周五',
 		'6': '周六',
-		'7': '周日',
+		'0': '周日',
 	}
 	return map[week]
 }
