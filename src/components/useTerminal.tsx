@@ -12,9 +12,11 @@ import { useHelp } from '@components/useHelp'
 import { useNode } from './useNode'
 import Welcome from './Welcome'
 import Weather from './Weather'
+import History from './History'
 import { usePosition } from '@hooks/useLocation'
 import { useDispatch, useSelector } from 'react-redux'
 import store from '@stores/store'
+import { cloneDeep } from 'lodash'
 
 export function useTerminal(): TSnowTerminal {
 	const { helpNode } = useHelp()
@@ -175,6 +177,19 @@ export function useTerminal(): TSnowTerminal {
 						instruct,
 						// result: result!,
 					})
+				case 'HISTORY':
+					const historyRecord: TInputRecord = {
+						id: uuid(),
+						instruct: instruct!,
+						type: type,
+						result: result!,
+					}
+					dispatch({
+						type: 'ADD_NODE',
+						record: historyRecord,
+						instruct,
+					})
+					return
 			}
 		},
 		reset: () => {
@@ -234,7 +249,7 @@ export function useTerminal(): TSnowTerminal {
 					height: 'calc(100vh - 130px)',
 				}}
 			>
-				{currentRecord.map(rec => (
+				{currentRecord.map((rec, index) => (
 					<div key={rec.id}>
 						{rec.type === 'INSTRUCT' ? (
 							<p key={rec.id}>
@@ -258,6 +273,8 @@ export function useTerminal(): TSnowTerminal {
 							infoNode
 						) : rec.type === 'WEATHER' ? (
 							<Weather weather={rec.result} />
+						) : rec.type === 'HISTORY' ? (
+							<History history={historyRecord} index={index} />
 						) : null}
 					</div>
 				))}

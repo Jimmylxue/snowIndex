@@ -14,6 +14,7 @@ import {
 	welcomeExecute,
 	weatherExecute,
 	wangYiYunExecute,
+	historyExecute,
 } from '@core/execute'
 import { zhihuExecute } from '@core/execute/zhihu'
 
@@ -95,6 +96,10 @@ export function doCommandExecute(instruct: string, terminal: TSnowTerminal) {
 
 		case 'weather':
 			weatherExecute(instrTemps, terminal, instruct)
+			return
+
+		case 'history':
+			terminal.addInstructRecord({ type: 'HISTORY', instruct })
 			return
 
 		default:

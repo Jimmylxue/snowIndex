@@ -30,6 +30,7 @@ export type TInstructType =
 	| 'INFO'
 	| 'SUCCESS_TEXT'
 	| 'WEATHER'
+	| 'HISTORY'
 
 export type TInputRecord = {
 	id: number
