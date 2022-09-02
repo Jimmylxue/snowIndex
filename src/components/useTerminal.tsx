@@ -194,7 +194,7 @@ export function useTerminal(): TSnowTerminal {
 		},
 		reset: () => {
 			storeDispatch({
-				type: 'clear',
+				type: 'RESET',
 			})
 		},
 
