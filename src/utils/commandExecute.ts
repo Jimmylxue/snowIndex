@@ -15,6 +15,7 @@ import {
 	weatherExecute,
 	wangYiYunExecute,
 	historyExecute,
+	bingBgExecute,
 } from '@core/execute'
 import { zhihuExecute } from '@core/execute/zhihu'
 
@@ -72,6 +73,10 @@ export function doCommandExecute(instruct: string, terminal: TSnowTerminal) {
 			return
 		case 'bg':
 			bgExecute(instrTemps, terminal)
+			terminal.addInstructRecord({ type: 'INSTRUCT', instruct })
+			return
+		case 'bingBg':
+			bingBgExecute(instrTemps, terminal)
 			terminal.addInstructRecord({ type: 'INSTRUCT', instruct })
 			return
 		case 'reset':

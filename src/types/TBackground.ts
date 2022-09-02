@@ -4,3 +4,8 @@ export type TBgType = {
 	imgurl: string
 	width: string
 }
+
+export type TBingTodayBg = {
+	code: number
+	result: string
+}

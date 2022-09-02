@@ -15,6 +15,7 @@ import { welcomeCommand } from '@core/execute/welcome'
 import { weatherCommand } from '@core/execute/weather'
 import { wangYiYunCommand } from '@core/execute/wangyiyun'
 import { historyCommand } from '@core/execute/history'
+import { bingBgCommand } from '@core/execute/bingBg'
 
 export const commandList = [
 	searchCommand,
@@ -34,6 +35,7 @@ export const commandList = [
 	weatherCommand,
 	wangYiYunCommand,
 	historyCommand,
+	bingBgCommand,
 ] as {
 	start: string
 	hint: string
