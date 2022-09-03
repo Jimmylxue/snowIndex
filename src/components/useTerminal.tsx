@@ -47,6 +47,10 @@ export function useTerminal(): TSnowTerminal {
 	let commandIndex = useMemo(() => commandRecord.length, [commandRecord.length])
 	const changeInput = (e: React.ChangeEvent<HTMLInputElement>) => {
 		const instruct = e.target.value
+		setHint(instruct)
+	}
+
+	const setHint = (instruct: string) => {
 		const instr = instruct.trim().split(' ')
 		if (instr.length === 0) {
 			return
@@ -268,8 +272,11 @@ export function useTerminal(): TSnowTerminal {
 			}
 			const matchInstruct = matchStartInstruct(instruct)
 			if (matchInstruct?.start) {
-				scheduler.setValue(matchInstruct?.start)
+				scheduler.setValue(`${matchInstruct?.start} `)
 				scheduler.focusInput()
+
+				// 设置hint
+				setHint(matchInstruct.start!)
 			}
 		},
 	}
