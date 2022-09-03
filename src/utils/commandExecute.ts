@@ -106,6 +106,9 @@ export function doCommandExecute(instruct: string, terminal: TSnowTerminal) {
 		case 'history':
 			terminal.addInstructRecord({ type: 'HISTORY', instruct })
 			return
+		case 'date':
+			terminal.addInstructRecord({ type: 'DATE', instruct })
+			return
 
 		default:
 			terminal.addInstructRecord({ type: 'INSTRUCT', instruct })

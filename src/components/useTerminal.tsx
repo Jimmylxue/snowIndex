@@ -13,6 +13,7 @@ import { useNode } from './useNode'
 import Welcome from './Welcome'
 import Weather from './Weather'
 import History from './History'
+import Date from './Date'
 import { usePosition } from '@hooks/useLocation'
 import { useDispatch, useSelector } from 'react-redux'
 import store from '@stores/store'
@@ -190,6 +191,19 @@ export function useTerminal(): TSnowTerminal {
 						instruct,
 					})
 					return
+				case 'DATE':
+					const dateRecord: TInputRecord = {
+						id: uuid(),
+						instruct: instruct!,
+						type: type,
+						result: result!,
+					}
+					dispatch({
+						type: 'ADD_NODE',
+						record: dateRecord,
+						instruct,
+					})
+					return
 			}
 		},
 		reset: () => {
@@ -275,6 +289,8 @@ export function useTerminal(): TSnowTerminal {
 							<Weather weather={rec.result} />
 						) : rec.type === 'HISTORY' ? (
 							<History history={historyRecord} index={index} />
+						) : rec.type === 'DATE' ? (
+							<Date />
 						) : null}
 					</div>
 				))}

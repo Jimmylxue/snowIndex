@@ -59,4 +59,11 @@ export function getWeekByDate(date: string): string {
 	return map[week]
 }
 
+export function getFullToday() {
+	const ymd = dayjs().format('YYYY-MM-DD')
+	const week = getWeekByDate(ymd)
+	const hms = dayjs().format('HH:mm:ss')
+	return `${ymd} ${week} ${hms}`
+}
+
 // getWeekByDate('2022-08-28')
