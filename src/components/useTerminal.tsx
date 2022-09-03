@@ -78,6 +78,7 @@ export function useTerminal(): TSnowTerminal {
 		},
 
 		focusInput: () => {
+			console.log('foucs')
 			inputRef.current?.focus()
 		},
 		clear: () => {
@@ -262,9 +263,13 @@ export function useTerminal(): TSnowTerminal {
 
 		matchInstruct: () => {
 			const instruct = scheduler.value
+			if (!instruct.trim()) {
+				return
+			}
 			const matchInstruct = matchStartInstruct(instruct)
 			if (matchInstruct?.start) {
 				scheduler.setValue(matchInstruct?.start)
+				scheduler.focusInput()
 			}
 		},
 	}

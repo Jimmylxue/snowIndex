@@ -11,5 +11,5 @@ export function matchHint(instruct: string) {
 }
 
 export function matchStartInstruct(instruct: string) {
-	return commandList.find(command => command.start.includes(instruct))
+	return commandList.find(command => command.start.startsWith(instruct))
 }

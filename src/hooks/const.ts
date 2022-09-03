@@ -49,6 +49,7 @@ export const shortcutList: ShortcutType[] = [
 	{
 		code: 'Tab',
 		action: (e, terminal) => {
+			e.preventDefault()
 			terminal.matchInstruct()
 		},
 	},

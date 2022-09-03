@@ -3,6 +3,7 @@ import { shortcutList } from './const'
 
 export function useShotCut(terminal: TSnowTerminal) {
 	document.onkeydown = (e: KeyboardEvent) => {
+		// e.preventDefault()
 		const key = e.key
 		/**
 		 * todo:
