@@ -9,3 +9,7 @@ export function matchHint(instruct: string) {
 	// 		return 'help 命令英文名称'
 	// }
 }
+
+export function matchStartInstruct(instruct: string) {
+	return commandList.find(command => command.start.includes(instruct))
+}

@@ -7,7 +7,7 @@ import {
 import { uuid } from '@utils/index'
 import { recordReducer } from '@stores/reducer/record'
 import { doCommandExecute } from '@utils/commandExecute'
-import { matchHint } from '@utils/hintExecute'
+import { matchHint, matchStartInstruct } from '@utils/hintExecute'
 import { useHelp } from '@components/useHelp'
 import { useNode } from './useNode'
 import Welcome from './Welcome'
@@ -17,12 +17,13 @@ import Date from './Date'
 import { usePosition } from '@hooks/useLocation'
 import { useDispatch, useSelector } from 'react-redux'
 import store from '@stores/store'
-import { cloneDeep } from 'lodash'
+import { useUpdate } from 'ahooks'
 
 export function useTerminal(): TSnowTerminal {
 	const { helpNode } = useHelp()
 	const { infoNode } = useNode()
 	usePosition()
+	const update = useUpdate()
 	const inputRef = useRef<HTMLInputElement>(null)
 	const recordContainer = useRef<HTMLInputElement>(null)
 	const [{ historyRecord, currentRecord, hintText }, dispatch] = useReducer(
@@ -61,6 +62,21 @@ export function useTerminal(): TSnowTerminal {
 	}, [currentRecord.length])
 
 	const scheduler = {
+		get value() {
+			return inputRef.current?.value! || ''
+		},
+		// set value(val: string) {
+		// 	console.log('sssssaa')
+		// 	inputRef.current!.value = val
+		// 	update()
+		// 	console.log('gengxinl')
+		// },
+
+		setValue(val: string) {
+			inputRef.current!.value = val
+			update()
+		},
+
 		focusInput: () => {
 			inputRef.current?.focus()
 		},
@@ -242,6 +258,14 @@ export function useTerminal(): TSnowTerminal {
 					welcomeText,
 				},
 			})
+		},
+
+		matchInstruct: () => {
+			const instruct = scheduler.value
+			const matchInstruct = matchStartInstruct(instruct)
+			if (matchInstruct?.start) {
+				scheduler.setValue(matchInstruct?.start)
+			}
 		},
 	}
 

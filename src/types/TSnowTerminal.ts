@@ -15,6 +15,9 @@ export type TSnowTerminal = {
 	reset: () => void
 	setSystemShow: (flag: 'AUTHOR_SHOW_ON' | 'AUTHOR_SHOW_OFF') => void
 	setWelcomeText: (text: string) => void
+	value: string
+	setValue: (instruct: string) => void
+	matchInstruct: () => void
 }
 
 export type TAddRecordItem = {

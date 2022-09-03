@@ -48,8 +48,8 @@ export const shortcutList: ShortcutType[] = [
 	},
 	{
 		code: 'Tab',
-		action: () => {
-			console.log('tab~~')
+		action: (e, terminal) => {
+			terminal.matchInstruct()
 		},
 	},
 	{
