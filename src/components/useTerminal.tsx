@@ -199,6 +199,7 @@ export function useTerminal(): TSnowTerminal {
 						instruct,
 						// result: result!,
 					})
+					return
 				case 'HISTORY':
 					const historyRecord: TInputRecord = {
 						id: uuid(),
