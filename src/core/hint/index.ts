@@ -17,6 +17,7 @@ import { wangYiYunCommand } from '@core/execute/wangyiyun'
 import { historyCommand } from '@core/execute/history'
 import { bingBgCommand } from '@core/execute/bingBg'
 import { dateCommand } from '@core/execute/date'
+import { gotoCommand } from '@core/execute/goto'
 
 export const commandList = [
 	searchCommand,
@@ -38,6 +39,7 @@ export const commandList = [
 	historyCommand,
 	bingBgCommand,
 	dateCommand,
+	gotoCommand,
 ] as {
 	start: string
 	hint: string

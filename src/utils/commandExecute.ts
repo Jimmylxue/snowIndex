@@ -16,6 +16,7 @@ import {
 	wangYiYunExecute,
 	historyExecute,
 	bingBgExecute,
+	gotoExecute,
 } from '@core/execute'
 import { zhihuExecute } from '@core/execute/zhihu'
 
@@ -71,6 +72,12 @@ export function doCommandExecute(instruct: string, terminal: TSnowTerminal) {
 			wangYiYunExecute(instrTemps)
 			terminal.addInstructRecord({ type: 'INSTRUCT', instruct })
 			return
+
+		case 'goto':
+			gotoExecute(instrTemps)
+			terminal.addInstructRecord({ type: 'INSTRUCT', instruct })
+			return
+
 		case 'bg':
 			bgExecute(instrTemps, terminal)
 			terminal.addInstructRecord({ type: 'INSTRUCT', instruct })
