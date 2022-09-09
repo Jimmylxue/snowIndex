@@ -58,7 +58,7 @@ export function recordReducer(
 		case 'SET_SUCCESS':
 			const success_record: TInputRecord = {
 				id: uuid(),
-				instruct: action.errorText!,
+				instruct: action.successText!,
 				type: 'SUCCESS_TEXT',
 			}
 			return {

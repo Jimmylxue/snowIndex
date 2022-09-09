@@ -17,6 +17,7 @@ import {
 	historyExecute,
 	bingBgExecute,
 	gotoExecute,
+	hintShowExecute,
 } from '@core/execute'
 import { zhihuExecute } from '@core/execute/zhihu'
 
@@ -87,7 +88,7 @@ export function doCommandExecute(instruct: string, terminal: TSnowTerminal) {
 			terminal.addInstructRecord({ type: 'INSTRUCT', instruct })
 			return
 		case 'reset':
-			resetExecute(instrTemps, terminal, instruct)
+			resetExecute(terminal, instruct)
 			return
 
 		case 'info':
@@ -100,6 +101,10 @@ export function doCommandExecute(instruct: string, terminal: TSnowTerminal) {
 
 		case 'authorShow':
 			authorShowExecute(instrTemps, terminal, instruct)
+			return
+
+		case 'hintShow':
+			hintShowExecute(instrTemps, terminal, instruct)
 			return
 
 		case 'welcome':

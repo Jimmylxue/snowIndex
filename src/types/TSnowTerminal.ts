@@ -13,7 +13,13 @@ export type TSnowTerminal = {
 	changeBackGround: (url: string) => void
 	addInstructRecord: (params: TAddRecordItem) => void
 	reset: () => void
-	setSystemShow: (flag: 'AUTHOR_SHOW_ON' | 'AUTHOR_SHOW_OFF') => void
+	setSystemShow: (
+		flag:
+			| 'AUTHOR_SHOW_ON'
+			| 'AUTHOR_SHOW_OFF'
+			| 'HINT_SHOW_ON'
+			| 'HINT_SHOW_OFF'
+	) => void
 	setWelcomeText: (text: string) => void
 	value: string
 	setValue: (instruct: string) => void

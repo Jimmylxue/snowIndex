@@ -1,5 +1,4 @@
 import { get } from '@api/index'
-// import { useChangeBackground } from '@api/background'
 import { TSnowTerminal } from 'types/TSnowTerminal'
 import { TWeatherInfo } from 'types/TWeather'
 

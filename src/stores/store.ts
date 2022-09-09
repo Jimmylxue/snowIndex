@@ -4,12 +4,14 @@ import backgroundReducer from './reducer/background'
 import welcomeReducer from './reducer/welcome'
 import { throttle } from 'lodash'
 import { loadState, saveState } from '@utils/localStroage'
+import baseConfigReducer from './reducer/baseConfig'
 
 const persistedState = loadState()
 
 const baseReducer = combineReducers({
 	background: backgroundReducer,
 	welcome: welcomeReducer,
+	baseConfig: baseConfigReducer,
 })
 
 const rootReducer = (state: any, action: any) => {

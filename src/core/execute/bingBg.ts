@@ -1,5 +1,4 @@
 import { get } from '@api/index'
-import { TBgType, TBingTodayBg } from 'types/TBackground'
 import { TSnowTerminal } from 'types/TSnowTerminal'
 
 export async function bingBgExecute(instruct: string, terminal: TSnowTerminal) {

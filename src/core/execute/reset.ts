@@ -1,10 +1,6 @@
 import { TSnowTerminal } from 'types/TSnowTerminal'
 
-export function resetExecute(
-	instruct: string,
-	terminal: TSnowTerminal,
-	fullInstruct: string
-) {
+export function resetExecute(terminal: TSnowTerminal, fullInstruct: string) {
 	terminal.reset()
 	terminal.showSuccess('重置成功', fullInstruct)
 }

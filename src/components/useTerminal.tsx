@@ -37,8 +37,8 @@ export function useTerminal(): TSnowTerminal {
 		}
 	)
 	const state = store.getState()
-	const { background } = useSelector<typeof state, typeof state.background>(
-		state => state.background
+	const { background, baseConfig } = useSelector<typeof state, typeof state>(
+		state => state
 	)
 	const storeDispatch = useDispatch()
 	const commandRecord = useMemo(() => {
@@ -146,7 +146,7 @@ export function useTerminal(): TSnowTerminal {
 		showSuccess: (text: string, instruct: string) => {
 			dispatch({
 				type: 'SET_SUCCESS',
-				errorText: text,
+				successText: text,
 				record: { id: uuid(), instruct, type: 'INSTRUCT' }, // 原指令
 			})
 		},
@@ -234,7 +234,13 @@ export function useTerminal(): TSnowTerminal {
 			})
 		},
 
-		setSystemShow: (flag: 'AUTHOR_SHOW_ON' | 'AUTHOR_SHOW_OFF') => {
+		setSystemShow: (
+			flag:
+				| 'AUTHOR_SHOW_ON'
+				| 'AUTHOR_SHOW_OFF'
+				| 'HINT_SHOW_ON'
+				| 'HINT_SHOW_OFF'
+		) => {
 			switch (flag) {
 				case 'AUTHOR_SHOW_ON':
 					storeDispatch({
@@ -252,6 +258,22 @@ export function useTerminal(): TSnowTerminal {
 						},
 					})
 					break
+				case 'HINT_SHOW_ON':
+					storeDispatch({
+						type: 'set_hint_show',
+						data: {
+							hintShow: true,
+						},
+					})
+					return
+				case 'HINT_SHOW_OFF':
+					storeDispatch({
+						type: 'set_hint_show',
+						data: {
+							hintShow: false,
+						},
+					})
+					return
 				default:
 					break
 			}
@@ -285,9 +307,9 @@ export function useTerminal(): TSnowTerminal {
 	const terminalNode = (
 		<>
 			<Welcome />
-			{background && (
+			{background?.background && (
 				<img
-					src={background}
+					src={background?.background}
 					alt="背景图片"
 					className=" absolute left-0 top-0 z-0 w-full h-full opacity-50"
 				/>
@@ -316,7 +338,8 @@ export function useTerminal(): TSnowTerminal {
 							<div className=" text-white flex items-center my-1">
 								<div className=" bg-green-600 px-2 text-white mr-2">
 									success
-								</div>{' '}
+								</div>
+								{rec.instruct}
 							</div>
 						) : rec.type === 'HELP' ? (
 							helpNode
@@ -341,7 +364,9 @@ export function useTerminal(): TSnowTerminal {
 						onChange={changeInput}
 					/>
 				</p>
-				{hintText && <p className=" text-gray-400">hint: {hintText}</p>}
+				{baseConfig?.hintShow && hintText && (
+					<p className=" text-gray-400">hint: {hintText}</p>
+				)}
 			</div>
 		</>
 	)

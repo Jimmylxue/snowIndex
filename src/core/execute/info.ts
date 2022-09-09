@@ -1,6 +1,4 @@
-import { searchPlatformList } from '@hooks/const'
-
-export function infoExecute(instruct: string) {}
+export function infoExecute() {}
 
 export const infoCommand = {
 	start: 'info',

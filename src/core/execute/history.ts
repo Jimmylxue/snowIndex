@@ -1,4 +1,3 @@
-import { searchPlatformList } from '@hooks/const'
 import { TSnowTerminal } from 'types/TSnowTerminal'
 
 export function historyExecute(instruct: string, terminal: TSnowTerminal) {
