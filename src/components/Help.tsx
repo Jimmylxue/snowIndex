@@ -1,8 +1,8 @@
 import { commandList } from '@core/hint'
-// import { useState } from 'react'
+import { memo } from 'react'
 
-export function useHelp() {
-	const helpNode = (
+export default memo(() => {
+	return (
 		<div className="mt-1 mb-2">
 			<div className=" mb-2">⭐️ 命令列表：</div>
 			{/* <p className="mb-2">
@@ -23,6 +23,4 @@ export function useHelp() {
 			</div>
 		</div>
 	)
-
-	return { helpNode }
-}
+})

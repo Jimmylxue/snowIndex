@@ -1,63 +1,4 @@
-import { useEffect, useMemo, useReducer, useRef } from 'react'
-import { TInputRecord, TSnowTerminal } from 'types/TSnowTerminal'
-import { uuid } from '@utils/index'
-import { recordReducer } from '@stores/reducer/record'
-import { doCommandExecute } from '@utils/commandExecute'
-import { matchHint, matchStartInstruct } from '@utils/hintExecute'
-import { usePosition } from '@hooks/useLocation'
-import { useDispatch, useSelector } from 'react-redux'
-import store from '@stores/store'
-import { useUpdate } from 'ahooks'
-import RecordContainer from './RecordContainer'
-import { Welcome } from '@components/index'
-
-export function useTerminal(): TSnowTerminal {
-	usePosition()
-	const update = useUpdate()
-	const inputRef = useRef<HTMLInputElement>(null)
-	const recordContainer = useRef<HTMLInputElement>(null)
-	const [{ historyRecord, currentRecord, hintText }, dispatch] = useReducer(
-		recordReducer,
-		{
-			historyRecord: [],
-			currentRecord: [],
-			hintText: '',
-			errorText: '',
-			successText: '',
-		}
-	)
-	const state = store.getState()
-	const { background, baseConfig } = useSelector<typeof state, typeof state>(
-		state => state
-	)
-	const storeDispatch = useDispatch()
-
-	const commandRecord = useMemo(() => {
-		return historyRecord.filter(cur => cur.type === 'INSTRUCT')
-	}, [historyRecord.length])
-
-	let commandIndex = useMemo(() => commandRecord.length, [commandRecord.length])
-
-	const changeInput = (e: React.ChangeEvent<HTMLInputElement>) => {
-		const instruct = e.target.value
-		setHint(instruct)
-	}
-
-	const setHint = (instruct: string) => {
-		const instr = instruct.trim().split(' ')
-		if (instr.length === 0) {
-			return
-		}
-		dispatch({
-			type: 'SET_HINT',
-			hintText: matchHint(instr[0])!,
-		})
-	}
-
-	useEffect(() => {
-		recordContainer.current!.scrollTop = recordContainer.current!.scrollHeight
-	}, [currentRecord.length])
-
+export function useScheduler(inputRef: React.RefObject<HTMLInputElement>) {
 	const scheduler = {
 		get value() {
 			return inputRef.current?.value! || ''
@@ -69,6 +10,7 @@ export function useTerminal(): TSnowTerminal {
 		},
 
 		focusInput: () => {
+			console.log('foucs')
 			inputRef.current?.focus()
 		},
 		clear: () => {
@@ -121,7 +63,7 @@ export function useTerminal(): TSnowTerminal {
 			}
 		},
 
-		showError: (text, instruct) => {
+		showError: (text: string, instruct: string) => {
 			dispatch({
 				type: 'SET_ERROR',
 				errorText: text,
@@ -129,7 +71,7 @@ export function useTerminal(): TSnowTerminal {
 			})
 		},
 
-		showSuccess: (text, instruct) => {
+		showSuccess: (text: string, instruct: string) => {
 			dispatch({
 				type: 'SET_SUCCESS',
 				successText: text,
@@ -146,7 +88,7 @@ export function useTerminal(): TSnowTerminal {
 			})
 		},
 
-		addInstructRecord: ({ type, instruct, result }) => {
+		addInstructRecord: ({ type, instruct, result }: TAddRecordItem) => {
 			switch (type) {
 				case 'INSTRUCT':
 					const record: TInputRecord = {
@@ -183,6 +125,7 @@ export function useTerminal(): TSnowTerminal {
 						type: 'ADD_NODE',
 						record: weatherRecord,
 						instruct,
+						// result: result!,
 					})
 					return
 				case 'HISTORY':
@@ -276,50 +219,12 @@ export function useTerminal(): TSnowTerminal {
 			if (matchInstruct?.start) {
 				scheduler.setValue(`${matchInstruct?.start} `)
 				scheduler.focusInput()
+
 				// 设置hint
 				setHint(matchInstruct.start!)
 			}
 		},
 	} as TSnowTerminal
 
-	const terminalNode = (
-		<>
-			<Welcome />
-			{background?.background && (
-				<img
-					src={background?.background}
-					alt="背景图片"
-					className=" absolute left-0 top-0 z-0 w-full h-full opacity-50"
-				/>
-			)}
-
-			<div
-				className="mt-8 relative z-10 overflow-auto text-white"
-				ref={recordContainer}
-				style={{
-					height: 'calc(100vh - 130px)',
-				}}
-			>
-				<RecordContainer
-					currentRecord={currentRecord}
-					historyRecord={historyRecord}
-				/>
-				<p className="flex items-center">
-					<span>[local]$ </span>
-					<input
-						ref={inputRef}
-						className=" bg-none outline-none bg-transparent flex-grow pl-2"
-						type="text"
-						autoFocus
-						onChange={changeInput}
-					/>
-				</p>
-				{baseConfig?.hintShow && hintText && (
-					<p className=" text-gray-400">hint: {hintText}</p>
-				)}
-			</div>
-		</>
-	)
-
-	return { ...scheduler, terminalNode }
+	return scheduler
 }

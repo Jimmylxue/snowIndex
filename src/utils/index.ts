@@ -1,7 +1,3 @@
-import { useHelp } from '@components/useHelp'
-import { useNode } from '@components/useNode'
-import { TInstructType } from 'types/TSnowTerminal'
-// const dayjs = require('dayjs')
 import dayjs from 'dayjs'
 
 let UID = {
@@ -20,22 +16,6 @@ export function subStrBetween(str: string, start: string, end: string) {
 	}
 	const split2 = split1.split(end)[0]
 	return split2
-}
-
-const { helpNode } = useHelp()
-const { infoNode } = useNode()
-
-export function getNodeByType(type: TInstructType) {
-	// const
-	switch (type) {
-		case 'HELP':
-			return helpNode
-		case 'INFO':
-			return infoNode
-		// case 'WEATHER':
-		// 	return <Weather />
-	}
-	// return
 }
 
 export function getToday() {
@@ -65,5 +45,3 @@ export function getFullToday() {
 	const hms = dayjs().format('HH:mm:ss')
 	return `${ymd} ${week} ${hms}`
 }
-
-// getWeekByDate('2022-08-28')

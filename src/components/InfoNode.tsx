@@ -1,5 +1,7 @@
-export function useNode() {
-	const infoNode = (
+import { memo } from 'react'
+
+export default memo(() => {
+	return (
 		<div className="my-1">
 			<div>
 				关于本站：SnowIndex 极客范儿的浏览器主页（reference from coder_yupi
@@ -27,6 +29,4 @@ export function useNode() {
 			</div>
 		</div>
 	)
-
-	return { infoNode }
-}
+})
