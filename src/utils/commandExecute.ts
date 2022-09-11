@@ -18,6 +18,7 @@ import {
 	bingBgExecute,
 	gotoExecute,
 	hintShowExecute,
+	hostnameExecute,
 } from '@core/execute'
 import { zhihuExecute } from '@core/execute/zhihu'
 
@@ -83,6 +84,12 @@ export function doCommandExecute(instruct: string, terminal: TSnowTerminal) {
 			bgExecute(instrTemps, terminal)
 			terminal.addInstructRecord({ type: 'INSTRUCT', instruct })
 			return
+
+		case 'hostname':
+			hostnameExecute(instrTemps, terminal, instruct)
+			// terminal.addInstructRecord({ type: 'INSTRUCT', instruct })
+			return
+
 		case 'bingBg':
 			bingBgExecute(instrTemps, terminal)
 			terminal.addInstructRecord({ type: 'INSTRUCT', instruct })

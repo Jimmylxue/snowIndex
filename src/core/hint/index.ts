@@ -19,6 +19,7 @@ import { bingBgCommand } from '@core/execute/bingBg'
 import { dateCommand } from '@core/execute/date'
 import { gotoCommand } from '@core/execute/goto'
 import { hintShowCommand } from '@core/execute/hintShow'
+import { hostnameCommand } from '@core/execute/hostname'
 
 export const commandList = [
 	searchCommand,
@@ -42,6 +43,7 @@ export const commandList = [
 	dateCommand,
 	gotoCommand,
 	hintShowCommand,
+	hostnameCommand,
 ] as {
 	start: string
 	hint: string

@@ -280,6 +280,15 @@ export function useTerminal(): TSnowTerminal {
 				setHint(matchInstruct.start!)
 			}
 		},
+
+		changeHostname: hostname => {
+			storeDispatch({
+				type: 'set_hostname',
+				data: {
+					hostname,
+				},
+			})
+		},
 	} as TSnowTerminal
 
 	const terminalNode = (
@@ -303,9 +312,10 @@ export function useTerminal(): TSnowTerminal {
 				<RecordContainer
 					currentRecord={currentRecord}
 					historyRecord={historyRecord}
+					hostname={baseConfig.hostname || 'local'}
 				/>
 				<p className="flex items-center">
-					<span>[local]$ </span>
+					<span>[{baseConfig.hostname || 'local'}]$ </span>
 					<input
 						ref={inputRef}
 						className=" bg-none outline-none bg-transparent flex-grow pl-2"

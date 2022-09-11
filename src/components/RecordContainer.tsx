@@ -6,15 +6,16 @@ import { Date, History, Weather, HelpNode, InfoNode } from '@components/index'
 type TProps = {
 	currentRecord: TInputRecord[]
 	historyRecord: TInputRecord[]
+	hostname: string
 }
 
 // @ts-ignore
-export default memo(({ currentRecord, historyRecord }: TProps) => {
+export default memo(({ currentRecord, historyRecord, hostname }: TProps) => {
 	return currentRecord.map((rec, index) => (
 		<div key={rec.id}>
 			{rec.type === 'INSTRUCT' ? (
 				<p key={rec.id}>
-					<span>[local]$ </span>
+					<span>[{hostname}]$ </span>
 					<span>{rec.instruct}</span>
 				</p>
 			) : rec.type === 'ERROR_TEXT' ? (

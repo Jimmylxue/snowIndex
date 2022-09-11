@@ -19,6 +19,7 @@ export type TSnowTerminal = {
 	value: string
 	setValue: (instruct: string) => void
 	matchInstruct: () => void
+	changeHostname: (hostname: string) => void
 }
 
 export type TAddRecordItem = {
