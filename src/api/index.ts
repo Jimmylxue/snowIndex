@@ -104,7 +104,7 @@ class RequestHttp {
 	get<T>(url: string, params?: object): Promise<ResultData<T>> {
 		return this.service.get(url, { params })
 	}
-	post<T>(url: string, params?: object): Promise<ResultData<T>> {
+	post<T, P>(url: string, params?: P): Promise<ResultData<T>> {
 		return this.service.post(url, params)
 	}
 	put<T>(url: string, params?: object): Promise<ResultData<T>> {
@@ -120,4 +120,8 @@ const request = new RequestHttp(config)
 
 export function get<T>(url: string) {
 	return request.get<T>(url)
+}
+
+export function post<T, P>(url: string, params: P) {
+	return request.post<T, P>(url, params)
 }

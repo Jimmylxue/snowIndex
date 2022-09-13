@@ -45,3 +45,14 @@ export function getFullToday() {
 	const hms = dayjs().format('HH:mm:ss')
 	return `${ymd} ${week} ${hms}`
 }
+
+export function isChinese(str: string) {
+	var reg = /^[\u4E00-\u9FA5]+$/
+	if (!reg.test(str)) {
+		// alert('不全是中文')
+		return false
+	} else {
+		// 全是中文
+		return true
+	}
+}

@@ -20,6 +20,7 @@ import { dateCommand } from '@core/execute/date'
 import { gotoCommand } from '@core/execute/goto'
 import { hintShowCommand } from '@core/execute/hintShow'
 import { hostnameCommand } from '@core/execute/hostname'
+import { fanyiCommand } from '@core/execute/fanyi'
 
 export const commandList = [
 	searchCommand,
@@ -44,6 +45,7 @@ export const commandList = [
 	gotoCommand,
 	hintShowCommand,
 	hostnameCommand,
+	fanyiCommand,
 ] as {
 	start: string
 	hint: string

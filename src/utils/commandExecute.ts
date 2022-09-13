@@ -19,6 +19,7 @@ import {
 	gotoExecute,
 	hintShowExecute,
 	hostnameExecute,
+	fanyiExecute,
 } from '@core/execute'
 import { zhihuExecute } from '@core/execute/zhihu'
 
@@ -125,8 +126,13 @@ export function doCommandExecute(instruct: string, terminal: TSnowTerminal) {
 		case 'history':
 			terminal.addInstructRecord({ type: 'HISTORY', instruct })
 			return
+
 		case 'date':
 			terminal.addInstructRecord({ type: 'DATE', instruct })
+			return
+
+		case 'fanyi':
+			fanyiExecute(instrTemps, terminal, instruct)
 			return
 
 		default:
