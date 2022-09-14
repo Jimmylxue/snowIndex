@@ -1,6 +1,5 @@
-import { searchPlatformList } from '@hooks/const'
 import { TSnowTerminal } from 'types/TSnowTerminal'
-import { get, post } from '@api/index'
+import { post } from '@api/index'
 import {
 	languageMap,
 	TBaiduFanyi,
@@ -45,6 +44,18 @@ export async function fanyiExecute(
 	}
 	let fromLan, toLan
 	if (
+		fullInstruct.split('--')[0].trim() === 'fanyi' &&
+		fullInstruct.split('--')[1].trim() === 'help'
+	) {
+		// fanyi --help
+		// console.log('fanyi --help')
+		terminal.addInstructRecord({
+			type: 'FANYI',
+			instruct: fullInstruct,
+		})
+		return
+	}
+	if (
 		instruct.trimStart().includes(' -f ') &&
 		instruct?.split(' -f ')[1].includes(' -t ')
 	) {
@@ -54,14 +65,20 @@ export async function fanyiExecute(
 		if (languageMapKeyList.includes(fromLan)) {
 			fanyiParams.from = fromLan as TShortEn
 		} else {
-			terminal.showError(`翻译源语言错误 `, fullInstruct)
+			terminal.showError(
+				`翻译源语言错误 输入: fanyi --help 查看帮助信息`,
+				fullInstruct
+			)
 			return
 		}
 
 		if (languageMapKeyList.includes(toLan)) {
 			fanyiParams.to = fromLan as TShortEn
 		} else {
-			terminal.showError(`翻译目标语言错误 `, fullInstruct)
+			terminal.showError(
+				`翻译目标语言错误 输入: fanyi --help 查看帮助信息`,
+				fullInstruct
+			)
 			return
 		}
 	} else if (instruct.trimStart().includes(' -f ')) {
@@ -70,7 +87,10 @@ export async function fanyiExecute(
 		if (languageMapKeyList.includes(fromLan)) {
 			fanyiParams.from = fromLan as TShortEn
 		} else {
-			terminal.showError(`翻译源语言错误 `, fullInstruct)
+			terminal.showError(
+				`翻译源语言错误 输入: fanyi --help 查看帮助信息`,
+				fullInstruct
+			)
 			return
 		}
 	} else if (instruct.trimEnd().includes(' -t ')) {
@@ -79,7 +99,10 @@ export async function fanyiExecute(
 		if (languageMapKeyList.includes(toLan)) {
 			fanyiParams.to = toLan as TShortEn
 		} else {
-			terminal.showError(`翻译目标语言错误 `, fullInstruct)
+			terminal.showError(
+				`翻译目标语言错误 输入: fanyi --help 查看帮助信息`,
+				fullInstruct
+			)
 			return
 		}
 	} else {

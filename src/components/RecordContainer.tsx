@@ -1,7 +1,14 @@
 import { memo } from 'react'
 import { TInputRecord } from 'types/TSnowTerminal'
 
-import { Date, History, Weather, HelpNode, InfoNode } from '@components/index'
+import {
+	Date,
+	History,
+	Weather,
+	HelpNode,
+	InfoNode,
+	FanyiList,
+} from '@components/index'
 
 type TProps = {
 	currentRecord: TInputRecord[]
@@ -38,6 +45,8 @@ export default memo(({ currentRecord, historyRecord, hostname }: TProps) => {
 				<History history={historyRecord} index={index} />
 			) : rec.type === 'DATE' ? (
 				<Date />
+			) : rec.type === 'FANYI' ? (
+				<FanyiList />
 			) : null}
 		</div>
 	))

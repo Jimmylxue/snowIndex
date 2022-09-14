@@ -37,6 +37,7 @@ export type TInstructType =
 	| 'WEATHER'
 	| 'HISTORY'
 	| 'DATE'
+	| 'FANYI'
 
 export type TInputRecord = {
 	id: number
