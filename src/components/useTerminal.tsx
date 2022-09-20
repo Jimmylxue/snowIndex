@@ -146,7 +146,7 @@ export function useTerminal(): TSnowTerminal {
 			})
 		},
 
-		addInstructRecord: ({ type, instruct, result }) => {
+		addInstructRecord: ({ type, instruct, result, helpKey }) => {
 			switch (type) {
 				case 'INSTRUCT':
 					const record: TInputRecord = {
@@ -230,11 +230,13 @@ export function useTerminal(): TSnowTerminal {
 						instruct: instruct!,
 						type: type,
 						result: result!,
+						helpKey,
 					}
 					dispatch({
 						type: 'ADD_NODE',
 						record: fanyiRecord,
 						instruct,
+						helpKey,
 					})
 					return
 			}
@@ -351,7 +353,7 @@ export function useTerminal(): TSnowTerminal {
 					/>
 				</p>
 				{baseConfig?.hintShow && hintText && (
-					<p className=" text-gray-400">hint: {hintText}</p>
+					<p className=" helpKey">hint: {hintText}</p>
 				)}
 			</div>
 		</>

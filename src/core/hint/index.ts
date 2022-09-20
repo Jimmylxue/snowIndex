@@ -50,4 +50,16 @@ export const commandList = [
 	start: string
 	hint: string
 	desc: string
+	params: {
+		key: string
+		desc: string
+		isRequire: boolean
+	}[]
+	options: {
+		key: string
+		desc: string
+		alias: string[]
+		isRequire: boolean
+		default: false
+	}[]
 }[]

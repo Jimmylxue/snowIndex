@@ -1,6 +1,35 @@
 import { searchPlatformList } from '@hooks/const'
-import { subStrBetween } from '@utils/index'
+import { isHelpInstruct, subStrBetween } from '@utils/index'
 import { TSnowTerminal } from 'types/TSnowTerminal'
+
+export const searchCommand = {
+	start: 'search',
+	hint: 'search <搜索内容> [-f from] [-s 是否当前页面打开]',
+	desc: '在不同的平台快速搜索内容',
+	params: [
+		{
+			key: 'word',
+			desc: '搜索内容',
+			isRequire: true, // 是否必填
+		},
+	],
+	options: [
+		{
+			key: 'self',
+			desc: '是否在当前页面打开',
+			alias: ['-s'],
+			type: 'boolean',
+			default: false,
+		},
+		{
+			key: 'from',
+			alias: ['-f'],
+			desc: '搜索的地址',
+			type: 'string',
+			default: 'baidu',
+		},
+	],
+}
 
 export function searchExecute(
 	instruct: string,
@@ -45,25 +74,4 @@ export function searchExecute(
 		`${searchTarget}${matchParams._}`,
 		`${matchParams.self ? '_self' : searchTarget + matchParams}`
 	)
-}
-
-export const searchCommand = {
-	start: 'search',
-	hint: 'search <搜索内容> [-f from] [-s 是否当前页面打开]',
-	desc: '在不同的平台快速搜索内容',
-	options: [
-		{
-			key: 'self',
-			desc: '是否在当前页面打开',
-			alias: ['-s'],
-			type: 'boolean',
-			default: false,
-		},
-		{
-			key: 'from',
-			desc: '搜索的地址',
-			type: 'string',
-			default: 'baidu',
-		},
-	],
 }

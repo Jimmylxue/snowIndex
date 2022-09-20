@@ -47,8 +47,6 @@ export async function fanyiExecute(
 		fullInstruct.split('--')[0].trim() === 'fanyi' &&
 		fullInstruct.split('--')[1].trim() === 'help'
 	) {
-		// fanyi --help
-		// console.log('fanyi --help')
 		terminal.addInstructRecord({
 			type: 'FANYI',
 			instruct: fullInstruct,

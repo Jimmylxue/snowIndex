@@ -22,6 +22,7 @@ import {
 	fanyiExecute,
 } from '@core/execute'
 import { zhihuExecute } from '@core/execute/zhihu'
+import { isHelpInstruct } from '.'
 
 export function doCommandExecute(instruct: string, terminal: TSnowTerminal) {
 	const instr = instruct.trim().split(' ')
@@ -29,11 +30,22 @@ export function doCommandExecute(instruct: string, terminal: TSnowTerminal) {
 		terminal.focusInput()
 		return
 	}
+	// 处理错误指令
 	const commandItem = commandList.find(str => str.start === instr[0])
 	if (!commandItem) {
 		terminal.showError('找不到命令（输入 help 查看命令列表）', instruct)
 		return
 	}
+	// 统一处理help指令
+	if (isHelpInstruct(instr[0], instruct)) {
+		terminal.addInstructRecord({
+			type: 'INSTRUCT_ITEM_HELP',
+			instruct,
+			helpKey: instr[0],
+		})
+		return
+	}
+	// 细节操作
 	const instrTemps = instruct.split(instr[0]).join(' ')
 	switch (instr[0]) {
 		case 'search':

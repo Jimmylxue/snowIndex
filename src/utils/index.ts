@@ -1,4 +1,5 @@
 import dayjs from 'dayjs'
+import { TSnowTerminal } from 'types/TSnowTerminal'
 
 let UID = {
 	_nextID: 0,
@@ -55,4 +56,14 @@ export function isChinese(str: string) {
 		// 全是中文
 		return true
 	}
+}
+
+export function isHelpInstruct(key: string, fullInstruct: string) {
+	if (
+		fullInstruct.split('--')[0].trim() === key &&
+		fullInstruct.split('--')[1].trim() === 'help'
+	) {
+		return true
+	}
+	return false
 }

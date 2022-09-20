@@ -26,6 +26,7 @@ export type TAddRecordItem = {
 	type: TInstructType
 	instruct?: string
 	result?: any
+	helpKey?: string
 }
 
 export type TInstructType =
@@ -38,12 +39,14 @@ export type TInstructType =
 	| 'HISTORY'
 	| 'DATE'
 	| 'FANYI'
+	| 'INSTRUCT_ITEM_HELP' // 所有的基础指令的help
 
 export type TInputRecord = {
 	id: number
 	instruct: string
 	type: TInstructType
 	result?: any // 接口的返回值 如天气接口返回值
+	helpKey?: string
 	// result
 }
 
@@ -70,4 +73,5 @@ export type TRecordAction = {
 		errorText?: string
 		instruct?: string
 		result?: any
+		helpKey?: string
 	}

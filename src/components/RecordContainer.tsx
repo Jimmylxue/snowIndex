@@ -9,6 +9,7 @@ import {
 	InfoNode,
 	FanyiList,
 } from '@components/index'
+import { HelpInstructNode } from './Help'
 
 type TProps = {
 	currentRecord: TInputRecord[]
@@ -47,6 +48,11 @@ export default memo(({ currentRecord, historyRecord, hostname }: TProps) => {
 				<Date />
 			) : rec.type === 'FANYI' ? (
 				<FanyiList />
+			) : rec.type === 'INSTRUCT_ITEM_HELP' ? (
+				<>
+					{JSON.stringify(rec)}
+					<HelpInstructNode helpKey={rec.helpKey!} />
+				</>
 			) : null}
 		</div>
 	))

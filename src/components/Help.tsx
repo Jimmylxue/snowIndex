@@ -24,3 +24,35 @@ export default memo(() => {
 		</div>
 	)
 })
+
+type THelpProps = {
+	helpKey: string
+}
+
+export function HelpInstructNode({ helpKey }: THelpProps) {
+	const command = commandList.find(str => str.start === helpKey)
+
+	return (
+		<div>
+			<div className=" mt-2">⭐️ {command?.start}帮助：</div>
+			<div className="text-gray-400">basic usage: {command?.hint}</div>
+			<div>
+				<p>参数：</p>
+				{command?.params.map(param => (
+					<p>
+						·{param.key} {param.isRequire ? '必填' : '非必填'} {param.desc}
+					</p>
+				))}
+			</div>
+			<div>
+				<p>选项：</p>
+				{command?.options.map(opt => (
+					<p>
+						·{opt.alias?.join(' ')} --{opt.key} {opt.desc} 默认
+						{JSON.stringify(opt.default)}
+					</p>
+				))}
+			</div>
+		</div>
+	)
+}
