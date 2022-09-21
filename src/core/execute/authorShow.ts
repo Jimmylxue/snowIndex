@@ -5,6 +5,7 @@ export const authorShowCommand = {
 	hint: 'authorShow [开关：on 开启, off关闭]',
 	desc: '显示作者信息',
 	options: [],
+	params: [],
 	case: ['on', 'off'],
 }
 

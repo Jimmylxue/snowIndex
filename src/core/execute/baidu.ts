@@ -37,6 +37,13 @@ export const baiduCommand = {
 	start: 'baidu',
 	hint: 'baidu <搜索内容> [-s 是否当前页面打开] [-p 是否搜索图片]',
 	desc: '百度搜索引擎搜索',
+	params: [
+		{
+			key: 'word',
+			desc: '搜索内容',
+			isRequire: true, // 是否必填
+		},
+	],
 	options: [
 		{
 			key: 'self',

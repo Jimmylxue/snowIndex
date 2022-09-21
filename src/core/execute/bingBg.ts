@@ -20,6 +20,7 @@ export const bingBgCommand = {
 	start: 'bingBg',
 	hint: 'bing精品壁纸 [-h 支持4K]',
 	desc: '背景设置 - bing源',
+	params: [],
 	options: [
 		{
 			key: 'uhd',

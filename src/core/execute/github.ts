@@ -45,6 +45,13 @@ export const githubCommand = {
 	start: 'github',
 	hint: 'github <搜索内容> [-u 是否搜索作者] [-s 是否当前页面打开]',
 	desc: '百度搜索引擎搜索',
+	params: [
+		{
+			key: 'word',
+			desc: '搜索内容',
+			isRequire: true, // 是否必填
+		},
+	],
 	options: [
 		{
 			key: 'self',

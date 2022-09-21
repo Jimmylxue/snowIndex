@@ -4,6 +4,7 @@ export const hintShowCommand = {
 	start: 'hintShow',
 	hint: 'hintShow [开关：on 开启, off关闭]',
 	desc: '显示指令提示信息',
+	params: [],
 	options: [],
 	case: ['on', 'off'],
 }

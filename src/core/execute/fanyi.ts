@@ -14,6 +14,13 @@ export const fanyiCommand = {
 	start: 'fanyi',
 	hint: 'fanyi <要翻译的内容> [-f 源语言] [-t 目标语言]',
 	desc: '快速翻译',
+	params: [
+		{
+			key: 'word',
+			desc: '翻译源语言文本',
+			isRequire: true, // 是否必填
+		},
+	],
 	options: [
 		{
 			key: 'from',
@@ -43,16 +50,6 @@ export async function fanyiExecute(
 		to: fanyiCommand.options[1].default as TShortEn,
 	}
 	let fromLan, toLan
-	if (
-		fullInstruct.split('--')[0].trim() === 'fanyi' &&
-		fullInstruct.split('--')[1].trim() === 'help'
-	) {
-		terminal.addInstructRecord({
-			type: 'FANYI',
-			instruct: fullInstruct,
-		})
-		return
-	}
 	if (
 		instruct.trimStart().includes(' -f ') &&
 		instruct?.split(' -f ')[1].includes(' -t ')

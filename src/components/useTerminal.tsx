@@ -161,69 +161,9 @@ export function useTerminal(): TSnowTerminal {
 					return
 				case 'INFO':
 				case 'HELP':
-				// const records: TInputRecord = {
-				// 	id: uuid(),
-				// 	instruct: 'aaa',
-				// 	type: type,
-				// }
-				// dispatch({
-				// 	type: 'ADD_NODE',
-				// 	record: records,
-				// 	instruct,
-				// })
-				// return
 				case 'WEATHER':
-				// const weatherRecord: TInputRecord = {
-				// 	id: uuid(),
-				// 	instruct: instruct!,
-				// 	type: type,
-				// 	result: result!,
-				// }
-				// dispatch({
-				// 	type: 'ADD_NODE',
-				// 	record: weatherRecord,
-				// 	instruct,
-				// })
-				// return
 				case 'HISTORY':
-				// const historyRecord: TInputRecord = {
-				// 	id: uuid(),
-				// 	instruct: instruct!,
-				// 	type: type,
-				// 	result: result!,
-				// }
-				// dispatch({
-				// 	type: 'ADD_NODE',
-				// 	record: historyRecord,
-				// 	instruct,
-				// })
-				// return
 				case 'DATE':
-				// const dateRecord: TInputRecord = {
-				// 	id: uuid(),
-				// 	instruct: instruct!,
-				// 	type: type,
-				// 	result: result!,
-				// }
-				// dispatch({
-				// 	type: 'ADD_NODE',
-				// 	record: dateRecord,
-				// 	instruct,
-				// })
-				// return
-				case 'FANYI':
-				// const fanyiRecord: TInputRecord = {
-				// 	id: uuid(),
-				// 	instruct: instruct!,
-				// 	type: type,
-				// 	result: result!,
-				// }
-				// dispatch({
-				// 	type: 'ADD_NODE',
-				// 	record: fanyiRecord,
-				// 	instruct,
-				// })
-				// return
 				default:
 					const fanyiRecord: TInputRecord = {
 						id: uuid(),

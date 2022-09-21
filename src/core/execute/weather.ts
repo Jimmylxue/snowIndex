@@ -21,4 +21,11 @@ export const weatherCommand = {
 	start: 'weather',
 	hint: 'weather [城市名称（不填则查询定位城市）]',
 	desc: '查询天气',
+	params: [
+		{
+			key: 'word',
+			desc: '城市名称',
+			isRequire: false, // 是否必填
+		},
+	],
 }

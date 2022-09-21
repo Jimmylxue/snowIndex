@@ -59,6 +59,10 @@ export function isChinese(str: string) {
 }
 
 export function isHelpInstruct(key: string, fullInstruct: string) {
+	if (key === fullInstruct.trim()) {
+		// 兼容 只输入一个 help 时的 指令
+		return false
+	}
 	if (
 		fullInstruct.split('--')[0].trim() === key &&
 		fullInstruct.split('--')[1].trim() === 'help'

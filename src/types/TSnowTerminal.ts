@@ -38,7 +38,6 @@ export type TInstructType =
 	| 'WEATHER'
 	| 'HISTORY'
 	| 'DATE'
-	| 'FANYI'
 	| 'INSTRUCT_ITEM_HELP' // 所有的基础指令的help
 
 export type TInputRecord = {

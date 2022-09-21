@@ -16,4 +16,6 @@ export const dateCommand = {
 	start: 'date',
 	hint: '查看当前日期',
 	desc: '查看当前日期',
+	params: [],
+	options: [],
 }

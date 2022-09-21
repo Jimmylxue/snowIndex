@@ -16,4 +16,12 @@ export const bgCommand = {
 	start: 'bg',
 	hint: 'background [图片地址（不填则随机）]',
 	desc: '背景设置',
+	params: [
+		{
+			key: 'word',
+			desc: '自定义背景图片链接',
+			isRequire: false, // 是否必填
+		},
+	],
+	options: [],
 }

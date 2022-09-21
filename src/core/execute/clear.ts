@@ -15,4 +15,6 @@ export const clearCommand = {
 	start: 'clear',
 	hint: 'clear 清屏',
 	desc: '清除屏幕记录',
+	params: [],
+	options: [],
 }

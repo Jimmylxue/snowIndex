@@ -21,6 +21,13 @@ export const gotoCommand = {
 	start: 'goto',
 	hint: 'goto <目标链接> [-s 是否当前页面打开]',
 	desc: '背景设置 - bing源',
+	params: [
+		{
+			key: 'word',
+			desc: '网页链接',
+			isRequire: true, // 是否必填
+		},
+	],
 	options: [
 		{
 			key: 'self',

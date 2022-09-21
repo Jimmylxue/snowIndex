@@ -37,6 +37,13 @@ export const googleCommand = {
 	start: 'google',
 	hint: 'google <搜索内容> [-s 是否当前页面打开] [-p 是否搜索图片]',
 	desc: '谷歌搜索引擎搜索',
+	params: [
+		{
+			key: 'word',
+			desc: '搜索内容',
+			isRequire: true, // 是否必填
+		},
+	],
 	options: [
 		{
 			key: 'self',

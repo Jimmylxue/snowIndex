@@ -45,6 +45,13 @@ export const biliCommand = {
 	start: 'bili',
 	hint: 'bilibili <搜索内容> [-u 是否搜索作者] [-s 是否当前页面打开]',
 	desc: 'bilibili搜索引擎',
+	params: [
+		{
+			key: 'word',
+			desc: '搜索内容',
+			isRequire: true, // 是否必填
+		},
+	],
 	options: [
 		{
 			key: 'self',

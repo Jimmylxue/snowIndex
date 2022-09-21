@@ -8,5 +8,7 @@ export function resetExecute(terminal: TSnowTerminal, fullInstruct: string) {
 export const resetCommand = {
 	start: 'reset',
 	hint: '重置系统配置',
-	desc: '重置系统配置 - 背景图片',
+	desc: '重置系统配置',
+	params: [],
+	options: [],
 }

@@ -8,5 +8,6 @@ export const historyCommand = {
 	start: 'history',
 	hint: 'history',
 	desc: '查看历史指令',
+	params: [],
 	options: [],
 }
