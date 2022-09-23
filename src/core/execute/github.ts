@@ -32,7 +32,11 @@ export function githubExecute(instruct: string) {
 	)
 
 	const searchTarget = searchPlatformList.find(
-		platform => platform.key === (githubParams.user ? 'githubUser' : 'github')
+		platform =>
+			platform.key ===
+			(githubParams.user || githubParams._.trim() === ''
+				? 'githubUser'
+				: 'github')
 	)?.target
 
 	window.open(
