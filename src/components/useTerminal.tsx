@@ -164,6 +164,7 @@ export function useTerminal(): TSnowTerminal {
 				case 'WEATHER':
 				case 'HISTORY':
 				case 'DATE':
+				case 'SHORTCUT':
 				default:
 					const fanyiRecord: TInputRecord = {
 						id: uuid(),

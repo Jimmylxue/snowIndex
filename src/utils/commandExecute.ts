@@ -147,6 +147,10 @@ export function doCommandExecute(instruct: string, terminal: TSnowTerminal) {
 			fanyiExecute(instrTemps, terminal, instruct)
 			return
 
+		case 'shortcut':
+			terminal.addInstructRecord({ type: 'SHORTCUT', instruct })
+			return
+
 		default:
 			terminal.addInstructRecord({ type: 'INSTRUCT', instruct })
 			terminal.focusInput()

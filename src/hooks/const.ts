@@ -28,26 +28,41 @@ export const shortcutList: ShortcutType[] = [
 			terminal.clear()
 		},
 	},
+	// {
+	// 	desc: '折叠',
+	// 	code: 'KeyO',
+	// 	keyDesc: 'Ctrl + O',
+	// 	ctrlKey: true,
+	// 	action: () => {
+	// 		console.log('折叠啊')
+	// 	},
+	// },
+	// {
+	// 	desc: '粘贴',
+	// 	code: 'KeyV',
+	// 	keyDesc: 'Ctrl + V',
+	// 	metaKey: true,
+	// 	action: () => {
+	// 		console.log('粘贴一下')
+	// 	},
+	// },
 	{
-		desc: '折叠',
-		code: 'KeyO',
-		keyDesc: 'Ctrl + O',
+		desc: '清空当前输入重新输入',
+		code: 'KeyC',
+		keyDesc: 'Ctrl + C',
 		ctrlKey: true,
-		action: () => {
-			console.log('折叠啊')
+		action: (_, terminal) => {
+			terminal.clearInput()
+			terminal.addInstructRecord({
+				type: 'INSTRUCT',
+				instruct: '',
+			})
 		},
 	},
 	{
-		desc: '粘贴',
-		code: 'KeyV',
-		keyDesc: 'Ctrl + V',
-		metaKey: true,
-		action: () => {
-			console.log('粘贴一下')
-		},
-	},
-	{
+		desc: '自动匹配指令',
 		code: 'Tab',
+		keyDesc: 'Tab',
 		action: (e, terminal) => {
 			e.preventDefault()
 			terminal.matchInstruct()
@@ -60,7 +75,9 @@ export const shortcutList: ShortcutType[] = [
 		},
 	},
 	{
+		desc: '指令指令',
 		code: 'Enter',
+		keyDesc: 'Enter',
 		action: (_, terminal) => {
 			terminal.enter()
 		},
@@ -79,19 +96,6 @@ export const shortcutList: ShortcutType[] = [
 		keyDesc: '↓',
 		action: (_, terminal) => {
 			terminal.showNextCommand()
-		},
-	},
-	{
-		desc: '查看下一条命令',
-		code: 'KeyC',
-		keyDesc: 'Ctrl + C',
-		ctrlKey: true,
-		action: (_, terminal) => {
-			terminal.clearInput()
-			terminal.addInstructRecord({
-				type: 'INSTRUCT',
-				instruct: '',
-			})
 		},
 	},
 ]

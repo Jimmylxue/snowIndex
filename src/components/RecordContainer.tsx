@@ -1,7 +1,14 @@
 import { memo } from 'react'
 import { TInputRecord } from 'types/TSnowTerminal'
 
-import { Date, History, Weather, HelpNode, InfoNode } from '@components/index'
+import {
+	Date,
+	History,
+	Weather,
+	HelpNode,
+	InfoNode,
+	Shortcut,
+} from '@components/index'
 import { HelpInstructNode } from './Help'
 
 type TProps = {
@@ -41,6 +48,8 @@ export default memo(({ currentRecord, historyRecord, hostname }: TProps) => {
 				<Date />
 			) : rec.type === 'INSTRUCT_ITEM_HELP' ? (
 				<HelpInstructNode helpKey={rec.helpKey!} />
+			) : rec.type === 'SHORTCUT' ? (
+				<Shortcut />
 			) : null}
 		</div>
 	))

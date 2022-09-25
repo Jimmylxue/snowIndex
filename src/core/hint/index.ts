@@ -21,6 +21,7 @@ import { gotoCommand } from '@core/execute/goto'
 import { hintShowCommand } from '@core/execute/hintShow'
 import { hostnameCommand } from '@core/execute/hostname'
 import { fanyiCommand } from '@core/execute/fanyi'
+import { shortcutCommand } from '@core/execute/shortCut'
 
 export const commandList = [
 	searchCommand,
@@ -46,6 +47,7 @@ export const commandList = [
 	hintShowCommand,
 	hostnameCommand,
 	fanyiCommand,
+	shortcutCommand,
 ] as {
 	start: string
 	hint: string
