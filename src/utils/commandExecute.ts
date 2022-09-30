@@ -151,6 +151,10 @@ export function doCommandExecute(instruct: string, terminal: TSnowTerminal) {
 			terminal.addInstructRecord({ type: 'SHORTCUT', instruct })
 			return
 
+		case 'time':
+			terminal.addInstructRecord({ type: 'TIME', instruct })
+			return
+
 		default:
 			terminal.addInstructRecord({ type: 'INSTRUCT', instruct })
 			terminal.focusInput()

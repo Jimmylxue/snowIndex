@@ -40,6 +40,7 @@ export type TInstructType =
 	| 'DATE'
 	| 'INSTRUCT_ITEM_HELP' // 所有的基础指令的help
 	| 'SHORTCUT'
+	| 'TIME'
 
 export type TInputRecord = {
 	id: number

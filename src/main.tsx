@@ -5,6 +5,7 @@ import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom'
 import './index.css'
 import { Provider } from 'react-redux'
 import store from '@stores/store'
+import 'antd/dist/antd.css'
 
 function Home() {
 	return <div>hello world</div>

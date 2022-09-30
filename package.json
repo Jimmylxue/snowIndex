@@ -11,6 +11,7 @@
   },
   "dependencies": {
     "ahooks": "^3.7.0",
+    "antd": "^4.23.3",
     "axios": "^0.27.2",
     "dayjs": "^1.11.5",
     "lodash": "^4.17.21",
