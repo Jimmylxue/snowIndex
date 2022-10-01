@@ -155,6 +155,10 @@ export function doCommandExecute(instruct: string, terminal: TSnowTerminal) {
 			terminal.addInstructRecord({ type: 'TIME', instruct })
 			return
 
+		case 'varbook':
+			terminal.addInstructRecord({ type: 'VAR_BOOK', instruct })
+			return
+
 		default:
 			terminal.addInstructRecord({ type: 'INSTRUCT', instruct })
 			terminal.focusInput()

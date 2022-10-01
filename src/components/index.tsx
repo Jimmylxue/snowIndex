@@ -6,5 +6,16 @@ import HelpNode from './Help'
 import InfoNode from './InfoNode'
 import Shortcut from './Shortcut'
 import Time from './Time'
+import Varbook from './Varbook'
 
-export { Date, History, Welcome, Weather, HelpNode, InfoNode, Shortcut, Time }
+export {
+	Date,
+	History,
+	Welcome,
+	Weather,
+	HelpNode,
+	InfoNode,
+	Shortcut,
+	Time,
+	Varbook,
+}

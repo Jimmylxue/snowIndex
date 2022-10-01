@@ -23,6 +23,7 @@ import { hostnameCommand } from '@core/execute/hostname'
 import { fanyiCommand } from '@core/execute/fanyi'
 import { shortcutCommand } from '@core/execute/shortCut'
 import { timeCommand } from '@core/execute/time'
+import { varbookCommand } from '@core/execute/varbook'
 
 export const commandList = [
 	searchCommand,
@@ -50,6 +51,7 @@ export const commandList = [
 	fanyiCommand,
 	shortcutCommand,
 	timeCommand,
+	varbookCommand,
 ] as {
 	start: string
 	hint: string

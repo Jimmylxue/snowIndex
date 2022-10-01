@@ -41,6 +41,7 @@ export type TInstructType =
 	| 'INSTRUCT_ITEM_HELP' // 所有的基础指令的help
 	| 'SHORTCUT'
 	| 'TIME'
+	| 'VAR_BOOK'
 
 export type TInputRecord = {
 	id: number

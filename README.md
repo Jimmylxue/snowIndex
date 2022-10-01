@@ -38,6 +38,7 @@ help => 查看帮助文档
 - React
 - vite3
 - tailwindcss
+- antd
 
 ### 后端
 

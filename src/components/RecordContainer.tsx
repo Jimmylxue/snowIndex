@@ -9,6 +9,7 @@ import {
 	InfoNode,
 	Shortcut,
 	Time,
+	Varbook,
 } from '@components/index'
 import { HelpInstructNode } from './Help'
 
@@ -53,6 +54,8 @@ export default memo(({ currentRecord, historyRecord, hostname }: TProps) => {
 				<Shortcut />
 			) : rec.type === 'TIME' ? (
 				<Time />
+			) : rec.type === 'VAR_BOOK' ? (
+				<Varbook />
 			) : null}
 		</div>
 	))
