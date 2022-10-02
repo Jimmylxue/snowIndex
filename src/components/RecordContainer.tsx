@@ -55,7 +55,7 @@ export default memo(({ currentRecord, historyRecord, hostname }: TProps) => {
 			) : rec.type === 'TIME' ? (
 				<Time />
 			) : rec.type === 'VAR_BOOK' ? (
-				<Varbook />
+				<Varbook book={rec.result} />
 			) : null}
 		</div>
 	))

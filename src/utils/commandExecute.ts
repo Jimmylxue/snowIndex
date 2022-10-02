@@ -20,6 +20,7 @@ import {
 	hintShowExecute,
 	hostnameExecute,
 	fanyiExecute,
+	varbookExecute,
 } from '@core/execute'
 import { zhihuExecute } from '@core/execute/zhihu'
 import { isHelpInstruct } from '.'
@@ -156,7 +157,7 @@ export function doCommandExecute(instruct: string, terminal: TSnowTerminal) {
 			return
 
 		case 'varbook':
-			terminal.addInstructRecord({ type: 'VAR_BOOK', instruct })
+			varbookExecute(instrTemps, terminal, instruct)
 			return
 
 		default:
