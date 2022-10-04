@@ -21,6 +21,7 @@ import {
 	hostnameExecute,
 	fanyiExecute,
 	varbookExecute,
+	pingExecute,
 } from '@core/execute'
 import { zhihuExecute } from '@core/execute/zhihu'
 import { isHelpInstruct } from '.'
@@ -158,6 +159,10 @@ export function doCommandExecute(instruct: string, terminal: TSnowTerminal) {
 
 		case 'varbook':
 			varbookExecute(instrTemps, terminal, instruct)
+			return
+
+		case 'ping':
+			pingExecute(instrTemps, terminal, instruct)
 			return
 
 		default:

@@ -24,6 +24,7 @@ import { fanyiCommand } from '@core/execute/fanyi'
 import { shortcutCommand } from '@core/execute/shortCut'
 import { timeCommand } from '@core/execute/time'
 import { varbookCommand } from '@core/execute/varbook'
+import { pingCommand } from '@core/execute/ping'
 
 export const commandList = [
 	searchCommand,
@@ -52,6 +53,7 @@ export const commandList = [
 	shortcutCommand,
 	timeCommand,
 	varbookCommand,
+	pingCommand,
 ] as {
 	start: string
 	hint: string
