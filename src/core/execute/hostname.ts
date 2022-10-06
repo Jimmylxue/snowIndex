@@ -1,5 +1,3 @@
-import { get } from '@api/index'
-import { TBgType } from 'types/TBackground'
 import { TSnowTerminal } from 'types/TSnowTerminal'
 
 export const hostnameCommand = {

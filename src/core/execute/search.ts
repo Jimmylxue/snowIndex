@@ -1,5 +1,5 @@
 import { searchPlatformList } from '@hooks/const'
-import { isHelpInstruct, subStrBetween } from '@utils/index'
+import { subStrBetween } from '@utils/index'
 import { TSnowTerminal } from 'types/TSnowTerminal'
 
 export const searchCommand = {

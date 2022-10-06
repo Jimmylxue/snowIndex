@@ -1,14 +1,4 @@
 import { TSnowTerminal } from 'types/TSnowTerminal'
-import { post } from '@api/index'
-import {
-	languageMap,
-	TBaiduFanyi,
-	TRequestParams,
-	TShortEn,
-} from 'types/TBaiduFanyi'
-import { isChinese } from '@utils/index'
-
-const languageMapKeyList = Object.keys(languageMap)
 
 export const pingCommand = {
 	start: 'ping',
@@ -64,7 +54,7 @@ export async function pingExecute(
 	}
 	const startTime = new Date().getTime()
 	await Promise.race([
-		new Promise(function (resolve, reject) {
+		new Promise(function (_, reject) {
 			setTimeout(() => reject(new Error('timeout')), Number(pingParams.timeout))
 		}),
 		fetch(dest, { mode: 'no-cors', cache: 'reload' }),
