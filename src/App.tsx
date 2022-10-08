@@ -11,7 +11,20 @@ function App() {
 
 	return (
 		<QueryClientProvider client={queryClient}>
-			<div className="bg-black h-screen overflow-auto font-sans p-5 relative">
+			{/* font-sans */}
+			{/* <p
+				style={{
+					fontFamily: 'Zpix',
+				}}
+			>
+				hello world 你好世界
+			</p> */}
+			<div
+				className="bg-black h-screen overflow-auto p-5 relative"
+				// style={{
+				// 	fontFamily: 'Zpix',
+				// }}
+			>
 				{terminalNode}
 			</div>
 		</QueryClientProvider>

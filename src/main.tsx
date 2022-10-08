@@ -6,6 +6,8 @@ import { Provider } from 'react-redux'
 import store from '@stores/store'
 import 'antd/dist/antd.css'
 import './index.css'
+import './assets/css/font.css'
+import 'nes.css/css/nes.min.css'
 
 function Home() {
 	return <div>hello world</div>
