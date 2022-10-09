@@ -26,6 +26,9 @@ jobs:
       - name: 安装yarn
         run: npm install -g yarn
 
+      - name: 设置屏蔽版本检查
+        run: yarn config set ignore-engines true
+
       # 安装依赖
       - name: 安装依赖
         run: yarn
