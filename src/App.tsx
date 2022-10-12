@@ -20,7 +20,7 @@ function App() {
 				hello world 你好世界
 			</p> */}
 			<div
-				className="bg-black h-screen overflow-auto p-5 relative font-sans"
+				className="bg-black h-screen overflow-auto p-5 relative"
 				// style={{
 				// 	fontFamily: 'Zpix',
 				// }}
