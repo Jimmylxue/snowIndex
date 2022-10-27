@@ -9,7 +9,8 @@ import { useDispatch, useSelector } from 'react-redux'
 import store from '@stores/store'
 import { useUpdate } from 'ahooks'
 import RecordContainer from './RecordContainer'
-import { Welcome } from '@components/index'
+import { Welcome, Time } from '@components/index'
+import classNames from 'classnames'
 
 export function useTerminal(): TSnowTerminal {
 	usePosition()
@@ -222,6 +223,22 @@ export function useTerminal(): TSnowTerminal {
 						},
 					})
 					return
+				case 'TIME_SHOW_ON':
+					storeDispatch({
+						type: 'set_time_show',
+						data: {
+							timeShow: true,
+						},
+					})
+					return
+				case 'TIME_SHOW_OFF':
+					storeDispatch({
+						type: 'set_time_show',
+						data: {
+							timeShow: false,
+						},
+					})
+					return
 				default:
 					break
 			}
@@ -270,9 +287,16 @@ export function useTerminal(): TSnowTerminal {
 					className=" absolute left-0 top-0 z-0 w-full h-full opacity-50"
 				/>
 			)}
+			{baseConfig?.timeShow && (
+				<div className=" text-white">
+					<Time />
+				</div>
+			)}
 
 			<div
-				className="mt-8 relative z-10 overflow-auto text-white"
+				className={classNames('relative z-10 overflow-auto text-white', {
+					'mt-8': !baseConfig?.timeShow,
+				})}
 				ref={recordContainer}
 				style={{
 					height: 'calc(100vh - 130px)',

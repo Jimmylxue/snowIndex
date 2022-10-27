@@ -4,12 +4,14 @@ import { Action } from 'redux'
 export type TBaseConfigType = {
 	hintShow: boolean
 	hostname: string
+	timeShow: boolean
 }
 
 // store中数据的默认值
 const defaultState: TBaseConfigType = {
 	hintShow: true,
 	hostname: 'local',
+	timeShow: false,
 }
 const baseConfigReducer = ((
 	state = defaultState,
@@ -28,6 +30,12 @@ const baseConfigReducer = ((
 			return {
 				...state,
 				hostname: data.hostname,
+			}
+
+		case 'set_time_show':
+			return {
+				...state,
+				timeShow: !!data.timeShow,
 			}
 
 		default:

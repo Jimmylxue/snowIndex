@@ -22,6 +22,7 @@ import {
 	fanyiExecute,
 	varbookExecute,
 	pingExecute,
+	timeShowExecute,
 } from '@core/execute'
 import { zhihuExecute } from '@core/execute/zhihu'
 import { isHelpInstruct } from '.'
@@ -155,6 +156,10 @@ export function doCommandExecute(instruct: string, terminal: TSnowTerminal) {
 
 		case 'time':
 			terminal.addInstructRecord({ type: 'TIME', instruct })
+			return
+
+		case 'timeShow':
+			timeShowExecute(instrTemps, terminal, instruct)
 			return
 
 		case 'varbook':

@@ -22,7 +22,7 @@ import { hintShowCommand } from '@core/execute/hintShow'
 import { hostnameCommand } from '@core/execute/hostname'
 import { fanyiCommand } from '@core/execute/fanyi'
 import { shortcutCommand } from '@core/execute/shortCut'
-import { timeCommand } from '@core/execute/time'
+import { timeCommand, timeShowCommand } from '@core/execute/time'
 import { varbookCommand } from '@core/execute/varbook'
 import { pingCommand } from '@core/execute/ping'
 
@@ -54,6 +54,7 @@ export const commandList = [
 	timeCommand,
 	varbookCommand,
 	pingCommand,
+	timeShowCommand,
 ] as {
 	start: string
 	hint: string
