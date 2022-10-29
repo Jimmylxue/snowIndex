@@ -18,7 +18,7 @@ export default memo(() => {
 		.add(7, 'days')
 		.format('YYYY/MM/DD') //下周一
 	return (
-		<div className="my-1">
+		<div className="my-1" id="timeNode">
 			{nowWeak <= 5 && nowHour < 6 && nowMinutes < 0 ? (
 				<Countdown
 					valueStyle={{

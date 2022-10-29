@@ -18,7 +18,7 @@ export default memo(() => {
 		}
 	}, [location])
 	return (
-		<div className=" text-white z-10 relative">
+		<div className=" text-white z-10 relative" id="welcomeNode">
 			<div className="flex justify-between items-center">
 				<p>{welcomeText}</p>
 				<p className="flex justify-center items-center">

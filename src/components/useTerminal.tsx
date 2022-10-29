@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useReducer, useRef } from 'react'
+import { useEffect, useMemo, useReducer, useRef, useState } from 'react'
 import { TInputRecord, TSnowTerminal } from 'types/TSnowTerminal'
 import { uuid } from '@utils/index'
 import { recordReducer } from '@stores/reducer/record'
@@ -15,6 +15,8 @@ export function useTerminal(): TSnowTerminal {
 	const update = useUpdate()
 	const inputRef = useRef<HTMLInputElement>(null)
 	const recordContainer = useRef<HTMLInputElement>(null)
+	const [containerHeight, setContainerHeight] = useState<number>(0)
+
 	const [{ historyRecord, currentRecord, hintText }, dispatch] = useReducer(
 		recordReducer,
 		{
@@ -275,6 +277,18 @@ export function useTerminal(): TSnowTerminal {
 		},
 	} as TSnowTerminal
 
+	useEffect(() => {
+		setTimeout(() => {
+			const welcomeNode = document
+				.getElementById('welcomeNode')
+				?.getBoundingClientRect()?.height
+			const timeNode = document
+				.getElementById('timeNode')
+				?.getBoundingClientRect()?.height
+			setContainerHeight((welcomeNode || 0) + (timeNode || 0) + 80)
+		})
+	}, [baseConfig?.timeShow])
+
 	const terminalNode = (
 		<>
 			<Welcome />
@@ -297,7 +311,7 @@ export function useTerminal(): TSnowTerminal {
 				})}
 				ref={recordContainer}
 				style={{
-					height: 'calc(100vh - 130px)',
+					height: `calc(100vh - ${containerHeight}px)`,
 				}}
 			>
 				<RecordContainer
