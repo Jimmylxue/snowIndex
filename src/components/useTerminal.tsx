@@ -4,7 +4,6 @@ import { uuid } from '@utils/index'
 import { recordReducer } from '@stores/reducer/record'
 import { doCommandExecute } from '@utils/commandExecute'
 import { matchHint, matchStartInstruct } from '@utils/hintExecute'
-import { usePosition } from '@hooks/useLocation'
 import { useDispatch, useSelector } from 'react-redux'
 import store from '@stores/store'
 import { useUpdate } from 'ahooks'
@@ -13,7 +12,6 @@ import { Welcome, Time } from '@components/index'
 import classNames from 'classnames'
 
 export function useTerminal(): TSnowTerminal {
-	usePosition()
 	const update = useUpdate()
 	const inputRef = useRef<HTMLInputElement>(null)
 	const recordContainer = useRef<HTMLInputElement>(null)

@@ -7,8 +7,15 @@ export async function weatherExecute(
 	terminal: TSnowTerminal,
 	fullInstruct: string
 ) {
+	const location = localStorage.getItem('snowIndex-location')
+	if (!location) {
+		terminal.showError(`获取地址失败，请尝试刷新浏览器`, fullInstruct)
+		return
+	}
 	const res = await get<TWeatherInfo>(
-		`weather/base?cityName=${instruct.trim() || '福州'}`
+		`weather/base?cityName=${
+			instruct.trim() || JSON.parse(location).city.replace(/市/g, '')
+		}`
 	)
 	terminal.addInstructRecord({
 		type: 'WEATHER',

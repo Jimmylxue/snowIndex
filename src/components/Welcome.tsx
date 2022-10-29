@@ -1,6 +1,8 @@
 import { TWelcomeType } from '@stores/reducer/welcome'
-import { memo } from 'react'
+import { memo, useEffect } from 'react'
 import { useSelector } from 'react-redux'
+import { EnvironmentOutlined, LoadingOutlined } from '@ant-design/icons'
+import { useLocation } from '@hooks/useLocation'
 
 export default memo(() => {
 	const { welcomeText, authorShow } = useSelector<
@@ -9,10 +11,26 @@ export default memo(() => {
 		},
 		TWelcomeType
 	>(state => state.welcome)
-
+	const location = useLocation()
+	useEffect(() => {
+		if (location?.city) {
+			localStorage.setItem('snowIndex-location', JSON.stringify(location))
+		}
+	}, [location])
 	return (
 		<div className=" text-white z-10 relative">
-			<p>{welcomeText}</p>
+			<div className="flex justify-between items-center">
+				<p>{welcomeText}</p>
+				<p className="flex justify-center items-center">
+					{location?.city ? (
+						<EnvironmentOutlined className="mr-1" />
+					) : (
+						<LoadingOutlined className="mr-1" />
+					)}
+
+					{location?.city || '定位中'}
+				</p>
+			</div>
 			{authorShow && (
 				<p>
 					Author{' '}
