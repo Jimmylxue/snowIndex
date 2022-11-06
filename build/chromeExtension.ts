@@ -31,7 +31,6 @@ export function chromeExtension(options: ChromeExtensionOptions = {}): Plugin {
 
 	async function bundle() {
 		const bundler = new ChromeExtension({
-			// @ts-ignore
 			privateKey: await loadPrivateKey(finalOpts.privateKey),
 		})
 
@@ -46,7 +45,6 @@ export function chromeExtension(options: ChromeExtensionOptions = {}): Plugin {
 				path.resolve(
 					__dirname,
 					'../dist',
-					// @ts-ignore
 					normalizeBundleName(finalOpts.bundleName)
 				),
 				bundle
