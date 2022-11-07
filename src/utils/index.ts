@@ -1,5 +1,4 @@
 import dayjs from 'dayjs'
-import { TSnowTerminal } from 'types/TSnowTerminal'
 
 let UID = {
 	_nextID: 0,

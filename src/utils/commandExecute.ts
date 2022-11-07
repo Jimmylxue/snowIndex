@@ -25,7 +25,7 @@ import {
 	timeShowExecute,
 	npmExecute,
 } from '@core/execute'
-import { zhihuExecute } from '@core/execute/zhihu'
+import { zhihuExecute } from '@core/execute/search/zhihu'
 import { isHelpInstruct } from '.'
 
 export function doCommandExecute(instruct: string, terminal: TSnowTerminal) {
