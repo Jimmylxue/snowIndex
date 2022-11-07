@@ -157,4 +157,8 @@ export const searchPlatformList = [
 		key: 'wangyiyunUser',
 		target: 'https://music.163.com/#/search/m/?type=100&s=',
 	},
+	{
+		key: 'npm',
+		target: 'https://www.npmjs.com/search?q=',
+	},
 ]

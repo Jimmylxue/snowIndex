@@ -25,6 +25,7 @@ import { shortcutCommand } from '@core/execute/shortCut'
 import { timeCommand, timeShowCommand } from '@core/execute/time'
 import { varbookCommand } from '@core/execute/varbook'
 import { pingCommand } from '@core/execute/ping'
+import { npmCommand } from '@core/execute/npm'
 
 export const commandList = [
 	searchCommand,
@@ -55,6 +56,7 @@ export const commandList = [
 	varbookCommand,
 	pingCommand,
 	timeShowCommand,
+	npmCommand,
 ] as {
 	start: string
 	hint: string
