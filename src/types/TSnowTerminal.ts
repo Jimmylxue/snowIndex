@@ -20,6 +20,11 @@ export type TSnowTerminal = {
 	setValue: (instruct: string) => void
 	matchInstruct: () => void
 	changeHostname: (hostname: string) => void
+	setJumpList: (
+		type: 'ADD' | 'REMOVE' | 'CLEAR',
+		jumpInfo?: { url: string; name: string }
+	) => void
+	getStoreValue: (key?: string) => any
 }
 
 export type TAddRecordItem = {

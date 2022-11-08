@@ -31,6 +31,7 @@ export function useTerminal(): TSnowTerminal {
 	const { background, baseConfig } = useSelector<typeof state, typeof state>(
 		state => state
 	)
+	const jumpList = baseConfig.jumpList || []
 	const storeDispatch = useDispatch()
 
 	const commandRecord = useMemo(() => {
@@ -275,6 +276,35 @@ export function useTerminal(): TSnowTerminal {
 				},
 			})
 		},
+
+		setJumpList: (type, jumpInfo?) => {
+			const getJumpValue = () => {
+				switch (type) {
+					case 'ADD':
+						return [...jumpList, jumpInfo]
+					case 'REMOVE':
+						return [...jumpList.filter(jump => jump.name !== jumpInfo?.name)]
+					case 'CLEAR':
+						return []
+					default:
+						return [...jumpList]
+				}
+			}
+			storeDispatch({
+				type: 'set_jump_list',
+				data: {
+					jumpList: getJumpValue(),
+				},
+			})
+		},
+
+		getStoreValue: key => {
+			if (key) {
+				// @ts-ignore
+				return state?.[key]
+			}
+			return state
+		},
 	} as TSnowTerminal
 
 	useEffect(() => {
@@ -302,6 +332,7 @@ export function useTerminal(): TSnowTerminal {
 			{baseConfig?.timeShow && (
 				<div className=" text-white">
 					<Time />
+					{/* {JSON.stringify(jumpList)} */}
 				</div>
 			)}
 

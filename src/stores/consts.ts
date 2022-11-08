@@ -21,6 +21,8 @@ enum TIME_SHOW_ON_TYPE {
 	TIME_SHOW_OFF,
 }
 
+export const SET_JUMP_LIST = 'set_jump_list'
+
 export type TWelcomeAction = typeof SET_WELCOME | typeof SET_AUTHOR_SHOW
 
 export const SET_BACKGROUND = 'set_background'
@@ -35,3 +37,4 @@ export type TBaseConfigAction =
 	| typeof SET_HOSTNAME
 	| typeof SET_HINT_SHOW
 	| typeof SET_TIME_SHOW
+	| typeof SET_JUMP_LIST

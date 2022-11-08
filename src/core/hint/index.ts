@@ -26,7 +26,7 @@ import { timeCommand, timeShowCommand } from '@core/execute/system/time'
 import { varbookCommand } from '@core/execute/tool/varbook'
 import { pingCommand } from '@core/execute/tool/ping'
 import { npmCommand } from '@core/execute/search/npm'
-
+import { jumpCommand } from '@core/execute/tool/jump'
 export const commandList = [
 	searchCommand,
 	baiduCommand,
@@ -57,6 +57,7 @@ export const commandList = [
 	pingCommand,
 	timeShowCommand,
 	npmCommand,
+	jumpCommand,
 ] as {
 	start: string
 	hint: string

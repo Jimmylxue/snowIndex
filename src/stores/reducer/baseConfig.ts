@@ -1,10 +1,15 @@
 import { TBaseConfigAction } from '@stores/consts'
 import { Action } from 'redux'
 
+// there is not every state both should be save as store
 export type TBaseConfigType = {
 	hintShow: boolean
 	hostname: string
 	timeShow: boolean
+	jumpList: {
+		name: string
+		url: string
+	}[]
 }
 
 // store中数据的默认值
@@ -12,6 +17,7 @@ const defaultState: TBaseConfigType = {
 	hintShow: true,
 	hostname: 'local',
 	timeShow: false,
+	jumpList: [],
 }
 const baseConfigReducer = ((
 	state = defaultState,
@@ -36,6 +42,12 @@ const baseConfigReducer = ((
 			return {
 				...state,
 				timeShow: !!data.timeShow,
+			}
+
+		case 'set_jump_list':
+			return {
+				...state,
+				jumpList: [...data.jumpList],
 			}
 
 		default:

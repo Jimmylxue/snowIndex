@@ -24,6 +24,7 @@ import {
 	pingExecute,
 	timeShowExecute,
 	npmExecute,
+	jumpExecute,
 } from '@core/execute'
 import { zhihuExecute } from '@core/execute/search/zhihu'
 import { isHelpInstruct } from '.'
@@ -174,6 +175,10 @@ export function doCommandExecute(instruct: string, terminal: TSnowTerminal) {
 		case 'npm':
 			npmExecute(instrTemps, instruct)
 			terminal.addInstructRecord({ type: 'INSTRUCT', instruct })
+			return
+
+		case 'jump':
+			jumpExecute(instrTemps, terminal, instruct)
 			return
 
 		default:
