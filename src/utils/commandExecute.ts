@@ -178,6 +178,7 @@ export function doCommandExecute(instruct: string, terminal: TSnowTerminal) {
 			return
 
 		case 'jump':
+		case 'j':
 			jumpExecute(instrTemps, terminal, instruct)
 			return
 
