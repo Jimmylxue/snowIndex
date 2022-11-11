@@ -1,7 +1,7 @@
 import { memo, useMemo } from 'react'
 import { Statistic } from 'antd'
 import moment from 'moment'
-import { getToday } from '@utils/index'
+import { getToday } from '@/utils/index'
 
 const { Countdown } = Statistic
 

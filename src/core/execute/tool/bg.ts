@@ -1,6 +1,6 @@
-import { get } from '@api/index'
-import { TBgType } from 'types/TBackground'
-import { TSnowTerminal } from 'types/TSnowTerminal'
+import { get } from '@/api/index'
+import { TBgType } from '@/types/TBackground'
+import { TSnowTerminal } from '@/types/TSnowTerminal'
 
 export async function bgExecute(instruct: string, terminal: TSnowTerminal) {
 	if (instruct.trim()) {

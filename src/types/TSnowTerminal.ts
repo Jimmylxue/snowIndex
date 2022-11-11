@@ -1,4 +1,4 @@
-import { TSystemShow } from '@stores/consts'
+import { TSystemShow } from '@/stores/consts'
 import { ReactNode } from 'react'
 
 export type TSnowTerminal = {

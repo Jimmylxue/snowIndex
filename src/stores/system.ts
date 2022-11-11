@@ -1,4 +1,4 @@
-import useLocalStorage from '@hooks/useLocalStorage'
+import useLocalStorage from '@/hooks/useLocalStorage'
 import { useLocalStorageState } from 'ahooks'
 
 export function useSystemState() {

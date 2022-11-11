@@ -1,4 +1,4 @@
-import { searchPlatformList } from '@hooks/const'
+import { searchPlatformList } from '@/hooks/const'
 
 export function baiduExecute(instruct: string) {
 	const baiduParams = {

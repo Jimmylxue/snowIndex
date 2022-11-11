@@ -1,4 +1,4 @@
-import { TSnowTerminal } from 'types/TSnowTerminal'
+import { TSnowTerminal } from '@/types/TSnowTerminal'
 import { shortcutList } from './const'
 
 export function useShotCut(terminal: TSnowTerminal) {

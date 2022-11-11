@@ -1,4 +1,4 @@
-import { searchPlatformList } from '@hooks/const'
+import { searchPlatformList } from '@/hooks/const'
 
 export function npmExecute(instruct: string, fullStruct: string) {
 	const npmParams = {

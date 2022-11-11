@@ -1,9 +1,9 @@
-import { uuid } from '@utils/index'
+import { uuid } from '@/utils/index'
 import {
 	TInputRecord,
 	TInstructRecordState,
 	TRecordAction,
-} from 'types/TSnowTerminal'
+} from '@/types/TSnowTerminal'
 
 export function recordReducer(
 	state: TInstructRecordState,

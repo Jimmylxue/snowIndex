@@ -1,8 +1,8 @@
-import { TWelcomeType } from '@stores/reducer/welcome'
+import { TWelcomeType } from '@/stores/reducer/welcome'
 import { memo, useEffect } from 'react'
 import { useSelector } from 'react-redux'
 import { EnvironmentOutlined, LoadingOutlined } from '@ant-design/icons'
-import { useLocation } from '@hooks/useLocation'
+import { useLocation } from '@/hooks/useLocation'
 
 export default memo(() => {
 	const { welcomeText, authorShow } = useSelector<

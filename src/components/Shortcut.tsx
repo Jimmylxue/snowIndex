@@ -1,5 +1,5 @@
 import { memo } from 'react'
-import { shortcutList } from '@hooks/const'
+import { shortcutList } from '@/hooks/const'
 import { divide } from 'lodash'
 
 export default memo(() => {

@@ -1,5 +1,5 @@
 import { useMemo } from 'react'
-import { TInputRecord } from 'types/TSnowTerminal'
+import { TInputRecord } from '@/types/TSnowTerminal'
 
 type TProps = {
 	history: TInputRecord[]

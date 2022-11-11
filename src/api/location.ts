@@ -1,5 +1,5 @@
 import { QueryKey, useQuery, UseQueryOptions } from 'react-query'
-import { TLocationByIp } from 'types/TLocation'
+import { TLocationByIp } from '@/types/TLocation'
 import { get } from '.'
 
 export type ClientError = {

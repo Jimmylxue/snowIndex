@@ -1,4 +1,4 @@
-import { getFullToday } from '@utils/index'
+import { getFullToday } from '@/utils/index'
 import { memo } from 'react'
 
 export default memo(() => {

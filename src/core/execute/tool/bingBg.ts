@@ -1,5 +1,5 @@
-import { get } from '@api/index'
-import { TSnowTerminal } from 'types/TSnowTerminal'
+import { get } from '@/api/index'
+import { TSnowTerminal } from '@/types/TSnowTerminal'
 
 export async function bingBgExecute(instruct: string, terminal: TSnowTerminal) {
 	const bgParams = {

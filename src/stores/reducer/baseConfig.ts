@@ -1,4 +1,4 @@
-import { TBaseConfigAction } from '@stores/consts'
+import { TBaseConfigAction } from '@/stores/consts'
 import { Action } from 'redux'
 
 // there is not every state both should be save as store

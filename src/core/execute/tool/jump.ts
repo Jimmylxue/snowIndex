@@ -1,4 +1,4 @@
-import { TSnowTerminal } from 'types/TSnowTerminal'
+import { TSnowTerminal } from '@/types/TSnowTerminal'
 import { gotoExecute } from '../search/goto'
 
 export async function jumpExecute(

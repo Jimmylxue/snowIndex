@@ -12,35 +12,35 @@ export default defineConfig({
 	resolve: {
 		alias: [
 			{
-				find: 'types',
+				find: '@/types',
 				replacement: resolve(__dirname, 'src/types'),
 			},
 			{
-				find: '@utils',
+				find: '@/utils',
 				replacement: resolve(__dirname, 'src/utils'),
 			},
 			{
-				find: '@hooks',
+				find: '@/hooks',
 				replacement: resolve(__dirname, 'src/hooks'),
 			},
 			{
-				find: '@stores',
+				find: '@/stores',
 				replacement: resolve(__dirname, 'src/stores'),
 			},
 			{
-				find: '@core',
+				find: '@/core',
 				replacement: resolve(__dirname, 'src/core'),
 			},
 			{
-				find: '@components',
+				find: '@/components',
 				replacement: resolve(__dirname, 'src/components'),
 			},
 			{
-				find: '@config',
+				find: '@/config',
 				replacement: resolve(__dirname, 'src/config'),
 			},
 			{
-				find: '@api',
+				find: '@/api',
 				replacement: resolve(__dirname, 'src/api'),
 			},
 		],

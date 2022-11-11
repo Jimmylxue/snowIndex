@@ -1,4 +1,4 @@
-import { TWelcomeAction } from '@stores/consts'
+import { TWelcomeAction } from '@/stores/consts'
 import { Action } from 'redux'
 
 export type TWelcomeType = {

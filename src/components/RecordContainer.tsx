@@ -1,5 +1,5 @@
 import { memo } from 'react'
-import { TInputRecord } from 'types/TSnowTerminal'
+import { TInputRecord } from '@/types/TSnowTerminal'
 
 import {
 	Date,
@@ -10,7 +10,7 @@ import {
 	Shortcut,
 	Time,
 	Varbook,
-} from '@components/index'
+} from '@/components/index'
 import { HelpInstructNode } from './Help'
 
 type TProps = {

@@ -1,5 +1,5 @@
-import { getToday, getWeekByDate } from '@utils/index'
-import { TWeatherInfo } from 'types/TWeather'
+import { getToday, getWeekByDate } from '@/utils/index'
+import { TWeatherInfo } from '@/types/TWeather'
 
 type TProps = {
 	weather: TWeatherInfo

@@ -2,7 +2,7 @@ import { memo, useMemo } from 'react'
 import { Table } from 'antd'
 import type { ColumnsType } from 'antd/es/table'
 import './cover.css'
-import { TVarBookResult } from 'types/TVarbook'
+import { TVarBookResult } from '@/types/TVarbook'
 
 interface DataType {
 	key: string

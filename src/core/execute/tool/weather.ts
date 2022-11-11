@@ -1,6 +1,6 @@
-import { get } from '@api/index'
-import { TSnowTerminal } from 'types/TSnowTerminal'
-import { TWeatherInfo } from 'types/TWeather'
+import { get } from '@/api/index'
+import { TSnowTerminal } from '@/types/TSnowTerminal'
+import { TWeatherInfo } from '@/types/TWeather'
 
 export async function weatherExecute(
 	instruct: string,

@@ -1,4 +1,4 @@
-import { config } from '@config/react-query'
+import { config } from '@/config/react-query'
 import TerminalPage from './pages/terminal'
 
 function App() {

@@ -1,6 +1,6 @@
-import { commandList } from '@core/hint'
+import { commandList } from '@/core/hint'
 import { memo } from 'react'
-import { languageMap } from 'types/TBaiduFanyi'
+import { languageMap } from '@/types/TBaiduFanyi'
 
 export default memo(() => {
 	return (

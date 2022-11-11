@@ -1,4 +1,4 @@
-import { commandList } from '@core/hint'
+import { commandList } from '@/core/hint'
 
 export function matchHint(instruct: string) {
 	return commandList.find(command => command.start === instruct)?.hint

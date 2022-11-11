@@ -1,6 +1,6 @@
-import { get } from '@api/index'
-import { TSnowTerminal } from 'types/TSnowTerminal'
-import { TVarBookResult } from 'types/TVarbook'
+import { get } from '@/api/index'
+import { TSnowTerminal } from '@/types/TSnowTerminal'
+import { TVarBookResult } from '@/types/TVarbook'
 
 export async function varbookExecute(
 	instruct: string,

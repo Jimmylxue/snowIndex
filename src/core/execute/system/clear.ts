@@ -1,4 +1,4 @@
-import { TSnowTerminal } from 'types/TSnowTerminal'
+import { TSnowTerminal } from '@/types/TSnowTerminal'
 
 export function clearExecute(instruct: string, terminal: TSnowTerminal) {
 	if (instruct.trim()) {

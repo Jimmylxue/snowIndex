@@ -1,12 +1,12 @@
-import { TSnowTerminal } from 'types/TSnowTerminal'
-import { post } from '@api/index'
+import { TSnowTerminal } from '@/types/TSnowTerminal'
+import { post } from '@/api/index'
 import {
 	languageMap,
 	TBaiduFanyi,
 	TRequestParams,
 	TShortEn,
-} from 'types/TBaiduFanyi'
-import { isChinese } from '@utils/index'
+} from '@/types/TBaiduFanyi'
+import { isChinese } from '@/utils/index'
 
 const languageMapKeyList = Object.keys(languageMap)
 

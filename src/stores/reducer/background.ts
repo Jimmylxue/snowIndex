@@ -1,4 +1,4 @@
-import { TBackgroundAction } from '@stores/consts'
+import { TBackgroundAction } from '@/stores/consts'
 import { Action } from 'redux'
 
 export type TBackgroundType = {

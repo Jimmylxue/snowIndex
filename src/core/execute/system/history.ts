@@ -1,4 +1,4 @@
-import { TSnowTerminal } from 'types/TSnowTerminal'
+import { TSnowTerminal } from '@/types/TSnowTerminal'
 
 export function historyExecute(instruct: string, terminal: TSnowTerminal) {
 	terminal.addInstructRecord({ type: 'HISTORY', instruct })

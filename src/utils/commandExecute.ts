@@ -1,5 +1,5 @@
-import { commandList } from '@core/hint'
-import { TSnowTerminal } from 'types/TSnowTerminal'
+import { commandList } from '@/core/hint'
+import { TSnowTerminal } from '@/types/TSnowTerminal'
 import {
 	baiduExecute,
 	bgExecute,
@@ -25,8 +25,8 @@ import {
 	timeShowExecute,
 	npmExecute,
 	jumpExecute,
-} from '@core/execute'
-import { zhihuExecute } from '@core/execute/search/zhihu'
+} from '@/core/execute'
+import { zhihuExecute } from '@/core/execute/search/zhihu'
 import { isHelpInstruct } from '.'
 
 export function doCommandExecute(instruct: string, terminal: TSnowTerminal) {

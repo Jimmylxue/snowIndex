@@ -1,4 +1,4 @@
-import { TSnowTerminal } from 'types/TSnowTerminal'
+import { TSnowTerminal } from '@/types/TSnowTerminal'
 
 export async function dateExecute(instruct: string, terminal: TSnowTerminal) {}
 

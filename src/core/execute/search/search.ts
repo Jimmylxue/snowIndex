@@ -1,6 +1,6 @@
-import { searchPlatformList } from '@hooks/const'
-import { subStrBetween } from '@utils/index'
-import { TSnowTerminal } from 'types/TSnowTerminal'
+import { searchPlatformList } from '@/hooks/const'
+import { subStrBetween } from '@/utils/index'
+import { TSnowTerminal } from '@/types/TSnowTerminal'
 
 export const searchCommand = {
 	start: 'search',

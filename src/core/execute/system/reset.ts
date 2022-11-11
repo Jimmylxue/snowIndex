@@ -1,4 +1,4 @@
-import { TSnowTerminal } from 'types/TSnowTerminal'
+import { TSnowTerminal } from '@/types/TSnowTerminal'
 
 export function resetExecute(terminal: TSnowTerminal, fullInstruct: string) {
 	terminal.reset()

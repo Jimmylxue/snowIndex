@@ -1,5 +1,5 @@
-import { useTerminal } from '@components/useTerminal'
-import { useShotCut } from '@hooks/useShotCut'
+import { useTerminal } from '@/components/useTerminal'
+import { useShotCut } from '@/hooks/useShotCut'
 import { memo } from 'react'
 
 export default memo(() => {

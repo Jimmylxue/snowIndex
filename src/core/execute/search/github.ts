@@ -1,4 +1,4 @@
-import { searchPlatformList } from '@hooks/const'
+import { searchPlatformList } from '@/hooks/const'
 
 export function githubExecute(instruct: string) {
 	const githubParams = {

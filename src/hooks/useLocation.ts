@@ -1,4 +1,4 @@
-import { useUserPosition } from '@api/location'
+import { useUserPosition } from '@/api/location'
 import { useEffect } from 'react'
 
 export function usePosition() {
