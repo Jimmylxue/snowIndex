@@ -36,6 +36,9 @@ export async function jumpExecute(
 			? instruct?.split(' -s')[0].trim()
 			: instruct?.trim()
 
+		console.log('didid', name)
+		console.log('instruct', instruct)
+
 		const baseConfig = terminal.getStoreValue('baseConfig')
 		const jumpList = baseConfig?.jumpList || []
 		const findItem = jumpList.find(
@@ -45,7 +48,7 @@ export async function jumpExecute(
 			gotoExecute(`${findItem.url} ${instruct.includes(' -s') ? '-s' : ''}`)
 			terminal.addInstructRecord({ type: 'INSTRUCT', instruct: fullInstruct })
 		} else {
-			console.log('无映射关系', name)
+			console.log('无映射关系', fullInstruct, '111', name, '111', instruct)
 			terminal.showError('暂无映射关系', fullInstruct)
 		}
 	}
@@ -53,6 +56,7 @@ export async function jumpExecute(
 
 export const jumpCommand = {
 	start: 'jump',
+	shortStart: ['j', 'ju'],
 	hint: 'jump <目标名称> [-s 是否当前页面打开]',
 	desc: '快速跳转至收藏的网站',
 	params: [

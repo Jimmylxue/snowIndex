@@ -36,7 +36,9 @@ export function doCommandExecute(instruct: string, terminal: TSnowTerminal) {
 		return
 	}
 	// 处理错误指令
-	const commandItem = commandList.find(str => str.start === instr[0])
+	const commandItem = commandList.find(
+		str => str.start === instr[0] || str?.shortStart?.includes(instr[0])
+	)
 	if (!commandItem) {
 		terminal.showError('找不到命令（输入 help 查看命令列表）', instruct)
 		return
@@ -51,7 +53,7 @@ export function doCommandExecute(instruct: string, terminal: TSnowTerminal) {
 		return
 	}
 	// 细节操作
-	const instrTemps = instruct.split(instr[0]).join(' ')
+	const instrTemps = instruct.split(`${instr[0]} `)[1]
 	switch (instr[0]) {
 		case 'search':
 			searchExecute(instrTemps, terminal, commandItem)

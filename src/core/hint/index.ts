@@ -60,6 +60,7 @@ export const commandList = [
 	jumpCommand,
 ] as {
 	start: string
+	shortStart: string[]
 	hint: string
 	desc: string
 	params: {

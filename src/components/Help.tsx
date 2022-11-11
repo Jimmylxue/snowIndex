@@ -60,6 +60,14 @@ export function HelpInstructNode({ helpKey }: THelpProps) {
 		<div>
 			<div className=" mt-1">⭐️ {command?.start}帮助：</div>
 			<div className="text-gray-400">basic usage: {command?.hint}</div>
+			{!!command?.shortStart.length && (
+				<div className="my-1">
+					简化指令：
+					{command?.shortStart.map(short => `${short}  `)}
+					<div className="text-gray-400 mt-1">可以使用简化指令替代完整指令</div>
+				</div>
+			)}
+
 			{!!command?.params?.length && (
 				<div>
 					<p>参数：</p>
