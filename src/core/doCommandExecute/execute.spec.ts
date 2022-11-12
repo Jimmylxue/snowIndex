@@ -1,4 +1,4 @@
-import { commandList } from '../core/hint'
+import { commandList } from '@/core/hint'
 import { checkIsSystemCommand, parseExecuteCommand } from './executeUtil'
 
 const jumpCommand = commandList.find(command => command.start === 'jump')

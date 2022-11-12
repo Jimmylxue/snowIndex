@@ -1,4 +1,3 @@
-import { commandList } from '@/core/hint'
 import { TSnowTerminal } from '@/types/TSnowTerminal'
 import {
 	baiduExecute,
@@ -27,91 +26,88 @@ import {
 	jumpExecute,
 } from '@/core/execute'
 import { zhihuExecute } from '@/core/execute/search/zhihu'
-import { isHelpInstruct } from '.'
+import { isHelpInstruct } from '../../utils'
+import { parseExecuteCommand } from './executeUtil'
 
 export function doCommandExecute(instruct: string, terminal: TSnowTerminal) {
-	const instr = instruct.trim().split(' ')
-	if (instr.length === 0) {
-		terminal.focusInput()
-		return
-	}
-	// 处理错误指令
-	const commandItem = commandList.find(
-		str => str.start === instr[0] || str?.shortStart?.includes(instr[0])
-	)
-	if (!commandItem) {
-		terminal.showError('找不到命令（输入 help 查看命令列表）', instruct)
+	const {
+		isCorrect,
+		startCommand,
+		fullCommand,
+		commandBody,
+		systemCommandInfo,
+	} = parseExecuteCommand(instruct)
+	if (!isCorrect) {
+		terminal.showError('找不到命令（输入 help 查看命令列表）', fullCommand)
 		return
 	}
 	// 统一处理help指令
-	if (isHelpInstruct(instr[0], instruct)) {
+	if (isHelpInstruct(startCommand!, fullCommand)) {
 		terminal.addInstructRecord({
 			type: 'INSTRUCT_ITEM_HELP',
 			instruct,
-			helpKey: instr[0],
+			helpKey: startCommand,
 		})
 		return
 	}
 	// 细节操作
-	const instrTemps = instruct.split(`${instr[0]} `)[1]
-	switch (instr[0]) {
+	switch (startCommand!) {
 		case 'search':
-			searchExecute(instrTemps, terminal, commandItem)
+			searchExecute(commandBody!, terminal, systemCommandInfo)
 			return
 		case 'help':
 			terminal.addInstructRecord({ type: 'HELP', instruct })
 			return
 		case 'baidu':
-			baiduExecute(instrTemps)
+			baiduExecute(commandBody!)
 			terminal.addInstructRecord({ type: 'INSTRUCT', instruct })
 
 			return
 		case 'github':
-			githubExecute(instrTemps)
+			githubExecute(commandBody!)
 			terminal.addInstructRecord({ type: 'INSTRUCT', instruct })
 
 			return
 		case 'google':
-			googleExecute(instrTemps)
+			googleExecute(commandBody!)
 			terminal.addInstructRecord({ type: 'INSTRUCT', instruct })
 
 			return
 		case 'juejin':
-			juejinExecute(instrTemps)
+			juejinExecute(commandBody!)
 			terminal.addInstructRecord({ type: 'INSTRUCT', instruct })
 
 			return
 		case 'zhihu':
-			zhihuExecute(instrTemps)
+			zhihuExecute(commandBody!)
 			terminal.addInstructRecord({ type: 'INSTRUCT', instruct })
 
 			return
 		case 'bili':
-			biliExecute(instrTemps)
+			biliExecute(commandBody!)
 			terminal.addInstructRecord({ type: 'INSTRUCT', instruct })
 
 		case 'wangyiyun':
-			wangYiYunExecute(instrTemps)
+			wangYiYunExecute(commandBody!)
 			terminal.addInstructRecord({ type: 'INSTRUCT', instruct })
 			return
 
 		case 'goto':
-			gotoExecute(instrTemps)
+			gotoExecute(commandBody!)
 			terminal.addInstructRecord({ type: 'INSTRUCT', instruct })
 			return
 
 		case 'bg':
-			bgExecute(instrTemps, terminal)
+			bgExecute(commandBody!, terminal)
 			terminal.addInstructRecord({ type: 'INSTRUCT', instruct })
 			return
 
 		case 'hostname':
-			hostnameExecute(instrTemps, terminal, instruct)
-			// terminal.addInstructRecord({ type: 'INSTRUCT', instruct })
+			hostnameExecute(commandBody!, terminal, instruct)
 			return
 
 		case 'bingBg':
-			bingBgExecute(instrTemps, terminal)
+			bingBgExecute(commandBody!, terminal)
 			terminal.addInstructRecord({ type: 'INSTRUCT', instruct })
 			return
 		case 'reset':
@@ -127,19 +123,19 @@ export function doCommandExecute(instruct: string, terminal: TSnowTerminal) {
 			return
 
 		case 'authorShow':
-			authorShowExecute(instrTemps, terminal, instruct)
+			authorShowExecute(commandBody!, terminal, instruct)
 			return
 
 		case 'hintShow':
-			hintShowExecute(instrTemps, terminal, instruct)
+			hintShowExecute(commandBody!, terminal, instruct)
 			return
 
 		case 'welcome':
-			welcomeExecute(instrTemps, terminal, instruct)
+			welcomeExecute(commandBody!, terminal, instruct)
 			return
 
 		case 'weather':
-			weatherExecute(instrTemps, terminal, instruct)
+			weatherExecute(commandBody!, terminal, instruct)
 			return
 
 		case 'history':
@@ -151,7 +147,7 @@ export function doCommandExecute(instruct: string, terminal: TSnowTerminal) {
 			return
 
 		case 'fanyi':
-			fanyiExecute(instrTemps, terminal, instruct)
+			fanyiExecute(commandBody!, terminal, instruct)
 			return
 
 		case 'shortcut':
@@ -163,25 +159,25 @@ export function doCommandExecute(instruct: string, terminal: TSnowTerminal) {
 			return
 
 		case 'timeShow':
-			timeShowExecute(instrTemps, terminal, instruct)
+			timeShowExecute(commandBody!, terminal, instruct)
 			return
 
 		case 'varbook':
-			varbookExecute(instrTemps, terminal, instruct)
+			varbookExecute(commandBody!, terminal, instruct)
 			return
 
 		case 'ping':
-			pingExecute(instrTemps, terminal, instruct)
+			pingExecute(commandBody!, terminal, instruct)
 			return
 
 		case 'npm':
-			npmExecute(instrTemps, instruct)
+			npmExecute(commandBody!, instruct)
 			terminal.addInstructRecord({ type: 'INSTRUCT', instruct })
 			return
 
 		case 'jump':
 		case 'j':
-			jumpExecute(instrTemps, terminal, instruct)
+			jumpExecute(commandBody!, terminal, instruct)
 			return
 
 		default:
