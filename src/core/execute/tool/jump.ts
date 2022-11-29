@@ -12,8 +12,9 @@ export async function jumpExecute(
 		name: '',
 		url: '',
 	}
+	console.log('aaaa', instruct)
 
-	if (instruct.includes(' set ') && !instruct.includes(' -s')) {
+	if (instruct.includes('set ') && !instruct.includes(' -s')) {
 		// is set jump
 		gotoParams.isSet = true
 		if (
@@ -28,10 +29,15 @@ export async function jumpExecute(
 			})
 			terminal.showSuccess('添加成功', fullInstruct)
 		} else {
-			terminal.showError('添加失败', fullInstruct)
+			terminal.showError(
+				'添加失败 demo: jump set -n blog -l http://www.jimmyxuexue.top:999/',
+				`${fullInstruct}`
+			)
 			console.log('instruct error')
 		}
 	} else {
+		console.log('   nnnn')
+
 		const name = instruct.includes(' -s')
 			? instruct?.split(' -s')[0].trim()
 			: instruct?.trim()

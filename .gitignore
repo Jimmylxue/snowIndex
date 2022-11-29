@@ -5,3 +5,5 @@ logs/
 # Project specifies
 *.pem
 *.crx
+
+.DS_Store
