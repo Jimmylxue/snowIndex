@@ -1,7 +1,10 @@
 import { config } from '@/config/react-query'
+import { useCatchError } from './hooks/useCatchError'
 import TerminalPage from './pages/terminal'
 
 function App() {
+	useCatchError()
+
 	const { queryClient, QueryClientProvider } = config()
 
 	return (
