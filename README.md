@@ -4,7 +4,7 @@
 
 在线体验：[传送门](http://www.jimmyxuexue.top:668)
 
-![image-20220814123001994](https://vitepress-source.oss-cn-beijing.aliyuncs.com/typoraimage-20220814123001994.png)
+![](https://vitepress-source.oss-cn-beijing.aliyuncs.com/typoraimage-20221202143109571.png)
 
 ![image-20220814122056794](https://vitepress-source.oss-cn-beijing.aliyuncs.com/typoraimage-20220814122056794.png)
 
@@ -25,9 +25,9 @@ github snowIndex
 help => 查看帮助文档
 ```
 
-目前以支持指令：
+目前已支持30+指令：
 
-![image-20220814122855846](https://vitepress-source.oss-cn-beijing.aliyuncs.com/typoraimage-20220814122855846.png)
+[指令文档传送门](http://www.jimmyxuexue.top:999/snowIndex/guide/introduce.html)
 
 > 不断完善中......
 

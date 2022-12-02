@@ -3,7 +3,7 @@ import { TBgType } from '@/types/TBackground'
 import { TSnowTerminal } from '@/types/TSnowTerminal'
 
 export async function bgExecute(instruct: string, terminal: TSnowTerminal) {
-	if (instruct.trim()) {
+	if (instruct?.trim()) {
 		// 有地址
 		terminal.changeBackGround(instruct.trim())
 		return

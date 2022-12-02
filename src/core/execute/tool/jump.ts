@@ -63,7 +63,7 @@ export async function jumpExecute(
 export const jumpCommand = {
 	start: 'jump',
 	shortStart: ['j', 'ju'],
-	hint: 'jump <目标名称> [-s 是否当前页面打开]',
+	hint: 'jump <目标名称> [-s 是否当前页面打开]  ;\n   jump set -n <跳转名> -l <跳转链接>',
 	desc: '快速跳转至收藏的网站',
 	params: [
 		{

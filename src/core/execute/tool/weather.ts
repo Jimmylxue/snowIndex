@@ -12,9 +12,10 @@ export async function weatherExecute(
 		terminal.showError(`获取地址失败，请尝试刷新浏览器`, fullInstruct)
 		return
 	}
+	console.log(location)
 	const res = await get<TWeatherInfo>(
 		`weather/base?cityName=${
-			instruct.trim() || JSON.parse(location).city.replace(/市/g, '')
+			instruct?.trim() || JSON.parse(location).city.replace(/市/g, '')
 		}`
 	)
 	terminal.addInstructRecord({
