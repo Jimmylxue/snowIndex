@@ -11,7 +11,8 @@
 		"build:crx": "cross-env BUILD_CRX=1 vite --mode production build",
 		"preview": "vite preview",
 		"test": "jest",
-		"test:w": "jest --watch"
+		"test:w": "jest --watch",
+		"upload:map": "node uploadMap.js"
 	},
 	"dependencies": {
 		"ahooks": "^3.7.0",

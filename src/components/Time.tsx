@@ -1,5 +1,5 @@
 import { memo, useMemo } from 'react'
-import { Statistic } from 'antd'
+import { Progress, Statistic } from 'antd'
 import moment from 'moment'
 import { getToday } from '@/utils/index'
 
@@ -18,7 +18,7 @@ export default memo(() => {
 		.add(7, 'days')
 		.format('YYYY/MM/DD') //下周一
 	const showOffWork = useMemo(() => {
-		if (nowWeak <= 5 && nowHour < 18) {
+		if (!(nowWeak <= 5 && nowHour < 18)) {
 			return (
 				<Countdown
 					valueStyle={{
@@ -28,7 +28,7 @@ export default memo(() => {
 						color: '#fff',
 					}}
 					title={<div className=" text-white -mb-2">距离下班：</div>}
-					value={xiaban}
+					value={1000 * 60 * 60 * 8}
 					format="HH:mm:ss:SSS"
 				/>
 			)
@@ -36,10 +36,17 @@ export default memo(() => {
 			return <p className="mb-1">下班时间，该学习啦~</p>
 		}
 	}, [nowWeak, nowHour, nowMinutes])
+
+	console.log(xiaban / (1000 * 60 * 60 * 8))
+	console.log(xiaban)
 	return (
 		<div className="my-1" id="timeNode">
+			<Progress
+				percent={99.9}
+				status="active"
+				strokeColor={{ '0%': '#108ee9', '100%': '#87d068' }}
+			/>
 			{showOffWork}
-
 			{nowWeak <= 5 ? (
 				<Countdown
 					valueStyle={{
