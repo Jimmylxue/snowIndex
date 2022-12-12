@@ -1,24 +1,25 @@
 import { memo, useMemo } from 'react'
 import { Progress, Statistic } from 'antd'
-import moment from 'moment'
-import { getToday } from '@/utils/index'
+import { useTimeInfo } from '@/hooks/useTimeInfo'
 
 const { Countdown } = Statistic
 
 export default memo(() => {
-	const dayStr = getToday() + ' 18:00:00'
-	const timeNow = new Date()
-	const nowHour = timeNow.getHours()
-	const nowMinutes = timeNow.getMinutes()
-	const nowWeak = +moment(timeNow).format('E')
-	const xiaban = +moment(dayStr)
-	const outWork = moment().weekday(6).format('YYYY/MM/DD') //周六
-	const weekStart = moment(timeNow)
-		.subtract(nowWeak - 1, 'days')
-		.add(7, 'days')
-		.format('YYYY/MM/DD') //下周一
+	const {
+		weekStart,
+		progress,
+		outWork,
+		endWork,
+		nowHour,
+		nowMinutes,
+		nowWeak,
+	} = useTimeInfo({
+		workStartTime: '9:00:00',
+		workEndTime: '18:00:00',
+	})
+
 	const showOffWork = useMemo(() => {
-		if (!(nowWeak <= 5 && nowHour < 18)) {
+		if (nowWeak <= 5 && nowHour < 18) {
 			return (
 				<Countdown
 					valueStyle={{
@@ -28,7 +29,7 @@ export default memo(() => {
 						color: '#fff',
 					}}
 					title={<div className=" text-white -mb-2">距离下班：</div>}
-					value={1000 * 60 * 60 * 8}
+					value={endWork}
 					format="HH:mm:ss:SSS"
 				/>
 			)
@@ -37,12 +38,10 @@ export default memo(() => {
 		}
 	}, [nowWeak, nowHour, nowMinutes])
 
-	console.log(xiaban / (1000 * 60 * 60 * 8))
-	console.log(xiaban)
 	return (
 		<div className="my-1" id="timeNode">
 			<Progress
-				percent={99.9}
+				percent={progress}
 				status="active"
 				strokeColor={{ '0%': '#108ee9', '100%': '#87d068' }}
 			/>
