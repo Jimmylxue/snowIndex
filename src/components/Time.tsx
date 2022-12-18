@@ -7,19 +7,24 @@ const { Countdown } = Statistic
 export default memo(() => {
 	const {
 		weekStart,
-		progress,
+		workProgress,
 		outWork,
 		endWork,
 		nowHour,
 		nowMinutes,
 		nowWeak,
+		weekProgress,
 	} = useTimeInfo({
 		workStartTime: '9:00:00',
 		workEndTime: '18:00:00',
 	})
 
+	const isWorkDay = useMemo(() => {
+		return nowWeak <= 5
+	}, [nowWeak])
+
 	const showOffWork = useMemo(() => {
-		if (nowWeak <= 5 && nowHour < 18) {
+		if (isWorkDay && nowHour < 18) {
 			return (
 				<Countdown
 					valueStyle={{
@@ -40,11 +45,20 @@ export default memo(() => {
 
 	return (
 		<div className="my-1" id="timeNode">
-			<Progress
-				percent={progress}
-				status="active"
-				strokeColor={{ '0%': '#108ee9', '100%': '#87d068' }}
-			/>
+			{isWorkDay ? (
+				<Progress
+					percent={workProgress}
+					status="active"
+					strokeColor={{ '0%': '#108ee9', '100%': '#87d068' }}
+				/>
+			) : (
+				<Progress
+					percent={weekProgress}
+					status="active"
+					strokeColor={{ '0%': '#108ee9', '100%': '#87d068' }}
+				/>
+			)}
+
 			{showOffWork}
 			{nowWeak <= 5 ? (
 				<Countdown
