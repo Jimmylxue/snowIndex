@@ -1,19 +1,19 @@
-import { config } from '@/config/react-query'
-import { useCatchError } from './hooks/useCatchError'
-import TerminalPage from './pages/terminal'
+import { config } from '@/config/react-query';
+import { useCatchError } from './hooks/useCatchError';
+import TerminalPage from './pages/terminal';
 
 function App() {
-	useCatchError()
+  useCatchError();
 
-	const { queryClient, QueryClientProvider } = config()
+  const { queryClient, QueryClientProvider } = config();
 
-	return (
-		<QueryClientProvider client={queryClient}>
-			<div className="bg-black h-screen overflow-auto p-5 relative font-sans">
-				<TerminalPage />
-			</div>
-		</QueryClientProvider>
-	)
+  return (
+    <QueryClientProvider client={queryClient}>
+      <div className='bg-black h-screen overflow-auto p-5 relative font-sans'>
+        <TerminalPage />
+      </div>
+    </QueryClientProvider>
+  );
 }
 
-export default App
+export default App;
