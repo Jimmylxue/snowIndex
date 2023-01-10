@@ -43,21 +43,38 @@ export default memo(() => {
     }
   }, [nowWeak, nowHour, nowMinutes]);
 
+  const getMakeMoney = useMemo(() => {
+    const oneDayMoney = Number(13000 / 30).toFixed(2);
+    if (!isWorkDay) {
+      return oneDayMoney;
+    }
+    if (workProgress <= 100) {
+      return ((+oneDayMoney * weekProgress) / 100).toFixed(2);
+    }
+    return oneDayMoney;
+  }, [isWorkDay, workProgress]);
+
   return (
     <div className='my-1' id='timeNode'>
-      {isWorkDay ? (
-        <Progress
-          percent={workProgress}
-          status='active'
-          strokeColor={{ '0%': '#108ee9', '100%': '#87d068' }}
-        />
-      ) : (
-        <Progress
-          percent={weekProgress}
-          status='active'
-          strokeColor={{ '0%': '#108ee9', '100%': '#87d068' }}
-        />
-      )}
+      <div className='flex items-center'>
+        <div className=' flex-grow'>
+          {isWorkDay ? (
+            <Progress
+              percent={workProgress}
+              status='active'
+              strokeColor={{ '0%': '#108ee9', '100%': '#87d068' }}
+              format={() => '💴'}
+            />
+          ) : (
+            <Progress
+              percent={weekProgress}
+              status='active'
+              strokeColor={{ '0%': '#108ee9', '100%': '#87d068' }}
+            />
+          )}
+        </div>
+        <div>income：￥{getMakeMoney}</div>
+      </div>
 
       {showOffWork}
       {nowWeak <= 5 ? (

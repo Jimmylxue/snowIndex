@@ -40,8 +40,6 @@ export async function pingExecute(
 		pingParams._ = instruct.trim()
 	}
 
-	console.log('pingParams', pingParams)
-
 	let dest = pingParams._
 	if (
 		!dest.toLowerCase().startsWith('http://') &&

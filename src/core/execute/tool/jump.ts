@@ -12,7 +12,6 @@ export async function jumpExecute(
 		name: '',
 		url: '',
 	}
-	console.log('aaaa', instruct)
 
 	if (instruct.includes('set ') && !instruct.includes(' -s')) {
 		// is set jump
@@ -36,15 +35,10 @@ export async function jumpExecute(
 			console.log('instruct error')
 		}
 	} else {
-		console.log('   nnnn')
 
 		const name = instruct.includes(' -s')
 			? instruct?.split(' -s')[0].trim()
 			: instruct?.trim()
-
-		console.log('didid', name)
-		console.log('instruct', instruct)
-
 		const baseConfig = terminal.getStoreValue('baseConfig')
 		const jumpList = baseConfig?.jumpList || []
 		const findItem = jumpList.find(

@@ -5,3 +5,7 @@
 #timeNode .ant-progress-text{
   color: #fff !important;
 }
+
+#snow-terminal-main-contain::-webkit-scrollbar {
+  display: none; /* Chrome Safari */
+}

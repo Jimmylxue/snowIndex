@@ -76,7 +76,6 @@ export function recordReducer(
 				type: 'INSTRUCT',
 				helpKey: action.helpKey,
 			}
-			console.log('acton', action)
 			return {
 				...state,
 				currentRecord: [...state.currentRecord, records, action.record!],

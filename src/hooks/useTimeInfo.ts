@@ -19,8 +19,6 @@ export function useTimeInfo({ workEndTime, workStartTime }: TProps) {
 		.add(7, 'days')
 		.format('YYYY/MM/DD') //下周一 -- 开始工作的时间
 
-	console.log(weekStart)
-
 	// 工作时间进度条
 	const workProgress = useMemo(() => {
 		const parent = moment(endWork).valueOf() - moment(startWork).valueOf()

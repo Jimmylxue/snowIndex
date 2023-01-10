@@ -10,6 +10,7 @@ import { useUpdate } from 'ahooks'
 import RecordContainer from './RecordContainer'
 import { Welcome, Time } from '@/components/index'
 import classNames from 'classnames'
+import './cover.css'
 
 export function useTerminal(): TSnowTerminal {
 	const update = useUpdate()
@@ -340,6 +341,7 @@ export function useTerminal(): TSnowTerminal {
 				className={classNames('relative z-10 overflow-auto text-white', {
 					'mt-8': !baseConfig?.timeShow,
 				})}
+				id="snow-terminal-main-contain"
 				ref={recordContainer}
 				style={{
 					height: `calc(100vh - ${containerHeight}px)`,
