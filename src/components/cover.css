@@ -1,3 +1,7 @@
 .varbook-dz .ant-table-thead > tr > th, .ant-table-tbody > tr > td, .ant-table tfoot > tr > th, .ant-table tfoot > tr > td {
   padding: 10px 16px !important;
 }
+
+#timeNode .ant-progress-text{
+  color: #fff !important;
+}
