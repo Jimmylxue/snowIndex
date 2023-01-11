@@ -49,7 +49,7 @@ export default memo(() => {
       return oneDayMoney;
     }
     if (workProgress <= 100) {
-      return ((+oneDayMoney * weekProgress) / 100).toFixed(2);
+      return ((+oneDayMoney * workProgress) / 100).toFixed(2);
     }
     return oneDayMoney;
   }, [isWorkDay, workProgress]);
