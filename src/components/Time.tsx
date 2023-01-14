@@ -70,6 +70,7 @@ export default memo(() => {
               percent={weekProgress}
               status='active'
               strokeColor={{ '0%': '#108ee9', '100%': '#87d068' }}
+              format={() => '💴'}
             />
           )}
         </div>
