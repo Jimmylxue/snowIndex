@@ -15,4 +15,5 @@ export type TMessage = {
   text: string;
   createTime: string;
   memberInfo: TUser;
+  userList: TUser[];
 };

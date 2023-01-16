@@ -14,18 +14,18 @@ function Home() {
 }
 
 ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
-  <React.StrictMode>
-    <Provider store={store}>
-      <SocketProvider>
-        <Router>
-          <Routes>
-            <Route path='/' element={<App />} />
-            <Route path='/home' element={<Home />} />
-            <Route path='/chatRoom' element={<ChatRoom />} />
-            <Route path='*' element={<App />}></Route>
-          </Routes>
-        </Router>
-      </SocketProvider>
-    </Provider>
-  </React.StrictMode>,
+  // <React.StrictMode>
+  <Provider store={store}>
+    <SocketProvider>
+      <Router>
+        <Routes>
+          <Route path='/' element={<App />} />
+          <Route path='/home' element={<Home />} />
+          <Route path='/chatRoom' element={<ChatRoom />} />
+          {/* <Route path='*' element={<App />}></Route> */}
+        </Routes>
+      </Router>
+    </SocketProvider>
+  </Provider>,
+  // </React.StrictMode>,
 );

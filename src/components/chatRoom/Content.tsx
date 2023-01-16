@@ -5,5 +5,9 @@ type TProps = {
 };
 
 export default memo(({ children }: TProps) => {
-  return <div className='content h-5/6 w-3/4 bg-red-200 px-5'>{children}</div>;
+  return (
+    <div id='content' className='h-5/6 w-3/4  px-5 overflow-auto'>
+      {children}
+    </div>
+  );
 });

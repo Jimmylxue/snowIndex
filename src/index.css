@@ -12,5 +12,7 @@ html{
   overflow: hidden;
 }
 
-
+button, [type='button'], [type='reset'], [type='submit']{
+  background:#1890ff;
+}
 

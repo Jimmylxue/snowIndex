@@ -1,4 +1,4 @@
-import { memo } from 'react';
+import { memo, useState } from 'react';
 import { Input } from 'antd';
 import { useSocket } from '@/hooks/useSocket';
 import { MESSAGE_TYPE, TUser } from '@/types/TSocket';
@@ -9,6 +9,7 @@ type TProps = {
 };
 
 export default memo(({ user }: TProps) => {
+  const [text, setText] = useState('');
   const socket = useSocket();
 
   return (
@@ -16,9 +17,13 @@ export default memo(({ user }: TProps) => {
       <Search
         placeholder='input search text'
         allowClear
-        enterButton='send'
+        enterButton='发送'
         size='large'
+        value={text}
         onSearch={(text) => {
+          if (!text) {
+            return;
+          }
           const textItem = {
             type: MESSAGE_TYPE.个人消息,
             text,
@@ -26,7 +31,11 @@ export default memo(({ user }: TProps) => {
             memberInfo: user,
           };
           socket.emit('sendMessage', textItem);
-          console.log(textItem);
+          setText('');
+        }}
+        onInput={(e) => {
+          // @ts-ignore
+          setText(e.nativeEvent.value);
         }}
       />
     </div>
