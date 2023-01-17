@@ -47,7 +47,8 @@ export default memo(() => {
           </a>
           ,{' '}
           <span className='text-gray-400'>
-            you can input "authorShow off" to hide it ☀️
+            you can input "authorShow off" to hide it ☀️ enter chatroom to
+            experience new features 🎉
           </span>
         </p>
       )}

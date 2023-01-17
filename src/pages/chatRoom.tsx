@@ -2,64 +2,14 @@ import Content from '@/components/chatRoom/Content';
 import Message from '@/components/chatRoom/Message';
 import SendBox from '@/components/chatRoom/SendBox';
 import User from '@/components/chatRoom/User';
-import { useSocket } from '@/hooks/useSocket';
-import { MESSAGE_TYPE, TMessage, TUser } from '@/types/TSocket';
+import { useChatRoom } from '@/hooks/chatRoom/useChatRoom';
 import { Button } from 'antd';
-import { memo, useEffect, useState } from 'react';
+import { memo } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 export default memo(() => {
-  useEffect(() => {
-    console.log('mmm');
-  }, []);
-
-  const socket = useSocket();
-  const [loginUser, setLoginUser] = useState<TUser>();
-  const [messageList, setMessageList] = useState<TMessage[]>([]);
-  const [userList, setUserList] = useState<TUser[]>([]);
-
-  useEffect(() => {
-    const handleMessage = (payload: TMessage) => {
-      const { type } = payload;
-      switch (type) {
-        case MESSAGE_TYPE.登录登出消息:
-          if (!loginUser?.socketId) {
-            console.log('sdssddd');
-            setLoginUser(payload.memberInfo);
-          }
-        // return;
-      }
-      setMessageList((list) => [...list, payload]);
-      setUserList(payload.userList || []);
-    };
-    if (socket) {
-      socket.on('message', handleMessage); // 监听消息
-      return () => {
-        // componentWillUnmount
-        socket.off('message', handleMessage);
-      };
-    }
-  }, [socket, loginUser]);
-
-  useEffect(() => {
-    console.log(socket);
-    if (socket) {
-      socket.emit('login');
-    }
-  }, []);
-
-  useEffect(() => {
-    const beforeunload = () => {
-      localStorage.setItem('sss', 'abc~~');
-      socket.emit('logout');
-    };
-    window.addEventListener('beforeunload', beforeunload);
-  }, [socket]);
-
-  useEffect(() => {
-    document!.getElementById('content')!.scrollTop =
-      document!.getElementById('content')!.scrollHeight;
-  }, [messageList.length]);
-
+  const { loginUser, messageList, userList } = useChatRoom();
+  const navigate = useNavigate();
   return (
     <div
       className=' w-full h-screen flex text-white'
@@ -72,15 +22,9 @@ export default memo(() => {
             src='https://img1.baidu.com/it/u=4050463138,1499422748&fm=253&app=138&size=w931&n=0&f=JPEG&fmt=auto?sec=1673974800&t=db34835adc90ef962e8848d96deb5683'
             alt=''
           />
-          <span
-            className=' text-lg my-2'
-            onClick={() => {
-              socket.emit('logout');
-            }}>
-            吉米小黑屋
-          </span>
+          <span className=' text-lg my-2'>吉米小黑屋</span>
         </div>
-        <div className=' overflow-auto h-fit'>
+        <div className=' overflow-auto h-fit px-2'>
           {userList.map((user, index) => (
             <User user={user} key={index} />
           ))}
@@ -91,6 +35,9 @@ export default memo(() => {
           className=' w-full absolute bottom-4'
           style={{
             background: 'none',
+          }}
+          onClick={() => {
+            navigate('/');
           }}>
           back snowIndex
         </Button>

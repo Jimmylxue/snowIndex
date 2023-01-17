@@ -14,7 +14,7 @@ function Home() {
 }
 
 ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
-  // <React.StrictMode>
+  // <React.StrictMode> react 18 版本 useEffect 会执行两次 不需要可以先注释掉
   <Provider store={store}>
     <SocketProvider>
       <Router>
