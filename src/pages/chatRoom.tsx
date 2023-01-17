@@ -100,13 +100,30 @@ export default memo(() => {
         style={{
           backgroundColor: '#2e2f38',
         }}>
+        <p className='-mt-4'>
+          如果觉得不错 👍，给个{' '}
+          <a
+            className=' text-blue-500'
+            href='https://github.com/Jimmylxue/snowIndex'>
+            star
+          </a>{' '}
+          ⭐ 吧，你的认可是我最大的动力 ！
+        </p>
         <Content>
           {messageList.map((message, index) => (
             <Message message={message} key={index}></Message>
           ))}
         </Content>
         <SendBox user={loginUser}></SendBox>
-        <p className='mt-2'>吉米小黑屋 - 如果侵权联系我删除</p>
+        <p className='mt-2'>吉米小黑屋 - 如有侵权联系我删除</p>
+        <div className=' flex -mb-5'>
+          <a className='mx-2' href='https://github.com/Jimmylxue/snowIndex'>
+            github
+          </a>
+          <a className='mx-2' href='http://www.jimmyxuexue.top/'>
+            知识星球
+          </a>
+        </div>
       </div>
     </div>
   );

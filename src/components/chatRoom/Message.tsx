@@ -1,4 +1,5 @@
 import { TMessage } from '@/types/TSocket';
+import moment from 'moment';
 import { memo } from 'react';
 
 type TProps = {
@@ -32,6 +33,9 @@ export default memo(({ message }: TProps) => {
           }}>
           {message.text}
         </div>
+        <p className='ml-3 text-xs mt-1'>
+          {moment(message.createTime).format('YYYY-MM-DD, h:mm:ss a')}
+        </p>
       </div>
     </div>
   );
