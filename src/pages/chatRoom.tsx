@@ -4,12 +4,19 @@ import SendBox from '@/components/chatRoom/SendBox';
 import User from '@/components/chatRoom/User';
 import { useChatRoom } from '@/hooks/chatRoom/useChatRoom';
 import { Button } from 'antd';
-import { memo } from 'react';
+import { memo, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 export default memo(() => {
   const { loginUser, messageList, userList } = useChatRoom();
   const navigate = useNavigate();
+
+  useEffect(() => {
+    window.oncontextmenu = function () {
+      return true;
+    };
+  }, []);
+
   return (
     <div
       className=' w-full h-screen flex text-white'

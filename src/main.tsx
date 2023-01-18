@@ -13,19 +13,25 @@ function Home() {
   return <div>hello world</div>;
 }
 
+const Root = function () {
+  return (
+    // <React.StrictMode>
+    //   react 18 版本 useEffect 会执行两次 不需要可以先注释掉
+    <Provider store={store}>
+      <SocketProvider>
+        <Router>
+          <Routes>
+            <Route path='/' element={<App />} />
+            <Route path='/chatRoom' element={<ChatRoom />} />
+            {/* <Route path='*' element={<App />}></Route> */}
+          </Routes>
+        </Router>
+      </SocketProvider>
+    </Provider>
+    // </React.StrictMode>
+  );
+};
+
 ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
-  // <React.StrictMode> react 18 版本 useEffect 会执行两次 不需要可以先注释掉
-  <Provider store={store}>
-    <SocketProvider>
-      <Router>
-        <Routes>
-          <Route path='/' element={<App />} />
-          <Route path='/home' element={<Home />} />
-          <Route path='/chatRoom' element={<ChatRoom />} />
-          {/* <Route path='*' element={<App />}></Route> */}
-        </Routes>
-      </Router>
-    </SocketProvider>
-  </Provider>,
-  // </React.StrictMode>,
+  <Root />,
 );
