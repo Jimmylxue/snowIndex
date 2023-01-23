@@ -9,7 +9,6 @@ function App() {
 
   useEffect(() => {
     window.oncontextmenu = function () {
-      console.log('sss', import.meta.env.VITE_APP_OPEN_CONTEXT_MENU);
       return import.meta.env.VITE_APP_OPEN_CONTEXT_MENU === 'false'
         ? false
         : true;
