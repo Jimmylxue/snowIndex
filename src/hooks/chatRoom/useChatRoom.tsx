@@ -1,11 +1,12 @@
 import { MESSAGE_TYPE, TMessage, TUser } from '@/types/TSocket';
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { useSocket } from '../useSocket';
 
 export function useChatRoom() {
   const [loginUser, setLoginUser] = useState<TUser>();
   const [messageList, setMessageList] = useState<TMessage[]>([]);
   const [userList, setUserList] = useState<TUser[]>([]);
+  const loginRef = useRef<boolean>(false);
 
   const socket = useSocket();
 
@@ -30,9 +31,12 @@ export function useChatRoom() {
   }, [socket, loginUser]);
 
   useEffect(() => {
-    if (socket) {
+    if (socket && !loginRef.current) {
       socket.emit('login');
     }
+    return () => {
+      loginRef.current = true;
+    };
   }, [socket]);
 
   useEffect(() => {
