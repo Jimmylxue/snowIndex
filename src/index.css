@@ -1,6 +1,6 @@
-@tailwind base;
+/* @tailwind base;
 @tailwind components;
-@tailwind utilities;
+@tailwind utilities; */
 
 *{
   margin: 0;
@@ -12,7 +12,12 @@ html{
   overflow: hidden;
 }
 
-button, [type='button'], [type='reset'], [type='submit']{
-  background:#1890ff;
+p{
+  margin-bottom: 0;
 }
+
+
+/* button, [type='button'], [type='reset'], [type='submit']{
+  background:#1890ff;
+} */
 

@@ -6,12 +6,9 @@ import { Provider } from 'react-redux';
 import store from '@/stores/store';
 import { SocketProvider } from './hooks/useSocket';
 import ChatRoom from './pages/chatRoom';
+import 'tailwindcss/tailwind.css';
 import 'antd/dist/antd.css';
 import './index.css';
-
-function Home() {
-  return <div>hello world</div>;
-}
 
 const Root = function () {
   return (

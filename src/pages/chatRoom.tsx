@@ -23,7 +23,7 @@ export default memo(() => {
       style={{
         backgroundColor: '#343540',
       }}>
-      <div className='slider w-1/5 relative pb-14 overflow-hidden flex flex-col'>
+      <div className='slider w-1/5 relative overflow-hidden flex flex-col h-full'>
         <div className=' flex flex-col justify-center items-center m-1'>
           <img
             src='https://img1.baidu.com/it/u=4050463138,1499422748&fm=253&app=138&size=w931&n=0&f=JPEG&fmt=auto?sec=1673974800&t=db34835adc90ef962e8848d96deb5683'
@@ -31,7 +31,7 @@ export default memo(() => {
           />
           <span className=' text-lg my-2'>吉米小黑屋</span>
         </div>
-        <div className=' overflow-auto h-fit px-2'>
+        <div className=' overflow-auto h-fit px-2 flex-grow'>
           {userList.map((user, index) => (
             <User user={user} key={index} />
           ))}
@@ -50,11 +50,11 @@ export default memo(() => {
         </Button>
       </div>
       <div
-        className='context w-full  flex flex-col items-center justify-center'
+        className='context w-full  flex flex-col items-center justify-center py-4'
         style={{
           backgroundColor: '#2e2f38',
         }}>
-        <p className='-mt-4'>
+        <p>
           如果觉得不错 👍，给个{' '}
           <a
             className=' text-blue-500'
@@ -69,8 +69,8 @@ export default memo(() => {
           ))}
         </Content>
         <SendBox user={loginUser}></SendBox>
-        <p className='mt-2'>吉米小黑屋 - 如有侵权联系我删除</p>
-        <div className=' flex -mb-5'>
+        <p className='mt-2 mb-0'>吉米小黑屋 - 如有侵权联系我删除</p>
+        <div className='flex mt-2'>
           <a className='mx-2' href='https://github.com/Jimmylxue/snowIndex'>
             github
           </a>
