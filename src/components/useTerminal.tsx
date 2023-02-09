@@ -287,7 +287,9 @@ export function useTerminal(): TSnowTerminal {
           case 'ADD':
             return [...jumpList, jumpInfo];
           case 'REMOVE':
-            return [...jumpList.filter((jump) => jump.name !== jumpInfo?.name)];
+            return [
+              ...jumpList.filter((jump: any) => jump.name !== jumpInfo?.name),
+            ];
           case 'CLEAR':
             return [];
           default:
