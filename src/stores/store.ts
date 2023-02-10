@@ -15,6 +15,9 @@ export type TStoreType = {
     hostname: string;
     jumpList: { name: string; url: string }[];
     timeShow: boolean;
+    salary: number;
+    workingHour: string[];
+    is996: boolean;
   };
   welcome: {
     authorShow: boolean;

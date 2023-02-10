@@ -1,10 +1,14 @@
 import { memo, useMemo } from 'react';
 import { Progress, Statistic } from 'antd';
 import { useTimeInfo } from '@/hooks/useTimeInfo';
+import { useSelector } from 'react-redux';
+import store from '@/stores/store';
+import { TStoreType } from '../stores/store';
 
 const { Countdown } = Statistic;
 
 export default memo(() => {
+  const { baseConfig } = useSelector<TStoreType, TStoreType>((state) => state);
   const {
     weekStart,
     workProgress,
@@ -15,10 +19,10 @@ export default memo(() => {
     nowWeak,
     weekProgress,
   } = useTimeInfo({
-    workStartTime: '9:00:00',
-    workEndTime: '18:00:00',
+    workStartTime: baseConfig.workingHour[0] || '09:00:00',
+    workEndTime: baseConfig.workingHour[1] || '18:00:00',
   });
-
+  console.log(baseConfig);
   const isWorkDay = useMemo(() => {
     return nowWeak <= 5;
   }, [nowWeak]);
@@ -44,7 +48,7 @@ export default memo(() => {
   }, [nowWeak, nowHour, nowMinutes]);
 
   const getMakeMoney = useMemo(() => {
-    const oneDayMoney = Number(13000 / 30).toFixed(2);
+    const oneDayMoney = Number(baseConfig.salary / 30).toFixed(2);
     if (!isWorkDay) {
       return oneDayMoney;
     }

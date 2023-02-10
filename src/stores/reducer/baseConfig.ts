@@ -11,7 +11,7 @@ export type TBaseConfigType = {
     url: string;
   }[];
   is996: boolean;
-  working: string[];
+  workingHour: string[];
   salary: number;
 };
 
@@ -22,7 +22,7 @@ const defaultState: TBaseConfigType = {
   timeShow: false,
   jumpList: [],
   is996: false,
-  working: ['9:00', '18:00'],
+  workingHour: ['9:00', '18:00'],
   salary: 13000,
 };
 const baseConfigReducer = ((

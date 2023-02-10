@@ -1,5 +1,6 @@
 import useLocalStorage from '@/hooks/useLocalStorage';
 import { useLocalStorageState } from 'ahooks';
+import moment from 'moment';
 import { TStoreType } from './store';
 
 export function useSystemState() {
@@ -36,7 +37,8 @@ type TParams = {
   is996: boolean;
   timeShow: boolean;
   welcomeText: string;
-  workingHour: [number, number];
+  workingHour: string[];
+  salary: number;
 };
 
 export function parseStoreParams(
@@ -47,10 +49,14 @@ export function parseStoreParams(
   if (!params) {
     return { ...initState };
   }
-
-  tempData.baseConfig.hintShow = params.hintShow;
-  tempData.baseConfig.timeShow = params.timeShow;
+  tempData.baseConfig.hintShow = !!params.hintShow;
+  tempData.baseConfig.timeShow = !!params.timeShow;
   tempData.welcome.welcomeText = params.welcomeText;
-
+  tempData.baseConfig.workingHour = [
+    moment(params?.workingHour?.[0]).format('HH:mm:ss'),
+    moment(params?.workingHour?.[1]).format('HH:mm:ss'),
+  ];
+  tempData.baseConfig.is996 = !!params.is996;
+  tempData.baseConfig.salary = params.salary;
   return tempData;
 }
