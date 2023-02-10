@@ -39,6 +39,12 @@ export function useChatRoom() {
     };
   }, [socket]);
 
+  // useEffect(() => {
+  //   if (socket && !loginRef.current) {
+  //     socket.emit('login');
+  //   }
+  // }, []);
+
   useEffect(() => {
     document!.getElementById('content')!.scrollTop =
       document!.getElementById('content')!.scrollHeight;
