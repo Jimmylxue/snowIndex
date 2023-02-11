@@ -60,3 +60,23 @@ export function parseStoreParams(
   tempData.baseConfig.salary = params.salary;
   return tempData;
 }
+
+export function parseSettingParams(initState: TStoreType): TParams {
+  const tempData: TParams = {
+    hintShow: initState.baseConfig.hintShow,
+    is996: initState.baseConfig.is996,
+    timeShow: initState.baseConfig.timeShow,
+    salary: initState.baseConfig.salary,
+    // @ts-ignore
+    workingHour: initState.baseConfig.workingHour.map((item) => {
+      const [hour, min, second] = item?.split(':');
+      return moment()
+        .set('hour', +hour)
+        .set('minute', +min)
+        .set('second', +second);
+    }),
+    welcomeText: initState.welcome.welcomeText,
+  };
+
+  return tempData;
+}

@@ -9,11 +9,13 @@ import {
   Space,
   TimePicker,
   Divider,
+  message,
 } from 'antd';
 import { useDispatch, useSelector } from 'react-redux';
 import store from '@/stores/store';
 import moment from 'moment';
-import { parseStoreParams } from '../stores';
+import { parseSettingParams, parseStoreParams } from '../stores';
+import { useEffect } from 'react';
 
 type TProps = {
   visible: boolean;
@@ -29,15 +31,18 @@ export function SettingModal({ visible, onOk, onCancel }: TProps) {
   const handleSave = () => {
     form.validateFields();
     const setObj = form.getFieldsValue();
-    console.log(setObj, state);
     storeDispatch({
       type: 'FULL_SETTING',
       data: parseStoreParams(state, setObj),
     });
-    // console.log(moment(setObj.workingHour[0]).format('HH:mm:ss'));
-    // console.log(moment(setObj.workingHour[1]).format('HH:mm:ss'));
-    // console.log(form.getFieldsValue());
+    message.success('设置成功');
+    onCancel?.();
   };
+
+  useEffect(() => {
+    const initState = parseSettingParams(state);
+    form.setFieldsValue(parseSettingParams(state));
+  }, [form, state]);
 
   return (
     <Drawer

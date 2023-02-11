@@ -2,7 +2,6 @@ import { memo, useMemo } from 'react';
 import { Progress, Statistic } from 'antd';
 import { useTimeInfo } from '@/hooks/useTimeInfo';
 import { useSelector } from 'react-redux';
-import store from '@/stores/store';
 import { TStoreType } from '../stores/store';
 
 const { Countdown } = Statistic;
@@ -19,10 +18,9 @@ export default memo(() => {
     nowWeak,
     weekProgress,
   } = useTimeInfo({
-    workStartTime: baseConfig.workingHour[0] || '09:00:00',
-    workEndTime: baseConfig.workingHour[1] || '18:00:00',
+    workStartTime: baseConfig?.workingHour?.[0] || '09:00:00',
+    workEndTime: baseConfig?.workingHour?.[1] || '18:00:00',
   });
-  console.log(baseConfig);
   const isWorkDay = useMemo(() => {
     return nowWeak <= 5;
   }, [nowWeak]);

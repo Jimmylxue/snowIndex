@@ -321,7 +321,9 @@ export function useTerminal(): TSnowTerminal {
       const timeNode = document
         .getElementById('timeNode')
         ?.getBoundingClientRect()?.height;
-      setContainerHeight((welcomeNode || 0) + (timeNode || 0) + 65);
+      setContainerHeight(
+        (welcomeNode || 0) + (timeNode ? timeNode - 30 : 0) + 85,
+      );
     });
   }, [baseConfig?.timeShow]);
 
