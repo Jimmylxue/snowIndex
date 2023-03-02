@@ -13,7 +13,8 @@
     "test": "jest",
     "test:w": "jest --watch",
     "upload:map": "node uploadMap.js",
-    "prepare": "husky install"
+    "prepare": "husky install",
+    "lint": "prettier --check ."
   },
   "dependencies": {
     "ahooks": "^3.7.0",
@@ -61,7 +62,11 @@
   },
   "husky": {
     "hooks": {
-      "pre-commit": "yarn test"
+      "pre-commit": "echo \"[Husky] pre-commit\" && lint-staged",
+      "pre-push": "yarn test"
     }
+  },
+  "lint-staged": {
+    "*": "prettier --write"
   }
 }
