@@ -3,7 +3,7 @@ describe('test demo', () => {
     expect(1 + 1).toBe(2);
   });
 
-  it('2 + 2', () => {
+  it('2 + 1', () => {
     expect(2 + 2).toBe(5);
   });
 });
