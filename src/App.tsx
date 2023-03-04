@@ -7,13 +7,13 @@ function App() {
   useCatchError();
   const { queryClient, QueryClientProvider } = config();
 
-  // useEffect(() => {
-  //   window.oncontextmenu = function () {
-  //     return import.meta.env.VITE_APP_OPEN_CONTEXT_MENU === 'false'
-  //       ? false
-  //       : true;
-  //   };
-  // }, []);
+  useEffect(() => {
+    window.oncontextmenu = function () {
+      return import.meta.env.VITE_APP_OPEN_CONTEXT_MENU === 'false'
+        ? false
+        : true;
+    };
+  }, []);
 
   return (
     <QueryClientProvider client={queryClient}>
