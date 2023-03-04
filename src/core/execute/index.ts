@@ -27,3 +27,4 @@ export { pingExecute } from './tool/ping';
 export { npmExecute } from './search/npm';
 export { jumpExecute } from './tool/jump';
 export { chatroomExecute } from './system/chatroom';
+export { bgAutoExecute } from './tool/bgAuto';

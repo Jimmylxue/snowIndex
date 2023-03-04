@@ -9,6 +9,8 @@ import baseConfigReducer from './reducer/baseConfig';
 export type TStoreType = {
   background: {
     background: string;
+    autoChange: boolean;
+    today: string;
   };
   baseConfig: {
     hintShow: boolean;

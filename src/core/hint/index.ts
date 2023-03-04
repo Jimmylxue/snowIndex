@@ -28,6 +28,7 @@ import { pingCommand } from '@/core/execute/tool/ping';
 import { npmCommand } from '@/core/execute/search/npm';
 import { jumpCommand } from '@/core/execute/tool/jump';
 import { chatroomCommand } from '../execute/system/chatroom';
+import { bgAutoCommand } from '../execute/tool/bgAuto';
 
 export type TSystemCommandType = {
   start: string;
@@ -80,4 +81,5 @@ export const commandList = [
   npmCommand,
   jumpCommand,
   chatroomCommand,
+  bgAutoCommand,
 ] as TSystemCommandType[];

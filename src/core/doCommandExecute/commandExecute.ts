@@ -22,6 +22,7 @@ import {
   timeShowExecute,
   npmExecute,
   jumpExecute,
+  bgAutoExecute,
 } from '@/core/execute';
 import { zhihuExecute } from '@/core/execute/search/zhihu';
 import { isHelpInstruct } from '../../utils';
@@ -184,6 +185,10 @@ export function useCommand() {
 
       case 'chatroom':
         navigate('/chatRoom');
+        return;
+
+      case 'bgAuto':
+        bgAutoExecute(commandBody!, terminal, instruct);
         return;
 
       default:

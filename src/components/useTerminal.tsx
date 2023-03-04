@@ -311,6 +311,15 @@ export function useTerminal(): TSnowTerminal {
       }
       return state;
     },
+
+    setBgAutoShow: (flag) => {
+      storeDispatch({
+        type: 'set_auto_bg_change',
+        data: {
+          autoChange: flag === 'bg_auto_off' ? false : true,
+        },
+      });
+    },
   } as TSnowTerminal;
 
   useEffect(() => {
