@@ -27,5 +27,5 @@ export function useSaveBackground(
     },
     ClientError,
     requestParams
-  >((data) => post('background/save', data), options);
+  >((data) => post('bingBg/love', data), options);
 }

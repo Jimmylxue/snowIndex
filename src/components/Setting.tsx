@@ -27,10 +27,14 @@ export function Setting({ terminal }: TProps) {
   useShotCut(terminal, !showSet);
 
   const saveImage = async () => {
-    await mutateAsync({
+    const data = await mutateAsync({
       date: background.today,
       background: background.background,
     });
+
+    if (data.code === 200) {
+      message.success('图片收藏成功');
+    }
   };
 
   return (
