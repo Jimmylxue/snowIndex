@@ -3,6 +3,8 @@ import { parseStoreParams } from '../system';
 const initState = {
   background: {
     background: '',
+    autoChange: false,
+    today: '2023-03-14',
   },
   baseConfig: {
     hintShow: true,
