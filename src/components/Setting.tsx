@@ -10,6 +10,7 @@ import { message } from 'antd';
 import { useState } from 'react';
 import { useSelector } from 'react-redux';
 import { useSaveBackground } from '../service';
+import { SelectPicture } from './SelectPicture';
 import { SettingModal } from './SettingModal';
 
 type TProps = {
@@ -19,6 +20,7 @@ type TProps = {
 export function Setting({ terminal }: TProps) {
   const state = store.getState();
   const [showSet, setShowSet] = useState<boolean>(false);
+  const [showChangePicture, setShowChangePicture] = useState<boolean>(false);
   const { background } = useSelector<typeof state, typeof state>(
     (state) => state,
   );
@@ -48,7 +50,8 @@ export function Setting({ terminal }: TProps) {
       <PictureOutlined
         className=' mr-3'
         onClick={() => {
-          message.info('敬请期待');
+          setShowChangePicture(true);
+          // message.info('敬请期待');
         }}
       />
       <SettingOutlined
@@ -63,6 +66,9 @@ export function Setting({ terminal }: TProps) {
         }}
         onCancel={() => setShowSet(false)}
       />
+      {showChangePicture && (
+        <SelectPicture onClose={() => setShowChangePicture(false)} />
+      )}
     </div>
   );
 }

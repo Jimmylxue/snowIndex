@@ -6,8 +6,8 @@ import { Provider } from 'react-redux';
 import store from '@/stores/store';
 import { SocketProvider } from './hooks/useSocket';
 import ChatRoom from './pages/chatRoom';
-import 'tailwindcss/tailwind.css';
 import 'antd/dist/antd.css';
+import 'tailwindcss/tailwind.css';
 import './index.css';
 
 const Root = function () {

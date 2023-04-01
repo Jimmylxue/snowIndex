@@ -8,6 +8,7 @@ import Shortcut from './Shortcut';
 import Time from './Time';
 import Varbook from './Varbook';
 import { SettingModal } from './SettingModal';
+export * from './SelectPicture';
 
 export {
   Date,
