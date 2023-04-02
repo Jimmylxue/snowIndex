@@ -51,7 +51,6 @@ export function Setting({ terminal }: TProps) {
         className=' mr-3'
         onClick={() => {
           setShowChangePicture(true);
-          // message.info('敬请期待');
         }}
       />
       <SettingOutlined
