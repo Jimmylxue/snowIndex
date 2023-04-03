@@ -43,7 +43,7 @@ export const SelectPicture: FC<TProps> = ({ onClose }) => {
       }}>
       <div className=' relative w-2/3 h-1/4 flex justify-center '>
         <CloseOutlined
-          className=' absolute right-3 top-3'
+          className=' absolute right-3 top-3 z-20'
           style={{
             fontSize: 18,
           }}
@@ -74,6 +74,7 @@ export const SelectPicture: FC<TProps> = ({ onClose }) => {
               <img
                 style={{
                   width: 200,
+                  height: 112,
                 }}
                 src={item}
                 alt=''
