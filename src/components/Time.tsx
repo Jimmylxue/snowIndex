@@ -1,13 +1,14 @@
 import { memo, useMemo } from 'react';
 import { Progress, Statistic } from 'antd';
 import { useTimeInfo } from '@/hooks/useTimeInfo';
-import { useSelector } from 'react-redux';
-import { TStoreType } from '../stores/store';
+import { useStore } from '../hooks';
 
 const { Countdown } = Statistic;
 
 export default memo(() => {
-  const { baseConfig } = useSelector<TStoreType, TStoreType>((state) => state);
+  const {
+    stores: { baseConfig },
+  } = useStore();
   const {
     weekStart,
     workProgress,

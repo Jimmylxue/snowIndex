@@ -1,5 +1,4 @@
 import { useShotCut } from '@/hooks/useShotCut';
-import store from '@/stores/store';
 import { TSnowTerminal } from '@/types/TSnowTerminal';
 import {
   SettingOutlined,
@@ -8,7 +7,7 @@ import {
 } from '@ant-design/icons';
 import { message } from 'antd';
 import { useState } from 'react';
-import { useSelector } from 'react-redux';
+import { useStore } from '../hooks';
 import { useSaveBackground } from '../service';
 import { SelectPicture } from './SelectPicture';
 import { SettingModal } from './SettingModal';
@@ -18,12 +17,12 @@ type TProps = {
 };
 
 export function Setting({ terminal }: TProps) {
-  const state = store.getState();
   const [showSet, setShowSet] = useState<boolean>(false);
   const [showChangePicture, setShowChangePicture] = useState<boolean>(false);
-  const { background } = useSelector<typeof state, typeof state>(
-    (state) => state,
-  );
+
+  const {
+    stores: { background },
+  } = useStore();
   const { mutateAsync } = useSaveBackground();
 
   useShotCut(terminal, !showSet);

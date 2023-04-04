@@ -117,3 +117,7 @@ export const uploadError = ({
 export function getUUID() {
   return crypto.randomUUID();
 }
+
+export function isFunction(fn: any): boolean {
+  return typeof fn === 'function';
+}

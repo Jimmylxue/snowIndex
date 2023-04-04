@@ -4,13 +4,13 @@ import { uuid } from '@/utils/index';
 import { recordReducer } from '@/stores/reducer/record';
 import { useCommand } from '@/core/doCommandExecute/commandExecute';
 import { matchHint, matchStartInstruct } from '@/utils/hintExecute';
-import { useDispatch, useSelector } from 'react-redux';
-import store from '@/stores/store';
+import { useDispatch } from 'react-redux';
 import { useUpdate } from 'ahooks';
 import RecordContainer from './RecordContainer';
 import { Welcome, Time } from '@/components/index';
 import classNames from 'classnames';
 import './cover.css';
+import { useStore } from '../hooks';
 
 export function useTerminal(): TSnowTerminal {
   const update = useUpdate();
@@ -28,10 +28,10 @@ export function useTerminal(): TSnowTerminal {
       successText: '',
     },
   );
-  const state = store.getState();
-  const { background, baseConfig } = useSelector<typeof state, typeof state>(
-    (state) => state,
-  );
+  const {
+    state,
+    stores: { background, baseConfig },
+  } = useStore();
   const jumpList = baseConfig.jumpList || [];
   const storeDispatch = useDispatch();
 
@@ -370,7 +370,7 @@ export function useTerminal(): TSnowTerminal {
           <span>[{baseConfig.hostname || 'local'}]$ </span>
           <input
             ref={inputRef}
-            className=' bg-none outline-none bg-transparent flex-grow pl-2'
+            className=' bg-none outline-none bg-transparent flex-grow pl-2 border-none'
             type='text'
             autoFocus
             onChange={changeInput}

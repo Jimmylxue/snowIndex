@@ -1,20 +1,19 @@
-import store from '@/stores/store';
 import { useCallback, useEffect } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { getToday } from '../utils';
 import { get } from '@/api/index';
 import { TSnowTerminal } from '@/types/TSnowTerminal';
+import { useStore } from './useStore';
 
 type TProps = {
   terminal: TSnowTerminal;
 };
 
 export function useBackground({ terminal }: TProps) {
-  const state = store.getState();
   const storeDispatch = useDispatch();
-  const { background } = useSelector<typeof state, typeof state>(
-    (state) => state,
-  );
+  const {
+    stores: { background },
+  } = useStore();
 
   const changeBingBg = useCallback(async () => {
     const res = await get<string>(`bingBg/today?UHD=true`);

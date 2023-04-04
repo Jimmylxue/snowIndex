@@ -1,8 +1,8 @@
 import classNames from 'classnames';
 import { FC, useEffect, useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { CloseOutlined } from '@ant-design/icons';
-import store from '@/stores/store';
+import { useStore } from '../hooks';
 
 const staticList = [
   'https://www.dreamplan.cn/baidu-rmb-video-cover-1/d11101af738c4a3c0fa477d8334f1101.jpeg',
@@ -23,10 +23,9 @@ interface TProps {
 export const SelectPicture: FC<TProps> = ({ onClose }) => {
   const [selectIndex, setSelectIndex] = useState<number>(0);
   const storeDispatch = useDispatch();
-  const state = store.getState();
-  const { background } = useSelector<typeof state, typeof state>(
-    (state) => state,
-  );
+  const {
+    stores: { background },
+  } = useStore();
   const [bgImageList, setBgImgList] = useState(staticList);
 
   useEffect(() => {

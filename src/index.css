@@ -8,6 +8,10 @@
   box-sizing: border-box;
 }
 
+p{
+  margin-bottom: 0;
+}
+
 /* html{
   overflow: hidden;
 }

@@ -45,7 +45,10 @@ const rootReducer = (state: any, action: any) => {
   return baseReducer(state, action);
 };
 // const store = createStore(baseReducer, persistedState)
-const store = createStore(rootReducer, persistedState);
+const store = createStore<any, any, TStoreType, TStoreType>(
+  rootReducer,
+  persistedState,
+);
 
 store.subscribe(
   throttle(() => {

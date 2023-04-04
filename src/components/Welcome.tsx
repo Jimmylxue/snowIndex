@@ -1,16 +1,14 @@
-import { TWelcomeType } from '@/stores/reducer/welcome';
 import { memo, useEffect } from 'react';
-import { useSelector } from 'react-redux';
 import { EnvironmentOutlined, LoadingOutlined } from '@ant-design/icons';
 import { useLocation } from '@/hooks/useLocation';
+import { useStore } from '../hooks';
 
 export default memo(() => {
-  const { welcomeText, authorShow } = useSelector<
-    {
-      welcome: TWelcomeType;
+  const {
+    stores: {
+      welcome: { welcomeText, authorShow },
     },
-    TWelcomeType
-  >((state) => state.welcome);
+  } = useStore();
   const location = useLocation();
   useEffect(() => {
     if (location?.city) {

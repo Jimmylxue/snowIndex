@@ -1,5 +1,4 @@
-export function isFunction(fn: any): boolean {
-	return typeof fn === 'function'
-}
-
-export * from './useLocation'
+export * from './useLocation';
+export * from './useStore';
+export * from './useSocket';
+export * from './useShotCut';
