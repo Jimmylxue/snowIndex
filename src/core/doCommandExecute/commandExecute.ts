@@ -23,6 +23,7 @@ import {
   npmExecute,
   jumpExecute,
   bgAutoExecute,
+  gameExecute,
 } from '@/core/execute';
 import { zhihuExecute } from '@/core/execute/search/zhihu';
 import { isHelpInstruct } from '../../utils';
@@ -189,6 +190,10 @@ export function useCommand() {
 
       case 'bgAuto':
         bgAutoExecute(commandBody!, terminal, instruct);
+        return;
+
+      case 'game':
+        gameExecute(commandBody!, terminal, instruct);
         return;
 
       default:

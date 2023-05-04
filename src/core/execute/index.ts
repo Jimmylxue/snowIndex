@@ -28,3 +28,4 @@ export { npmExecute } from './search/npm';
 export { jumpExecute } from './tool/jump';
 export { chatroomExecute } from './system/chatroom';
 export { bgAutoExecute } from './tool/bgAuto';
+export { gameExecute } from './system/game';

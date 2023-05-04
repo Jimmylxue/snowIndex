@@ -9,6 +9,7 @@ import Time from './Time';
 import Varbook from './Varbook';
 import { SettingModal } from './SettingModal';
 export * from './SelectPicture';
+export { Gobang } from './gobang';
 
 export {
   Date,
