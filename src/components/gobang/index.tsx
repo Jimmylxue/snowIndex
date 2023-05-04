@@ -46,7 +46,6 @@ export function Gobang() {
       <Button type='primary' onClick={rePlay}>
         replay
       </Button>
-      <hr />
       <h4 className='mt-3 text-white'>基于react 的五子棋游戏</h4>
       <h4 className=' text-white'>
         如果觉得不错 👍，给个{' '}
