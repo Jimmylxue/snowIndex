@@ -6,7 +6,7 @@ export function Layout() {
       {/* row */}
       {size.map((_, index) => (
         <div
-          className='row absolute bg-gray-300'
+          className='row absolute bg-gray-300 pointer-events-none'
           key={index}
           style={{
             width: 750,
@@ -18,7 +18,7 @@ export function Layout() {
       {/* col */}
       {size.map((_, index) => (
         <div
-          className='col absolute bg-gray-300'
+          className='col absolute bg-gray-300 pointer-events-none'
           key={index}
           style={{
             width: 1,

@@ -12,8 +12,10 @@ export function Gobang() {
     };
     // @ts-ignore
     if ([...e.target.classList].includes('absolute')) {
-      clickPosition.xPx = e.nativeEvent.x - 100;
-      clickPosition.yPx = e.nativeEvent.y - 50;
+      // @ts-ignore
+      clickPosition.xPx = e.nativeEvent.layerX;
+      // @ts-ignore
+      clickPosition.yPx = e.nativeEvent.layerY;
     }
 
     console.log({ x: clickPosition.xPx, y: clickPosition.yPx });
