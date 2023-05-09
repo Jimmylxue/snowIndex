@@ -30,7 +30,7 @@ export function Gobang() {
   }, [winner]);
 
   return (
-    <>
+    <div className='flex items-center'>
       <div
         className='relative'
         style={{
@@ -45,20 +45,18 @@ export function Gobang() {
           <RenderChess pointList={twoDiffPointList} />
         </div>
       </div>
-      <Button type='primary' onClick={rePlay}>
-        replay
-      </Button>
-      <h4 className='mt-3 text-white'>基于react 的五子棋游戏</h4>
-      <h4 className=' text-white'>
-        如果觉得不错 👍，给个{' '}
-        <a href='https://github.com/Jimmylxue/daily-store/tree/master/packages/snowweb/src/components/gobang'>
-          star
-        </a>{' '}
-        ⭐ 吧，你的认可是我最大的动力 ！
-      </h4>
-      <a href='https://github.com/Jimmylxue/daily-store/tree/master/packages/snowweb/src/components/gobang'>
-        github 传送门
-      </a>
-    </>
+      <div className='ml-10'>
+        <Button type='primary' onClick={rePlay}>
+          replay
+        </Button>
+        <h4 className=' text-white mt-3'>
+          如果觉得不错 👍，给个{' '}
+          <a href='https://github.com/Jimmylxue/daily-store/tree/master/packages/snowweb/src/components/gobang'>
+            star
+          </a>{' '}
+          ⭐ 吧，你的认可是我最大的动力 ！
+        </h4>
+      </div>
+    </div>
   );
 }
