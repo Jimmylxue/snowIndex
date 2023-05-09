@@ -6,6 +6,7 @@ import { Provider } from 'react-redux';
 import store from '@/stores/store';
 import { SocketProvider } from './hooks/useSocket';
 import ChatRoom from './pages/chatRoom';
+import { TodoList } from './pages/todoList';
 import 'antd/dist/antd.css';
 import 'tailwindcss/tailwind.css';
 import './index.css';
@@ -20,6 +21,7 @@ const Root = function () {
             <Routes>
               <Route path='/' element={<App />} />
               <Route path='/chatRoom' element={<ChatRoom />} />
+              <Route path='/todoList' element={<TodoList />} />
               {/* <Route path='*' element={<App />}></Route> */}
             </Routes>
           </Router>
