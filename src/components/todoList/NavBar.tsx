@@ -7,9 +7,14 @@ import {
 } from '@ant-design/icons';
 import { Input } from 'antd';
 import { Avatar } from './Avatar';
+import { SButton } from './Button';
 import './index.css';
 
-export function NavBar() {
+type TProps = {
+  onMenuClick: () => void;
+};
+
+export function NavBar({ onMenuClick }: TProps) {
   return (
     <div
       className='w-full px-5'
@@ -19,8 +24,16 @@ export function NavBar() {
       }}>
       <div className='w-full h-full flex items-center justify-between text-white'>
         <div className='flex items-center'>
-          <UnorderedListOutlined className=' text-lg' />
-          <HomeOutlined className=' text-lg ml-4' />
+          <SButton
+            icon={
+              <UnorderedListOutlined className=' flex text-xl flex-shrink-0' />
+            }
+            onClick={onMenuClick}
+          />
+          <SButton
+            className='ml-2'
+            icon={<HomeOutlined className=' flex text-xl flex-shrink-0' />}
+          />
           <Input
             className='ml-4 border-r-2'
             placeholder='default size'
