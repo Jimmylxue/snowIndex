@@ -1,19 +1,22 @@
-import { NavBar, TaskItem } from '@/components/todoList';
-import { Button, Checkbox, Divider, Radio } from 'antd';
+import { MenuItem, NavBar, TaskItem } from '@/components/todoList';
+import { Button } from 'antd';
 import classNames from 'classnames';
 import { useState } from 'react';
+import { CarryOutOutlined } from '@ant-design/icons';
 import './index.less';
-export function TodoList() {
-  const [menuShow, setMenuShow] = useState<boolean>(false);
+import { menuListConst } from './mock/const';
 
+export function TodoList() {
+  const [menuShow, setMenuShow] = useState<boolean>(true);
+  const [menuIndex, setMenuIndex] = useState<number>(0);
   return (
-    <div className=' w-screen h-screen'>
+    <div className=' w-screen h-screen flex flex-col'>
       <NavBar
         onMenuClick={() => {
           setMenuShow((status) => !status);
         }}
       />
-      <div className=' w-full h-full flex'>
+      <div className=' w-full flex flex-grow'>
         <div
           className={classNames(
             'whitespace-nowrap overflow-hidden flex-shrink-0',
@@ -22,7 +25,20 @@ export function TodoList() {
               sliderBarClose: !menuShow,
             },
           )}>
-          <div className='w-full'>收件箱</div>
+          <div className='w-full px-3 py-3'>
+            {menuListConst.map((menu, index) => (
+              <MenuItem
+                key={index}
+                checked={index === menuIndex}
+                icon={menu.icon}
+                text={menu.text}
+                message={menu.message}
+                onClick={() => {
+                  setMenuIndex(index);
+                }}
+              />
+            ))}
+          </div>
         </div>
         <div className='content w-full h-full flex justify-center'>
           <div

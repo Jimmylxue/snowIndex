@@ -1,6 +1,6 @@
 .btn_hover:hover{
-  /* background-color: rgba(255, 255, 255, 0.2); */
-  box-shadow: 0 0 5px #fff;
+  background-color: rgba(255, 255, 255, 0.2);
+  /* box-shadow: 0 0 5px #fff; */
   /* text-shadow: 5px #fff; */
   transition: background-all 0.5s ease-in-out;
 }

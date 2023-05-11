@@ -1,4 +1,5 @@
 import { config } from '@/config/react-query';
+import { ConfigProvider } from 'antd';
 import { useEffect } from 'react';
 import { useCatchError } from './hooks/useCatchError';
 import TerminalPage from './pages/terminal';
