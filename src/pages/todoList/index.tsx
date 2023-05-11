@@ -1,14 +1,17 @@
-import { MenuItem, NavBar, TaskItem } from '@/components/todoList';
+import { MenuItem, NavBar, TaskItem, TaskModal } from '@/components/todoList';
 import { Button } from 'antd';
 import classNames from 'classnames';
 import { useState } from 'react';
 import { CarryOutOutlined } from '@ant-design/icons';
 import './index.less';
-import { menuListConst } from './mock/const';
+import { menuListConst, taskListConst } from './mock/const';
 
 export function TodoList() {
   const [menuShow, setMenuShow] = useState<boolean>(true);
   const [menuIndex, setMenuIndex] = useState<number>(0);
+
+  const [editShow, setEditShow] = useState<boolean>(false);
+
   return (
     <div className=' w-screen h-screen flex flex-col'>
       <NavBar
@@ -40,6 +43,7 @@ export function TodoList() {
             ))}
           </div>
         </div>
+
         <div className='content w-full h-full flex justify-center'>
           <div
             className=' h-full'
@@ -112,10 +116,28 @@ export function TodoList() {
               </div>
             </div>
             {/* 任务项 */}
-            <TaskItem />
-            <TaskItem />
-            <TaskItem />
-            {/* <Divider className='my-1' /> */}
+            {taskListConst.map((task, index) => (
+              <TaskItem
+                key={index}
+                taskName={task.taskName}
+                taskType={task.taskType}
+                desc={task.desc}
+                onClick={() => {
+                  console.log('hello world');
+                  // todo 编辑操作
+                  setEditShow(true);
+                }}
+              />
+            ))}
+            <TaskModal
+              show={editShow}
+              onCancel={() => {
+                setEditShow(false);
+              }}
+              onOk={() => {
+                setEditShow(false);
+              }}
+            />
           </div>
         </div>
       </div>

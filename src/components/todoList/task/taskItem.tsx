@@ -1,17 +1,40 @@
-import { Checkbox } from 'antd';
+import { Checkbox, Popconfirm } from 'antd';
+import { FC, HTMLAttributes } from 'react';
+import { DeleteOutlined, QuestionCircleOutlined } from '@ant-design/icons';
+import './index.less';
 
-export function TaskItem() {
+interface TProps extends HTMLAttributes<HTMLDivElement> {
+  taskName: string;
+  desc: string;
+  taskType: string;
+}
+
+export const TaskItem: FC<TProps> = ({ taskName, desc, taskType, onClick }) => {
   return (
-    <div>
+    <div className='snow-task-item relative px-2 py-2 rounded-md'>
       <div>
-        <Checkbox onChange={() => {}}>
-          <span className=' text-base'>打扫所有房间</span>
-        </Checkbox>
+        <Checkbox
+          onChange={() => {
+            // todo 完成任务
+          }}></Checkbox>
+        <span onClick={onClick} className=' text-base ml-2 cursor-pointer'>
+          {taskName}
+        </span>
       </div>
-      <div className='px-6 text-xs'>将房间都好好打扫一下</div>
+      <div className='px-6 text-xs'>{desc}</div>
       <div className=' flex justify-end'>
-        <div className='text-xs'>日常</div>
+        <div className='text-xs'>{taskType}</div>
       </div>
+      <Popconfirm
+        okText='确定'
+        cancelText='取消'
+        title='确定删除该任务吗？'
+        icon={<QuestionCircleOutlined style={{ color: 'red' }} />}>
+        <DeleteOutlined
+          className='snow-delete-btn absolute right-2 top-1/2 -translate-y-1/2 text-base cursor-pointer'
+          onClick={() => {}}
+        />
+      </Popconfirm>
     </div>
   );
-}
+};

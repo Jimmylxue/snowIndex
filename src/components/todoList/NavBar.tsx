@@ -12,6 +12,7 @@ import { useState } from 'react';
 import { Avatar } from './Avatar';
 import { SButton } from './Button';
 import './index.css';
+import { TaskModal } from './Task';
 
 type TProps = {
   onMenuClick: () => void;
@@ -62,57 +63,15 @@ export function NavBar({ onMenuClick }: TProps) {
           </div>
         </div>
       </div>
-      <Modal
-        title='添加任务'
-        open={addTaskShow}
-        okText={'添加任务'}
-        cancelText={'取消'}
+      <TaskModal
+        show={addTaskShow}
         onOk={() => {
           setAddTaskShow(false);
         }}
         onCancel={() => {
           setAddTaskShow(false);
-        }}>
-        <Form form={form} name='horizontal_login' onFinish={() => {}}>
-          <Form.Item
-            name='username'
-            rules={[
-              { required: true, message: 'Please input your username!' },
-            ]}>
-            <Input
-              prefix={<UserOutlined className='site-form-item-icon' />}
-              placeholder='任务名称'
-            />
-          </Form.Item>
-          <Form.Item
-            name='password'
-            rules={[
-              { required: true, message: 'Please input your password!' },
-            ]}>
-            <Input
-              prefix={<LockOutlined className='site-form-item-icon' />}
-              type='password'
-              placeholder='描述'
-            />
-          </Form.Item>
-          <Form.Item
-            name='password3'
-            rules={[
-              { required: true, message: 'Please input your password!' },
-            ]}>
-            <DatePicker />
-          </Form.Item>
-          <Form.Item
-            name='password3'
-            rules={[
-              { required: true, message: 'Please input your password!' },
-            ]}>
-            <Select>
-              <Select.Option value='demo'>Demo</Select.Option>
-            </Select>
-          </Form.Item>
-        </Form>
-      </Modal>
+        }}
+      />
     </div>
   );
 }

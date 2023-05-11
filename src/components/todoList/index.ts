@@ -1,4 +1,4 @@
 export * from './NavBar';
-export * from './task';
+export * from './Task';
 export * from './Button';
 export * from './SliderBar';
