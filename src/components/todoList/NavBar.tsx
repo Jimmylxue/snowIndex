@@ -9,7 +9,7 @@ import {
 } from '@ant-design/icons';
 import { Button, DatePicker, Form, Input, Modal, Select } from 'antd';
 import { useState } from 'react';
-import { Avatar } from './Avatar';
+import { Avatar } from './SAvatar';
 import { SButton } from './Button';
 import './index.css';
 import { TaskModal } from './Task';
@@ -59,7 +59,14 @@ export function NavBar({ onMenuClick }: TProps) {
             icon={<ChromeOutlined className=' flex text-xl flex-shrink-0' />}
           />
           <div className='ml-2'>
-            <Avatar />
+            <Avatar
+              onClick={() => {
+                console.log('hello world');
+              }}
+              userName='Jimmy'
+              // avatar='https://vitepress-source.oss-cn-beijing.aliyuncs.com/typoraimage-20220326203849385.png'
+            />
+            {/* <Avatar /> */}
           </div>
         </div>
       </div>
