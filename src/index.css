@@ -1,6 +1,4 @@
-/* @tailwind base;
-@tailwind components;
-@tailwind utilities; */
+/* @import '~antd/es/style/themes/default.less'; */
 
 *{
   margin: 0;
@@ -12,16 +10,5 @@ p{
   margin-bottom: 0;
 }
 
-/* html{
-  overflow: hidden;
-}
 
-p{
-  margin-bottom: 0;
-} */
-
-
-/* button, [type='button'], [type='reset'], [type='submit']{
-  background:#1890ff;
-} */
 

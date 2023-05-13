@@ -7,25 +7,29 @@ import store from '@/stores/store';
 import { SocketProvider } from './hooks/useSocket';
 import ChatRoom from './pages/chatRoom';
 import { TodoList } from './pages/todoList';
-import 'antd/dist/antd.css';
 import 'tailwindcss/tailwind.css';
 import './index.css';
+import './var.less';
+import { config } from './config/react-query';
 
 const Root = function () {
+  const { queryClient, QueryClientProvider } = config();
   return (
     <React.StrictMode>
       {/* // react 18 版本 useEffect 会执行两次 不需要可以先注释掉 */}
       <Provider store={store}>
-        <SocketProvider>
-          <Router>
-            <Routes>
-              <Route path='/' element={<App />} />
-              <Route path='/chatRoom' element={<ChatRoom />} />
-              <Route path='/todoList' element={<TodoList />} />
-              {/* <Route path='*' element={<App />}></Route> */}
-            </Routes>
-          </Router>
-        </SocketProvider>
+        <QueryClientProvider client={queryClient}>
+          <SocketProvider>
+            <Router>
+              <Routes>
+                <Route path='/' element={<App />} />
+                <Route path='/chatRoom' element={<ChatRoom />} />
+                <Route path='/todoList' element={<TodoList />} />
+                {/* <Route path='*' element={<App />}></Route> */}
+              </Routes>
+            </Router>
+          </SocketProvider>
+        </QueryClientProvider>
       </Provider>
     </React.StrictMode>
   );

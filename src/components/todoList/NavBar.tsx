@@ -4,22 +4,18 @@ import {
   PlusOutlined,
   ChromeOutlined,
   SearchOutlined,
-  UserOutlined,
-  LockOutlined,
 } from '@ant-design/icons';
-import { Button, DatePicker, Form, Input, Modal, Select } from 'antd';
-import { useState } from 'react';
+import { Form, Input } from 'antd';
 import { Avatar } from './SAvatar';
 import { SButton } from './Button';
 import './index.css';
-import { TaskModal } from './Task';
 
 type TProps = {
   onMenuClick: () => void;
+  onAddTask: () => void;
 };
 
-export function NavBar({ onMenuClick }: TProps) {
-  const [addTaskShow, setAddTaskShow] = useState<boolean>(false);
+export function NavBar({ onMenuClick, onAddTask }: TProps) {
   const [form] = Form.useForm();
   return (
     <div
@@ -41,8 +37,8 @@ export function NavBar({ onMenuClick }: TProps) {
             icon={<HomeOutlined className=' flex text-xl flex-shrink-0' />}
           />
           <Input
-            className='ml-4 border-r-2'
-            placeholder='default size'
+            className='dz-input ml-4 border-r-2'
+            placeholder='请输入'
             prefix={<SearchOutlined />}
           />
         </div>
@@ -50,9 +46,7 @@ export function NavBar({ onMenuClick }: TProps) {
           <SButton
             className='ml-2'
             icon={<PlusOutlined className=' flex text-xl flex-shrink-0' />}
-            onClick={() => {
-              setAddTaskShow(true);
-            }}
+            onClick={onAddTask}
           />
           <SButton
             className='ml-2'
@@ -66,19 +60,9 @@ export function NavBar({ onMenuClick }: TProps) {
               userName='Jimmy'
               // avatar='https://vitepress-source.oss-cn-beijing.aliyuncs.com/typoraimage-20220326203849385.png'
             />
-            {/* <Avatar /> */}
           </div>
         </div>
       </div>
-      <TaskModal
-        show={addTaskShow}
-        onOk={() => {
-          setAddTaskShow(false);
-        }}
-        onCancel={() => {
-          setAddTaskShow(false);
-        }}
-      />
     </div>
   );
 }

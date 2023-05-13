@@ -1,5 +1,6 @@
 import { DatePicker, Form, Input, Modal, Select } from 'antd';
 import { UserOutlined, LockOutlined } from '@ant-design/icons';
+import { useTodoList } from '@/hooks/todolist/useTodolist';
 
 type TProps = {
   show: boolean;
@@ -9,6 +10,10 @@ type TProps = {
 
 export function TaskModal({ show, onOk, onCancel }: TProps) {
   const [form] = Form.useForm();
+
+  const { taskType } = useTodoList();
+
+  console.log('dddd', taskType);
 
   return (
     <Modal
@@ -54,7 +59,11 @@ export function TaskModal({ show, onOk, onCancel }: TProps) {
             style={{
               width: 150,
             }}>
-            <Select.Option value='demo'>Demo</Select.Option>
+            {taskType?.map((taskType) => (
+              <Select.Option key={taskType.typeId} value={taskType.typeId}>
+                {taskType.typeName}
+              </Select.Option>
+            ))}
           </Select>
         </Form.Item>
       </Form>

@@ -1,9 +1,9 @@
-import { useMutation, UseMutationOptions } from 'react-query'
+import { useMutation, UseMutationOptions } from 'react-query';
 // import { ClientError } from '..'
 // import { post } from '../request'
-import { AddOrderParams, AddOrderResult } from './types'
+import { AddOrderParams, AddOrderResult } from './types';
 
-type ClientError = {}
+type ClientError = {};
 
 // export function useChangeBackground(
 // 	options?: UseMutationOptions<
