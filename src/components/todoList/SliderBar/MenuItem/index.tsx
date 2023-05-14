@@ -1,11 +1,14 @@
 import { FC, HTMLAttributes, ReactNode } from 'react';
 import './index.less';
+import classNames from 'classnames';
 
 interface TProps extends HTMLAttributes<HTMLDivElement> {
   icon: ReactNode;
   text: string | ReactNode;
-  message: number;
+  message: number | ReactNode;
   checked?: boolean;
+  showEdit?: boolean;
+  onEdit?: () => void;
 }
 
 export const MenuItem: FC<TProps> = ({
@@ -14,6 +17,8 @@ export const MenuItem: FC<TProps> = ({
   message,
   className,
   checked,
+  onEdit,
+  showEdit,
   ...args
 }) => {
   return (
@@ -30,12 +35,19 @@ export const MenuItem: FC<TProps> = ({
         </div>
         <div>
           <span
-            className=' text-xs '
+            className={classNames('text-xs', {
+              'snow-message-count': showEdit,
+            })}
             style={{
               color: '#b1b1b1',
             }}>
             {message}
           </span>
+          {showEdit && (
+            <span className='snow-edit' onClick={onEdit}>
+              编辑
+            </span>
+          )}
         </div>
       </div>
     </>

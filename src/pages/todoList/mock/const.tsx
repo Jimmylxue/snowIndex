@@ -38,3 +38,12 @@ export const taskListConst = [
     taskType: '工作',
   },
 ];
+
+export const taskTypeListConst = [
+  {
+    typeName: '工作',
+  },
+  {
+    typeName: '生活',
+  },
+];
