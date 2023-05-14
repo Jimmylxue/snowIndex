@@ -8,11 +8,17 @@ type TProps = {
 };
 
 export function Content({ onEditTask }: TProps) {
-  const { data } = useUserTask('userTask', {
-    userId: 1001,
-    page: 1,
-    pageSize: 15,
-  });
+  const { data } = useUserTask(
+    'userTask',
+    {
+      userId: 1001,
+      page: 1,
+      pageSize: 15,
+    },
+    {
+      refetchOnWindowFocus: false,
+    },
+  );
 
   return (
     <div className='content w-full h-full flex justify-center'>
@@ -94,9 +100,9 @@ export function Content({ onEditTask }: TProps) {
           <TaskItem
             isComplete={1}
             key={index}
-            taskName={task.task_taskName}
-            taskType={task.taskType_typeName}
-            desc={task.task_taskContent}
+            taskName={task.taskName}
+            taskType={task.typeMessage?.typeName}
+            desc={task.taskContent}
             onClick={onEditTask}
           />
         ))}

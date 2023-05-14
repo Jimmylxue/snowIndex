@@ -24,8 +24,9 @@ export const TodoListProvider: FC<TProps> = (props) => {
       // todo: 将 写死的userId 替换成 真正的用户id
     },
     {
+      refetchOnWindowFocus: false,
       onSuccess(data) {
-        setTaskListInfo((info) => ({ ...info, taskType: data.result }));
+        setTaskListInfo((info) => ({ ...info, taskType: data?.result }));
       },
     },
   );

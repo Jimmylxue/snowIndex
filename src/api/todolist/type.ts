@@ -8,14 +8,14 @@ export type TaskType = {
 };
 
 export type TaskItem = {
-  task_taskId: number;
-  task_userId: number;
-  task_typeId: number;
-  task_status: 1 | 0;
-  task_taskName: string;
-  task_taskContent: string;
-  task_completeTime: string;
-  task_createTime: string;
-  task_updateTime: string;
-  taskType_typeName: string;
+  taskId: number;
+  userId: number;
+  typeId: number;
+  status: 1 | 0;
+  taskName: string;
+  taskContent: string;
+  completeTime: string;
+  createTime: string;
+  updateTime: string;
+  typeMessage: TaskType;
 };
