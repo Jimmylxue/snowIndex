@@ -36,6 +36,9 @@ export function useUserTask(
     page: number;
     pageSize: number;
     typeId?: number;
+    startTime?: number;
+    endTime?: number;
+    status?: number;
   },
   config?: UseQueryOptions<
     {

@@ -2,24 +2,14 @@ import { taskListConst } from '@/pages/todoList/mock/const';
 import { Button } from 'antd';
 import { TaskItem, TaskModal } from './Task';
 import { useUserTask } from '@/api/todolist';
+import { TaskItem as Task } from '@/api/todolist/type';
 
 type TProps = {
   onEditTask: () => void;
+  taskData: Task[];
 };
 
-export function Content({ onEditTask }: TProps) {
-  const { data } = useUserTask(
-    'userTask',
-    {
-      userId: 1001,
-      page: 1,
-      pageSize: 15,
-    },
-    {
-      refetchOnWindowFocus: false,
-    },
-  );
-
+export function Content({ onEditTask, taskData }: TProps) {
   return (
     <div className='content w-full h-full flex justify-center'>
       <div
@@ -97,7 +87,7 @@ export function Content({ onEditTask }: TProps) {
         </div>
         {/* 任务项 */}
         {/* {data?.result?.result?.map((task, index) => ( */}
-        {data?.result?.result?.map((task, index) => (
+        {taskData?.map((task, index) => (
           <TaskItem
             isComplete={1}
             key={index}

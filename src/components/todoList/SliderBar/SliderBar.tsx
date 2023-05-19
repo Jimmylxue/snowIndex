@@ -11,30 +11,43 @@ import {
 import { TaskTypeModal } from '../Task/TaskTypeModal';
 import { useAddTaskType } from '@/api/todolist/taskType';
 import { message } from 'antd';
+import { getStatusByIndex, getTaskTypeByIndex, getTimeByIndex } from './core';
+import dayjs from 'dayjs';
+
+export type TSearchTaskParams = {
+  taskType: number;
+  status: number;
+  startTime: number;
+  endTime: number;
+};
 
 type TProps = {
   menuShow: boolean;
+  onSearchChange: (params: TSearchTaskParams) => void;
 };
 
-export function SliderBar({ menuShow }: TProps) {
+export function SliderBar({ menuShow, onSearchChange }: TProps) {
   const taskTypeListConst = [
     {
       typeName: '工作',
+      taskType: 1001,
     },
     {
       typeName: '家庭',
+      taskType: 1002,
     },
     {
       typeName: '健身',
+      taskType: 1003,
     },
   ];
 
   const taskStatusListConst = [
     {
-      statusName: '已完成',
+      statusName: '未完成',
     },
     {
-      statusName: '未完成',
+      statusName: '已完成',
     },
   ];
 
@@ -77,7 +90,7 @@ export function SliderBar({ menuShow }: TProps) {
     },
   ];
 
-  const [menuIndex, setMenuIndex] = useState<number>(0);
+  const [timeIndex, setTimeIndex] = useState<number>(0);
   const [taskTypeIndex, setTaskTypeIndex] = useState<number>(0);
   const [taskStatusIndex, setTaskStatusIndex] = useState<number>(0);
   const [taskTypeModalShow, setTaskTypeModalShow] = useState<boolean>(false);
@@ -89,6 +102,27 @@ export function SliderBar({ menuShow }: TProps) {
       message.success('任务添加成功');
     }
   }, [data]);
+
+  useEffect(() => {
+    console.log('aaaaa', dayjs().subtract(1, 'day').startOf('D').valueOf());
+    // console.log('aaaaa', dayjs().endOf('D').valueOf());
+  }, []);
+
+  useEffect(() => {
+    const [startTime, endTime] = getTimeByIndex(timeIndex);
+    const { status } = getStatusByIndex(taskStatusIndex);
+    const { taskType } = getTaskTypeByIndex(taskTypeIndex, taskTypeListConst);
+
+    const params = {
+      taskType,
+      status,
+      startTime,
+      endTime,
+    };
+
+    onSearchChange(params);
+    // getTimeByIndex(timeIndex);
+  }, [timeIndex, taskStatusIndex, taskTypeIndex]);
 
   return (
     <div
@@ -110,12 +144,12 @@ export function SliderBar({ menuShow }: TProps) {
         {menuListConst.map((menu, index) => (
           <MenuItem
             key={index}
-            checked={index === menuIndex}
+            checked={index === timeIndex}
             icon={menu.icon}
             text={menu.text}
             message={menu.message}
             onClick={() => {
-              setMenuIndex(index);
+              setTimeIndex(index);
             }}
           />
         ))}

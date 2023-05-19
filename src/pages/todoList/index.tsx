@@ -1,12 +1,33 @@
 import { Content, NavBar, TaskModal } from '@/components/todoList';
 import { useState } from 'react';
 import './index.less';
-import { SliderBar } from '@/components/todoList/SliderBar/SliderBar';
+import {
+  SliderBar,
+  TSearchTaskParams,
+} from '@/components/todoList/SliderBar/SliderBar';
 import { TodoListProvider } from '@/hooks/todolist/useTodolist';
+import { useUserTask } from '@/api/todolist';
 
 export function TodoList() {
   const [menuShow, setMenuShow] = useState<boolean>(true);
   const [taskModalShow, setTaskModalShow] = useState<boolean>(false);
+  const [searchParams, setSearchParams] = useState<TSearchTaskParams>();
+
+  const { data } = useUserTask(
+    ['userTask', searchParams],
+    {
+      userId: 1001,
+      page: 1,
+      pageSize: 15,
+      status: searchParams?.status,
+      startTime: searchParams?.startTime,
+      endTime: searchParams?.endTime,
+    },
+    {
+      refetchOnWindowFocus: false,
+      enabled: !!searchParams?.startTime,
+    },
+  );
 
   return (
     <TodoListProvider>
@@ -20,8 +41,15 @@ export function TodoList() {
           }}
         />
         <div className=' w-full flex flex-grow'>
-          <SliderBar menuShow={menuShow} />
+          <SliderBar
+            menuShow={menuShow}
+            onSearchChange={(searchParams) => {
+              setSearchParams(searchParams);
+              // refetch();
+            }}
+          />
           <Content
+            taskData={data?.result?.result || []}
             onEditTask={() => {
               setTaskModalShow(true);
             }}
