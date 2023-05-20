@@ -13,7 +13,7 @@ export function TodoList() {
   const [taskModalShow, setTaskModalShow] = useState<boolean>(false);
   const [searchParams, setSearchParams] = useState<TSearchTaskParams>();
 
-  const { data } = useUserTask(
+  const { data, refetch } = useUserTask(
     ['userTask', searchParams],
     {
       userId: 1001,
@@ -49,10 +49,12 @@ export function TodoList() {
             }}
           />
           <Content
+            searchParams={searchParams}
             taskData={data?.result?.result || []}
             onEditTask={() => {
               setTaskModalShow(true);
             }}
+            refetchList={refetch}
           />
         </div>
         <TaskModal
@@ -61,6 +63,7 @@ export function TodoList() {
             setTaskModalShow(false);
           }}
           onOk={() => {
+            refetch();
             setTaskModalShow(false);
           }}
         />

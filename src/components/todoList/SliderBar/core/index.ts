@@ -1,3 +1,4 @@
+import { TaskType } from '@/api/todolist/type';
 import dayjs from 'dayjs';
 
 export function getTimeByIndex(timeIndex: number) {
@@ -24,11 +25,8 @@ export function getStatusByIndex(status: number) {
   return { status };
 }
 
-export function getTaskTypeByIndex(
-  index: number,
-  taskTypeList: { taskType: number }[],
-) {
+export function getTaskTypeByIndex(index: number, taskTypeList: TaskType[]) {
   return {
-    taskType: taskTypeList[index].taskType,
+    taskType: taskTypeList?.[index]?.typeId,
   };
 }

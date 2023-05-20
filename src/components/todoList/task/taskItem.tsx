@@ -1,10 +1,6 @@
-import { Checkbox, Popconfirm, notification } from 'antd';
+import { Checkbox, Popconfirm } from 'antd';
 import { FC, HTMLAttributes } from 'react';
-import {
-  DeleteOutlined,
-  QuestionCircleOutlined,
-  BellOutlined,
-} from '@ant-design/icons';
+import { DeleteOutlined, QuestionCircleOutlined } from '@ant-design/icons';
 import './index.less';
 
 interface TProps extends HTMLAttributes<HTMLDivElement> {
@@ -12,6 +8,7 @@ interface TProps extends HTMLAttributes<HTMLDivElement> {
   desc: string;
   taskType: string;
   isComplete: 1 | 0;
+  onCompleteTask: (status: boolean) => void;
 }
 
 export const TaskItem: FC<TProps> = ({
@@ -19,6 +16,7 @@ export const TaskItem: FC<TProps> = ({
   desc,
   taskType,
   isComplete,
+  onCompleteTask,
   onClick,
 }) => {
   return (
@@ -26,15 +24,10 @@ export const TaskItem: FC<TProps> = ({
       <div>
         <Checkbox
           checked={isComplete === 1}
-          onChange={() => {
+          onChange={(e) => {
+            console.log();
+            onCompleteTask(e.target.checked);
             // todo 完成任务
-            notification.info({
-              message: `任务已完成`,
-              description:
-                'This is the content of the notification. This is the content of the notification. This is the content of the notification.',
-              placement: 'bottomLeft',
-              icon: <BellOutlined />,
-            });
           }}></Checkbox>
         <span onClick={onClick} className=' text-base ml-2 cursor-pointer'>
           {taskName}

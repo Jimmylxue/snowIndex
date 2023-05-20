@@ -14,12 +14,14 @@ import { useAddTaskType } from '@/api/todolist/taskType';
 import { message } from 'antd';
 import { getStatusByIndex, getTaskTypeByIndex, getTimeByIndex } from './core';
 import dayjs from 'dayjs';
+import { useTodoList } from '@/hooks/todolist/useTodolist';
 
 export type TSearchTaskParams = {
   taskType: number;
   status: number;
   startTime: number;
   endTime: number;
+  timeIndex: number;
 };
 
 type TProps = {
@@ -28,20 +30,7 @@ type TProps = {
 };
 
 export function SliderBar({ menuShow, onSearchChange }: TProps) {
-  const taskTypeListConst = [
-    {
-      typeName: '工作',
-      taskType: 1001,
-    },
-    {
-      typeName: '家庭',
-      taskType: 1002,
-    },
-    {
-      typeName: '健身',
-      taskType: 1003,
-    },
-  ];
+  const { taskType: taskTypeList } = useTodoList();
 
   const taskStatusListConst = [
     {
@@ -112,13 +101,14 @@ export function SliderBar({ menuShow, onSearchChange }: TProps) {
   useEffect(() => {
     const [startTime, endTime] = getTimeByIndex(timeIndex);
     const { status } = getStatusByIndex(taskStatusIndex);
-    const { taskType } = getTaskTypeByIndex(taskTypeIndex, taskTypeListConst);
+    const { taskType } = getTaskTypeByIndex(taskTypeIndex, taskTypeList!);
 
     const params = {
       taskType,
       status,
       startTime,
       endTime,
+      timeIndex,
     };
 
     onSearchChange(params);
@@ -200,7 +190,7 @@ export function SliderBar({ menuShow, onSearchChange }: TProps) {
           />
         </div>
         <div>
-          {taskTypeListConst.map((taskType, index) => (
+          {taskTypeList?.map((taskType, index) => (
             <MenuItem
               key={index}
               showEdit={true}
