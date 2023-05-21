@@ -1,3 +1,4 @@
+import { todoListAuth } from '@/hooks/todolist/useAuth';
 import { message } from 'antd';
 import axios, {
   AxiosInstance,
@@ -5,6 +6,7 @@ import axios, {
   AxiosRequestConfig,
   AxiosResponse,
 } from 'axios';
+import { debounce } from 'lodash';
 // import { ElMessage } from 'element-plus'
 // 数据返回的接口
 // 定义请求响应参数，不含data
@@ -40,6 +42,11 @@ type TResponse = {
   message: string;
 };
 
+const handle401 = debounce(() => {
+  message.error('未登录 请重新登录');
+  todoListAuth.setShouldLoginStatus(true);
+}, 500);
+
 class RequestHttp {
   // 定义成员变量并指定类型
   service: AxiosInstance;
@@ -74,7 +81,9 @@ class RequestHttp {
 
     this.service.interceptors.response.use(
       (response: AxiosResponse) => {
+        // 请求成功时
         const { data, config } = response; // 解构
+        console.log('data~~~', data);
         if (data.code === RequestEnums.OVERDUE) {
           // 登录信息失效，应跳转到登录页面，并清空本地的token
           localStorage.setItem('token', ''); // router.replace({ //   path: '/login' // })
@@ -83,13 +92,19 @@ class RequestHttp {
         if (data.code && data.code !== RequestEnums.SUCCESS) {
           // ElMessage.error(data) // 此处也可以使用组件提示报错信息
           // return Promise.reject(data)
-          message.error(data.message);
+          message.error(data.message || data.result);
           return data;
         }
+
         return data;
       },
       (error: AxiosError<TResponse>) => {
+        // 请求失败时
         const { response } = error;
+        if (response?.status === 401) {
+          handle401();
+          return;
+        }
         if (response) {
           console.log(response);
           this.handleCode(response.status, response.data);

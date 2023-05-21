@@ -8,11 +8,15 @@ import {
 import { TodoListProvider } from '@/hooks/todolist/useTodolist';
 import { useUserTask } from '@/api/todolist';
 import { Spin } from 'antd';
+import { Login } from '@/components/common/Login';
+import { observer } from 'mobx-react-lite';
+import { todoListAuth } from '@/hooks/todolist/useAuth';
 
-export function TodoList() {
+export const TodoList = observer(() => {
   const [menuShow, setMenuShow] = useState<boolean>(true);
   const [taskModalShow, setTaskModalShow] = useState<boolean>(false);
   const [searchParams, setSearchParams] = useState<TSearchTaskParams>();
+  const [loginShow, setLoginShow] = useState<boolean>(false);
 
   const { data, refetch, isLoading } = useUserTask(
     ['userTask', searchParams],
@@ -73,6 +77,10 @@ export function TodoList() {
           }}
         />
       </div>
+      <Login
+        show={todoListAuth.shouldLogin}
+        onClose={() => todoListAuth.setShouldLoginStatus(false)}
+      />
     </TodoListProvider>
   );
-}
+});
