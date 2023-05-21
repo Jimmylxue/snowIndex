@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useCallback, useRef } from 'react';
 import classNames from 'classnames';
 import { MenuItem } from './MenuItem';
 import { useEffect, useState } from 'react';
@@ -11,10 +11,17 @@ import {
 } from '@ant-design/icons';
 import { TaskTypeModal } from '../Task/TaskTypeModal';
 import { useAddTaskType } from '@/api/todolist/taskType';
-import { message } from 'antd';
-import { getStatusByIndex, getTaskTypeByIndex, getTimeByIndex } from './core';
+import { message, DatePicker } from 'antd';
+import {
+  getStatusByIndex,
+  getTaskTypeByIndex,
+  getTimeByIndex,
+  getTimeStringByDate,
+} from './core';
 import dayjs from 'dayjs';
 import { useTodoList } from '@/hooks/todolist/useTodolist';
+
+const { RangePicker } = DatePicker;
 
 export type TSearchTaskParams = {
   taskType: number;
@@ -51,8 +58,8 @@ export function SliderBar({ menuShow, onSearchChange }: TProps) {
           }}
         />
       ),
-      text: '今天',
-      message: 3,
+      text: '近7天',
+      message: 2,
     },
     {
       icon: (
@@ -75,7 +82,19 @@ export function SliderBar({ menuShow, onSearchChange }: TProps) {
           }}
         />
       ),
-      text: '近7天',
+      text: '今天',
+      message: 3,
+    },
+    {
+      icon: (
+        <CarryOutOutlined
+          className='text-lg flex flex-shrink-0'
+          style={{
+            color: '#3a8335',
+          }}
+        />
+      ),
+      text: '自定义',
       message: 2,
     },
   ];
@@ -84,6 +103,8 @@ export function SliderBar({ menuShow, onSearchChange }: TProps) {
   const [taskTypeIndex, setTaskTypeIndex] = useState<number>(0);
   const [taskStatusIndex, setTaskStatusIndex] = useState<number>(0);
   const [taskTypeModalShow, setTaskTypeModalShow] = useState<boolean>(false);
+  const timeStr = useRef<number[]>([0, 0]);
+  // const [] = useState()
 
   const { data, mutateAsync } = useAddTaskType();
 
@@ -98,7 +119,7 @@ export function SliderBar({ menuShow, onSearchChange }: TProps) {
     // console.log('aaaaa', dayjs().endOf('D').valueOf());
   }, []);
 
-  useEffect(() => {
+  const paramsChangeFn = () => {
     const [startTime, endTime] = getTimeByIndex(timeIndex);
     const { status } = getStatusByIndex(taskStatusIndex);
     const { taskType } = getTaskTypeByIndex(taskTypeIndex, taskTypeList!);
@@ -111,9 +132,31 @@ export function SliderBar({ menuShow, onSearchChange }: TProps) {
       timeIndex,
     };
 
+    if (timeIndex === 3 && !timeStr.current?.[0]) {
+      console.log('未选时间，不请求');
+      return;
+    }
+
+    if (timeIndex === 3 && timeStr.current[0]) {
+      // 自定义
+      params.startTime = timeStr.current[0];
+      params.endTime = timeStr.current[1];
+    }
     onSearchChange(params);
-    // getTimeByIndex(timeIndex);
+  };
+
+  useEffect(() => {
+    paramsChangeFn();
   }, [timeIndex, taskStatusIndex, taskTypeIndex]);
+
+  const onTaskTypeOk = useCallback(() => {
+    setTaskTypeModalShow(false);
+    message.success('任务添加成功');
+  }, []);
+
+  const onTaskTypeCancel = useCallback(() => {
+    setTaskTypeModalShow(false);
+  }, []);
 
   return (
     <div
@@ -138,12 +181,28 @@ export function SliderBar({ menuShow, onSearchChange }: TProps) {
             checked={index === timeIndex}
             icon={menu.icon}
             text={menu.text}
-            message={menu.message}
+            message={<></>}
             onClick={() => {
               setTimeIndex(index);
             }}
           />
         ))}
+        {timeIndex === 3 && (
+          <div className='mt-2'>
+            <RangePicker
+              format={'YYYY/MM/DD'}
+              onChange={(date) => {
+                const res = date?.map((info) => info?.format('YYYY/MM/DD'));
+                const tempStr = [
+                  getTimeStringByDate(res?.[0]!, 'start'),
+                  getTimeStringByDate(res?.[1]!, 'end'),
+                ];
+                timeStr.current = tempStr;
+                paramsChangeFn();
+              }}
+            />
+          </div>
+        )}
       </div>
 
       <div className='w-full px-3 py-3'>
@@ -170,7 +229,7 @@ export function SliderBar({ menuShow, onSearchChange }: TProps) {
               />
             }
             text={status.statusName}
-            message={2}
+            message={<></>}
             onClick={() => {
               setTaskStatusIndex(index);
             }}
@@ -180,7 +239,7 @@ export function SliderBar({ menuShow, onSearchChange }: TProps) {
 
       <div className='px-3 py-3'>
         <div className=' flex justify-between items-center'>
-          <div className=' font-bold text-base mb-1'>项目</div>
+          <div className=' font-bold text-base mb-1'>任务类型</div>
           <SButton
             className='ml-2 cursor-pointer'
             icon={<PlusOutlined className=' flex text-sm flex-shrink-0' />}
@@ -204,7 +263,7 @@ export function SliderBar({ menuShow, onSearchChange }: TProps) {
                 />
               }
               text={taskType.typeName}
-              message={3}
+              message={<></>}
               onClick={() => {
                 setTaskTypeIndex(index);
                 // setMenuIndex(index);
@@ -219,18 +278,8 @@ export function SliderBar({ menuShow, onSearchChange }: TProps) {
 
       <TaskTypeModal
         show={taskTypeModalShow}
-        onOk={async () => {
-          setTaskTypeModalShow(false);
-          // await mutateAsync({
-          //   typeName: '111',
-          //   desc: '222',
-          //   userId: 1001,
-          // });
-          message.success('任务添加成功');
-        }}
-        onCancel={() => {
-          setTaskTypeModalShow(false);
-        }}
+        onOk={onTaskTypeOk}
+        onCancel={onTaskTypeCancel}
       />
     </div>
   );

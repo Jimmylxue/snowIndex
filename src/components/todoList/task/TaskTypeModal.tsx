@@ -1,6 +1,7 @@
 import { DatePicker, Form, Input, Modal, Select } from 'antd';
 import { UserOutlined, LockOutlined } from '@ant-design/icons';
 import { useTodoList } from '@/hooks/todolist/useTodolist';
+import { memo } from 'react';
 
 type TProps = {
   show: boolean;
@@ -8,13 +9,8 @@ type TProps = {
   onCancel: () => void;
 };
 
-export function TaskTypeModal({ show, onOk, onCancel }: TProps) {
+export const TaskTypeModal = memo(({ show, onOk, onCancel }: TProps) => {
   const [form] = Form.useForm();
-
-  const { taskType } = useTodoList();
-
-  console.log('dddd', taskType);
-
   return (
     <Modal
       title='添加任务类型'
@@ -44,4 +40,4 @@ export function TaskTypeModal({ show, onOk, onCancel }: TProps) {
       </Form>
     </Modal>
   );
-}
+});

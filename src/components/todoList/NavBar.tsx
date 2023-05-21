@@ -48,10 +48,10 @@ export function NavBar({ onMenuClick, onAddTask }: TProps) {
             icon={<PlusOutlined className=' flex text-xl flex-shrink-0' />}
             onClick={onAddTask}
           />
-          <SButton
+          {/* <SButton
             className='ml-2'
             icon={<ChromeOutlined className=' flex text-xl flex-shrink-0' />}
-          />
+          /> */}
           <div className='ml-2'>
             <Avatar
               onClick={() => {

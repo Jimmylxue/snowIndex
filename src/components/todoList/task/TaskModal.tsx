@@ -16,8 +16,6 @@ export function TaskModal({ show, onOk, onCancel }: TProps) {
 
   const { mutateAsync } = useAddTask();
 
-  console.log('dddd', taskType);
-
   const confirm = () => {
     form.submit();
   };

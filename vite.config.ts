@@ -61,6 +61,10 @@ export default defineConfig({
         find: '@/pages',
         replacement: resolve(__dirname, 'src/pages'),
       },
+      {
+        find: '@/assets',
+        replacement: resolve(__dirname, 'src/assets'),
+      },
     ],
   },
   server: {

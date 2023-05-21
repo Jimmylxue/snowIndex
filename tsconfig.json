@@ -26,6 +26,7 @@
       "@/config/*":["./src/config/*"],
       "@/api/*":["./src/api/*"],
       "@/pages/*":["./src/pages/*"],
+      "@/assets/*":["./src/assets/*"],
     }, 
   },
   "include": ["src", "src/hooks/.ts"],

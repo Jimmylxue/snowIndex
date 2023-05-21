@@ -34,3 +34,6 @@
   /* text-shadow: 5px #fff; */
   transition: background-all 0.5s ease-in-out;
 }
+.snow-content > .ant-spin-nested-loading {
+  height: 100% !important;
+}

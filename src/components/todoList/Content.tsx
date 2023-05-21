@@ -5,6 +5,7 @@ import { TSearchTaskParams } from './SliderBar/SliderBar';
 import { getFullTimeByIndex, getTimeTextByIndex } from './utils';
 import { useUpdateTask } from '@/api/todolist/task';
 import { BellOutlined } from '@ant-design/icons';
+import EmptyImage from '@/assets/img/todolist/empty.jpg';
 
 type TProps = {
   onEditTask: (type: 'ADD' | 'EDIT') => void;
@@ -22,7 +23,7 @@ export function Content({
   const { mutateAsync } = useUpdateTask();
 
   return (
-    <div className='content w-full h-full flex justify-center'>
+    <div className='content w-full flex justify-center'>
       <div
         className=' h-full'
         style={{
@@ -39,7 +40,11 @@ export function Content({
         <div className=' flex justify-between items-center py-1'>
           <div className='flex items-center'>
             <span className=' text-lg font-bold'>
-              {getFullTimeByIndex(searchParams?.timeIndex)}
+              {getFullTimeByIndex(
+                searchParams?.timeIndex,
+                searchParams?.startTime,
+                searchParams?.endTime,
+              )}
             </span>
           </div>
         </div>
@@ -80,7 +85,13 @@ export function Content({
             }}
           />
         ))}
+        <div className=' w-full flex flex-col items-center justify-center mt-10'>
+          <img src={EmptyImage} alt='' />
+          <p>准备做点什么呢？😄</p>
+        </div>
+
         <Button
+          block
           type='primary'
           className='mt-3'
           // loading={true}

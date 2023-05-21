@@ -7,13 +7,14 @@ import {
 } from '@/components/todoList/SliderBar/SliderBar';
 import { TodoListProvider } from '@/hooks/todolist/useTodolist';
 import { useUserTask } from '@/api/todolist';
+import { Spin } from 'antd';
 
 export function TodoList() {
   const [menuShow, setMenuShow] = useState<boolean>(true);
   const [taskModalShow, setTaskModalShow] = useState<boolean>(false);
   const [searchParams, setSearchParams] = useState<TSearchTaskParams>();
 
-  const { data, refetch } = useUserTask(
+  const { data, refetch, isLoading } = useUserTask(
     ['userTask', searchParams],
     {
       userId: 1001,
@@ -48,14 +49,18 @@ export function TodoList() {
               // refetch();
             }}
           />
-          <Content
-            searchParams={searchParams}
-            taskData={data?.result?.result || []}
-            onEditTask={() => {
-              setTaskModalShow(true);
-            }}
-            refetchList={refetch}
-          />
+          <div className='flex-grow h-full snow-content'>
+            <Spin tip='Loading...' spinning={isLoading} className='h-full'>
+              <Content
+                searchParams={searchParams}
+                taskData={data?.result?.result || []}
+                onEditTask={() => {
+                  setTaskModalShow(true);
+                }}
+                refetchList={refetch}
+              />
+            </Spin>
+          </div>
         </div>
         <TaskModal
           show={taskModalShow}
