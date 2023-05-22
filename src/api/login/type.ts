@@ -1,6 +1,6 @@
 export type TUserLoginParams = {
-  phone: number;
-  password: number;
+  phone: string;
+  password: string;
 };
 
 export type TUpdateTaskParams = {

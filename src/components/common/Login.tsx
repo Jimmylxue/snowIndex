@@ -1,5 +1,7 @@
 import { useUserLogin } from '@/api/login';
-import { Button, Form, Input, Modal } from 'antd';
+import { config } from '@/config/react-query';
+import { todoListAuth, useUser } from '@/hooks/todolist/useAuth';
+import { Button, Form, Input, Modal, message } from 'antd';
 
 type TProps = {
   show: boolean;
@@ -7,23 +9,26 @@ type TProps = {
 };
 
 export function Login({ show, onClose }: TProps) {
-  const { mutateAsync } = useUserLogin();
+  const { login } = useUser();
+  const { queryClient } = config();
   const [form] = Form.useForm();
   return (
     <Modal title='用户登录' open={show} onCancel={onClose} footer={null}>
       <Form
         form={form}
         name='basic'
-        labelCol={{ span: 8 }}
+        labelCol={{ span: 6 }}
         wrapperCol={{ span: 16 }}
         initialValues={{ remember: true }}
         onFinish={async () => {
           const params = form.getFieldsValue();
-          const res = await mutateAsync({
-            phone: params.phone,
-            password: params.password,
-          });
-          console.log('res', res);
+          const status = await login(params);
+          if (status) {
+            // 重新触发一些请求
+            queryClient.invalidateQueries('userTask');
+            queryClient.invalidateQueries('taskType');
+            onClose();
+          }
         }}
         autoComplete='off'>
         <Form.Item
@@ -40,7 +45,7 @@ export function Login({ show, onClose }: TProps) {
           <Input.Password />
         </Form.Item>
 
-        <Form.Item wrapperCol={{ offset: 8, span: 16 }}>
+        <Form.Item wrapperCol={{ offset: 6, span: 16 }}>
           <Button type='primary' htmlType='submit'>
             登录
           </Button>

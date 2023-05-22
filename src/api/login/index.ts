@@ -3,11 +3,23 @@ import { UseMutationOptions, useMutation } from 'react-query';
 import { TUpdateTaskParams, TUserLoginParams } from './type';
 import { post } from '..';
 
+export type TLoginUser = {
+  id: number;
+  username: string;
+  avatar: string;
+  sex: 1 | 0;
+  phone: string;
+  createTime: string;
+};
+
 export function useUserLogin(
   options?: UseMutationOptions<
     {
       code: number;
-      result: string;
+      result: {
+        token: string;
+        user: TLoginUser;
+      };
     },
     ClientError,
     TUserLoginParams
@@ -16,7 +28,10 @@ export function useUserLogin(
   return useMutation<
     {
       code: number;
-      result: string;
+      result: {
+        token: string;
+        user: TLoginUser;
+      };
     },
     ClientError,
     TUserLoginParams

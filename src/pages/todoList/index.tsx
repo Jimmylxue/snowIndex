@@ -27,6 +27,7 @@ export const TodoList = observer(() => {
       status: searchParams?.status,
       startTime: searchParams?.startTime,
       endTime: searchParams?.endTime,
+      typeId: searchParams?.taskType,
     },
     {
       refetchOnWindowFocus: false,

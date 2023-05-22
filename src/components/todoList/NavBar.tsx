@@ -9,14 +9,16 @@ import { Form, Input } from 'antd';
 import { Avatar } from './SAvatar';
 import { SButton } from './Button';
 import './index.css';
+import { useUser } from '@/hooks/todolist/useAuth';
+import { observer } from 'mobx-react-lite';
 
 type TProps = {
   onMenuClick: () => void;
   onAddTask: () => void;
 };
 
-export function NavBar({ onMenuClick, onAddTask }: TProps) {
-  const [form] = Form.useForm();
+export const NavBar = observer(({ onMenuClick, onAddTask }: TProps) => {
+  const { user } = useUser();
   return (
     <div
       className='w-full px-5'
@@ -57,12 +59,12 @@ export function NavBar({ onMenuClick, onAddTask }: TProps) {
               onClick={() => {
                 console.log('hello world');
               }}
-              userName='Jimmy'
-              // avatar='https://vitepress-source.oss-cn-beijing.aliyuncs.com/typoraimage-20220326203849385.png'
+              userName={user?.username!}
+              avatar={user?.avatar}
             />
           </div>
         </div>
       </div>
     </div>
   );
-}
+});

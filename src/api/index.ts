@@ -64,9 +64,9 @@ class RequestHttp {
         const token = localStorage.getItem('token') || '';
         return {
           ...config,
-          // headers: {
-          // 	'x-access-token': token, // 请求头中携带token信息
-          // },
+          headers: {
+            Authorization: 'Bearer ' + token, // 请求头中携带token信息
+          },
         };
       },
       (error: AxiosError) => {
@@ -85,6 +85,7 @@ class RequestHttp {
         const { data, config } = response; // 解构
         console.log('data~~~', data);
         if (data.code === RequestEnums.OVERDUE) {
+          console.log('err');
           // 登录信息失效，应跳转到登录页面，并清空本地的token
           localStorage.setItem('token', ''); // router.replace({ //   path: '/login' // })
           return Promise.reject(data);

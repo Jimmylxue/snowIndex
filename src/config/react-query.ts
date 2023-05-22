@@ -1,16 +1,16 @@
-import { QueryClientProvider, QueryClient } from 'react-query'
+import { QueryClientProvider, QueryClient } from 'react-query';
+
+const queryClient = new QueryClient({
+  defaultOptions: {
+    queries: {
+      retry: false,
+    },
+  },
+});
 
 export function config() {
-	const queryClient = new QueryClient({
-		defaultOptions: {
-			queries: {
-				retry: false,
-			},
-		},
-	})
-
-	return {
-		queryClient,
-		QueryClientProvider,
-	}
+  return {
+    queryClient,
+    QueryClientProvider,
+  };
 }

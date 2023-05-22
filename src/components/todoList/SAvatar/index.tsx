@@ -1,13 +1,14 @@
 import classNames from 'classnames';
 import { FC, HTMLAttributes } from 'react';
 import { getUserFirstName } from './core';
+import { observer } from 'mobx-react-lite';
 
 interface Props extends HTMLAttributes<HTMLDivElement> {
   avatar?: string;
   userName: string;
 }
 
-export const Avatar: FC<Props> = ({ avatar, userName, ...args }) => {
+export const Avatar: FC<Props> = observer(({ avatar, userName, ...args }) => {
   /**
    * todo:
    *  替换成 判断 链接 是否是一个 可访问的链接
@@ -32,4 +33,4 @@ export const Avatar: FC<Props> = ({ avatar, userName, ...args }) => {
       )}
     </div>
   );
-};
+});
