@@ -1,6 +1,5 @@
-import React from 'react';
 export * from './NavBar';
 export * from './Content';
-export * from './Task';
+export * from './Tasks';
 export * from './Button';
 export * from './SliderBar';

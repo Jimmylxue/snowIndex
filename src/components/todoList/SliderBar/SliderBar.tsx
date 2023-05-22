@@ -9,7 +9,7 @@ import {
   CarryOutOutlined,
   BulbOutlined,
 } from '@ant-design/icons';
-import { TaskTypeModal } from '../Task/TaskTypeModal';
+import { TaskTypeModal } from '../Tasks/TaskTypeModal';
 import { useAddTaskType } from '@/api/todolist/taskType';
 import { message, DatePicker } from 'antd';
 import {

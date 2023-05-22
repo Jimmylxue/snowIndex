@@ -1,4 +1,4 @@
-import { Content, NavBar, TaskModal } from '@/components/todoList';
+import { Content, NavBar, TasksModal } from '@/components/todoList';
 import { useState } from 'react';
 import './index.less';
 import {
@@ -66,7 +66,7 @@ export const TodoList = observer(() => {
             </Spin>
           </div>
         </div>
-        <TaskModal
+        <TasksModal
           show={taskModalShow}
           onCancel={() => {
             setTaskModalShow(false);

@@ -1,5 +1,5 @@
 import { Button, notification } from 'antd';
-import { TaskItem } from './Task';
+import { TaskItem } from './Tasks';
 import { TaskItem as Task } from '@/api/todolist/type';
 import { TSearchTaskParams } from './SliderBar/SliderBar';
 import { getFullTimeByIndex, getTimeTextByIndex } from './utils';

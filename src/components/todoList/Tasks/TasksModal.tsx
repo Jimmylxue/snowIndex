@@ -9,7 +9,7 @@ type TProps = {
   onCancel: () => void;
 };
 
-export function TaskModal({ show, onOk, onCancel }: TProps) {
+export function TasksModal({ show, onOk, onCancel }: TProps) {
   const [form] = Form.useForm();
 
   const { taskType } = useTodoList();
