@@ -1,6 +1,10 @@
 import { ClientError } from '@/api/location';
 import { UseMutationOptions, useMutation } from 'react-query';
-import { TUpdateTaskParams, TUserLoginParams } from './type';
+import {
+  TUpdateTaskParams,
+  TUserLoginParams,
+  TUserRegisterParams,
+} from './type';
 import { post } from '..';
 
 export type TLoginUser = {
@@ -36,6 +40,26 @@ export function useUserLogin(
     ClientError,
     TUserLoginParams
   >((data) => post('user/login', data), options);
+}
+
+export function useUserRegister(
+  options?: UseMutationOptions<
+    {
+      code: number;
+      result: string;
+    },
+    ClientError,
+    TUserRegisterParams
+  >,
+) {
+  return useMutation<
+    {
+      code: number;
+      result: string;
+    },
+    ClientError,
+    TUserRegisterParams
+  >((data) => post('user/register', data), options);
 }
 
 export function useUpdateTask(

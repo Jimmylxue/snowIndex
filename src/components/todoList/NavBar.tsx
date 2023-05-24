@@ -2,10 +2,9 @@ import {
   UnorderedListOutlined,
   HomeOutlined,
   PlusOutlined,
-  ChromeOutlined,
   SearchOutlined,
 } from '@ant-design/icons';
-import { Form, Input } from 'antd';
+import { Dropdown, Form, Input, MenuProps } from 'antd';
 import { Avatar } from './SAvatar';
 import { SButton } from './Button';
 import './index.css';
@@ -18,7 +17,30 @@ type TProps = {
 };
 
 export const NavBar = observer(({ onMenuClick, onAddTask }: TProps) => {
-  const { user } = useUser();
+  const { user, logOut, showLoginModal } = useUser();
+
+  const loginItems: MenuProps['items'] = [
+    {
+      key: '1',
+      label: (
+        <a target='_blank' rel='noopener noreferrer' onClick={logOut}>
+          退出登录
+        </a>
+      ),
+    },
+  ];
+
+  const logoutItem: MenuProps['items'] = [
+    {
+      key: '1',
+      label: (
+        <a target='_blank' rel='noopener noreferrer' onClick={showLoginModal}>
+          立即登录
+        </a>
+      ),
+    },
+  ];
+
   return (
     <div
       className='w-full px-5'
@@ -55,13 +77,15 @@ export const NavBar = observer(({ onMenuClick, onAddTask }: TProps) => {
             icon={<ChromeOutlined className=' flex text-xl flex-shrink-0' />}
           /> */}
           <div className='ml-2'>
-            <Avatar
-              onClick={() => {
-                console.log('hello world');
-              }}
-              userName={user?.username!}
-              avatar={user?.avatar}
-            />
+            <Dropdown menu={{ items: user ? loginItems : logoutItem }}>
+              <Avatar
+                onClick={() => {
+                  console.log('hello world');
+                }}
+                userName={user?.username!}
+                avatar={user?.avatar}
+              />
+            </Dropdown>
           </div>
         </div>
       </div>

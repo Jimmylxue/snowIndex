@@ -3,6 +3,10 @@ export type TUserLoginParams = {
   password: string;
 };
 
+export type TUserRegisterParams = TUserLoginParams & {
+  username: string;
+};
+
 export type TUpdateTaskParams = {
   userId?: number;
   taskId: number;

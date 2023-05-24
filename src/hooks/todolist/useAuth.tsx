@@ -1,4 +1,5 @@
-import { TLoginUser, useUserLogin } from '@/api/login';
+import { TLoginUser, useUserLogin, useUserRegister } from '@/api/login';
+import { TUserRegisterParams } from '@/api/login/type';
 import { message } from 'antd';
 import { makeAutoObservable } from 'mobx';
 import { useEffect } from 'react';
@@ -25,6 +26,7 @@ export const todoListAuth = new Auth();
 
 export function useUser() {
   const { mutateAsync } = useUserLogin();
+  const { mutateAsync: registerFn } = useUserRegister();
 
   useEffect(() => {
     try {
@@ -54,7 +56,23 @@ export function useUser() {
   const logOut = () => {
     todoListAuth.user = undefined;
     localStorage.setItem('token', '');
+    localStorage.setItem('login-user', '');
+    message.success('已退出');
+    todoListAuth.setShouldLoginStatus(true);
   };
 
-  return { user: todoListAuth.user, logOut, login };
+  const register = async (params: TUserRegisterParams) => {
+    const res = await registerFn(params);
+    if (res.code === 200) {
+      message.success('注册成功');
+      return true;
+    }
+    return false;
+  };
+
+  const showLoginModal = () => {
+    todoListAuth.setShouldLoginStatus(true);
+  };
+
+  return { user: todoListAuth.user, logOut, login, showLoginModal, register };
 }

@@ -16,7 +16,6 @@ export const TodoList = observer(() => {
   const [menuShow, setMenuShow] = useState<boolean>(true);
   const [taskModalShow, setTaskModalShow] = useState<boolean>(false);
   const [searchParams, setSearchParams] = useState<TSearchTaskParams>();
-  const [loginShow, setLoginShow] = useState<boolean>(false);
 
   const { data, refetch, isLoading } = useUserTask(
     ['userTask', searchParams],
@@ -31,7 +30,7 @@ export const TodoList = observer(() => {
     },
     {
       refetchOnWindowFocus: false,
-      enabled: !!searchParams?.startTime,
+      enabled: !!searchParams?.startTime && !!searchParams.taskType,
     },
   );
 

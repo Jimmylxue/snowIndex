@@ -2,6 +2,7 @@ import { useUserLogin } from '@/api/login';
 import { config } from '@/config/react-query';
 import { todoListAuth, useUser } from '@/hooks/todolist/useAuth';
 import { Button, Form, Input, Modal, message } from 'antd';
+import { useEffect, useState } from 'react';
 
 type TProps = {
   show: boolean;
@@ -9,11 +10,25 @@ type TProps = {
 };
 
 export function Login({ show, onClose }: TProps) {
-  const { login } = useUser();
+  const { login, register } = useUser();
   const { queryClient } = config();
   const [form] = Form.useForm();
+  const [modalType, setModalType] = useState<'login' | 'register'>('login');
+
+  useEffect(() => {
+    if (show) {
+      setModalType('login');
+    } else {
+      form.resetFields();
+    }
+  }, [show]);
+
   return (
-    <Modal title='用户登录' open={show} onCancel={onClose} footer={null}>
+    <Modal
+      title={modalType === 'login' ? '用户登录' : '用户注册'}
+      open={show}
+      onCancel={onClose}
+      footer={null}>
       <Form
         form={form}
         name='basic'
@@ -22,15 +37,33 @@ export function Login({ show, onClose }: TProps) {
         initialValues={{ remember: true }}
         onFinish={async () => {
           const params = form.getFieldsValue();
-          const status = await login(params);
-          if (status) {
-            // 重新触发一些请求
-            queryClient.invalidateQueries('userTask');
-            queryClient.invalidateQueries('taskType');
-            onClose();
+
+          if (modalType === 'login') {
+            const status = await login(params);
+            if (status) {
+              // 重新触发一些请求
+              queryClient.invalidateQueries('userTask');
+              queryClient.invalidateQueries('taskType');
+              onClose();
+            }
+          } else {
+            const status = await register(params);
+            if (status) {
+              form.resetFields();
+              setModalType('login');
+            }
           }
         }}
         autoComplete='off'>
+        {modalType === 'register' && (
+          <Form.Item
+            label='用户名'
+            name='username'
+            rules={[{ required: true, message: '请输入用户名!' }]}>
+            <Input />
+          </Form.Item>
+        )}
+
         <Form.Item
           label='手机号'
           name='phone'
@@ -46,8 +79,23 @@ export function Login({ show, onClose }: TProps) {
         </Form.Item>
 
         <Form.Item wrapperCol={{ offset: 6, span: 16 }}>
-          <Button type='primary' htmlType='submit'>
-            登录
+          {modalType === 'login' ? (
+            <Button type='primary' htmlType='submit'>
+              登录
+            </Button>
+          ) : (
+            <Button type='primary' htmlType='submit'>
+              注册
+            </Button>
+          )}
+
+          <Button
+            type='link'
+            onClick={() => {
+              form.resetFields();
+              setModalType((val) => (val === 'login' ? 'register' : 'login'));
+            }}>
+            {modalType === 'login' ? '没有账号，立即注册' : '返回登录'}
           </Button>
         </Form.Item>
       </Form>

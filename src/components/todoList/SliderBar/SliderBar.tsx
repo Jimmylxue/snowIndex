@@ -149,6 +149,12 @@ export function SliderBar({ menuShow, onSearchChange }: TProps) {
     paramsChangeFn();
   }, [timeIndex, taskStatusIndex, taskTypeIndex]);
 
+  useEffect(() => {
+    if (taskTypeList?.length) {
+      paramsChangeFn();
+    }
+  }, [taskTypeList]);
+
   const onTaskTypeOk = useCallback(() => {
     setTaskTypeModalShow(false);
     message.success('任务添加成功');
