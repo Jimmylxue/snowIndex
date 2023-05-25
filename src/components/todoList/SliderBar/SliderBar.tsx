@@ -20,6 +20,7 @@ import {
 } from './core';
 import dayjs from 'dayjs';
 import { useTodoList } from '@/hooks/todolist/useTodolist';
+import { TaskType } from '@/api/todolist/type';
 
 const { RangePicker } = DatePicker;
 
@@ -103,21 +104,11 @@ export function SliderBar({ menuShow, onSearchChange }: TProps) {
   const [taskTypeIndex, setTaskTypeIndex] = useState<number>(0);
   const [taskStatusIndex, setTaskStatusIndex] = useState<number>(0);
   const [taskTypeModalShow, setTaskTypeModalShow] = useState<boolean>(false);
+  const [taskTypeModalType, setTaskTypeModalType] = useState<'ADD' | 'EDIT'>(
+    'ADD',
+  );
   const timeStr = useRef<number[]>([0, 0]);
-  // const [] = useState()
-
-  const { data, mutateAsync } = useAddTaskType();
-
-  useEffect(() => {
-    if (data?.code === 200) {
-      message.success('任务添加成功');
-    }
-  }, [data]);
-
-  useEffect(() => {
-    console.log('aaaaa', dayjs().subtract(1, 'day').startOf('D').valueOf());
-    // console.log('aaaaa', dayjs().endOf('D').valueOf());
-  }, []);
+  const selectTaskType = useRef<TaskType>();
 
   const paramsChangeFn = () => {
     const [startTime, endTime] = getTimeByIndex(timeIndex);
@@ -250,6 +241,8 @@ export function SliderBar({ menuShow, onSearchChange }: TProps) {
             className='ml-2 cursor-pointer'
             icon={<PlusOutlined className=' flex text-sm flex-shrink-0' />}
             onClick={() => {
+              setTaskTypeModalType('ADD');
+              selectTaskType.current = void 0;
               setTaskTypeModalShow(true);
             }}
           />
@@ -271,10 +264,12 @@ export function SliderBar({ menuShow, onSearchChange }: TProps) {
               text={taskType.typeName}
               message={<></>}
               onClick={() => {
+                setTaskTypeModalType('ADD');
                 setTaskTypeIndex(index);
-                // setMenuIndex(index);
               }}
               onEdit={() => {
+                selectTaskType.current = taskType;
+                setTaskTypeModalType('EDIT');
                 setTaskTypeModalShow(true);
               }}
             />
@@ -283,6 +278,8 @@ export function SliderBar({ menuShow, onSearchChange }: TProps) {
       </div>
 
       <TaskTypeModal
+        type={taskTypeModalType}
+        typeInfo={selectTaskType.current}
         show={taskTypeModalShow}
         onOk={onTaskTypeOk}
         onCancel={onTaskTypeCancel}

@@ -1,5 +1,10 @@
 export type TAddTaskTypeParams = {
   typeName: string;
   desc: string;
-  userId: number;
 };
+
+export type TDelTaskTypeParams = {
+  typeId: number;
+};
+
+export type TUpdateTaskTypeParams = TAddTaskTypeParams & TDelTaskTypeParams;

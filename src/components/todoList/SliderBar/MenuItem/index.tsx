@@ -44,7 +44,12 @@ export const MenuItem: FC<TProps> = ({
             {message}
           </span>
           {showEdit && (
-            <span className='snow-edit' onClick={onEdit}>
+            <span
+              className='snow-edit'
+              onClick={(e) => {
+                e.stopPropagation();
+                onEdit?.();
+              }}>
               编辑
             </span>
           )}

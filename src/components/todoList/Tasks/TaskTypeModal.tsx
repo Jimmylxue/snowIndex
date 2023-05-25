@@ -1,26 +1,106 @@
-import { Form, Input, Modal } from 'antd';
+import { Button, Form, Input, Modal, Popconfirm, message } from 'antd';
 import { UserOutlined, LockOutlined } from '@ant-design/icons';
-import { memo } from 'react';
+import { memo, useEffect } from 'react';
+import {
+  useAddTaskType,
+  useDelTaskType,
+  useUpdateTaskType,
+} from '@/api/todolist/taskType';
+import { config } from '@/config/react-query';
+import { TaskType } from '@/api/todolist/type';
 
 type TProps = {
+  type: 'ADD' | 'EDIT';
+  typeInfo?: TaskType;
   show: boolean;
   onOk: () => void;
   onCancel: () => void;
 };
 
-export const TaskTypeModal = memo(({ show, onOk, onCancel }: TProps) => {
+export const TaskTypeModal = ({
+  type,
+  show,
+  onOk,
+  onCancel,
+  typeInfo,
+}: TProps) => {
+  useEffect(() => {
+    console.log(type);
+  }, [type]);
+  const { mutateAsync } = useAddTaskType();
+  const { mutateAsync: updateTaskType } = useUpdateTaskType();
+  const { mutateAsync: delTaskType } = useDelTaskType();
+  const { queryClient } = config();
   const [form] = Form.useForm();
+  useEffect(() => {
+    if (!show) {
+      form.resetFields();
+    }
+  }, [show]);
+
+  useEffect(() => {
+    if (typeInfo?.typeId) {
+      form.setFieldsValue({
+        typeName: typeInfo.typeName,
+        desc: typeInfo.desc,
+      });
+    }
+  }, [typeInfo]);
   return (
     <Modal
-      title='添加任务类型'
+      title={type === 'ADD' ? '添加任务类型' : '编辑任务类型'}
       open={show}
-      okText={'添加类型'}
+      okText={type === 'ADD' ? '添加类型' : '编辑类型'}
       cancelText={'取消'}
-      onOk={onOk}
-      onCancel={onCancel}>
-      <Form form={form} name='horizontal_login' onFinish={() => {}}>
+      onCancel={onCancel}
+      footer={
+        <div className='flex justify-end w-full'>
+          <Popconfirm
+            title='确定要删除这个任务吗？'
+            onConfirm={async () => {
+              const res = await delTaskType({ typeId: typeInfo?.typeId! });
+              if (res.code === 200) {
+                message.success('操作成功');
+                onCancel();
+                queryClient.invalidateQueries('taskType');
+              }
+            }}
+            okText='确定'
+            cancelText='取消'>
+            <Button danger>删除任务</Button>
+          </Popconfirm>
+          <Button type='primary' onClick={form.submit}>
+            {' '}
+            {type === 'ADD' ? '添加类型' : '编辑类型'}
+          </Button>
+        </div>
+      }>
+      <Form
+        form={form}
+        name='horizontal_login'
+        onFinish={async () => {
+          const params = form.getFieldsValue();
+          if (type === 'ADD') {
+            const res = await mutateAsync(params);
+            if (res.code === 200) {
+              message.success('操作成功');
+              queryClient.invalidateQueries('taskType');
+              onCancel();
+            }
+          } else {
+            const updateParams = { ...params, typeId: typeInfo?.typeId };
+            const res = await updateTaskType(updateParams);
+            if (res.code === 200) {
+              message.success('操作成功');
+              queryClient.invalidateQueries('taskType');
+              onCancel();
+            }
+          }
+
+          console.log(params);
+        }}>
         <Form.Item
-          name='username'
+          name='typeName'
           rules={[{ required: true, message: 'Please input your username!' }]}>
           <Input
             prefix={<UserOutlined className='site-form-item-icon' />}
@@ -28,15 +108,14 @@ export const TaskTypeModal = memo(({ show, onOk, onCancel }: TProps) => {
           />
         </Form.Item>
         <Form.Item
-          name='password'
+          name='desc'
           rules={[{ required: true, message: 'Please input your password!' }]}>
           <Input
             prefix={<LockOutlined className='site-form-item-icon' />}
-            type='password'
             placeholder='类型描述'
           />
         </Form.Item>
       </Form>
     </Modal>
   );
-});
+};
