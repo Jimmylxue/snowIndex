@@ -22,7 +22,8 @@ export function useTimeInfo({ workEndTime, workStartTime }: TProps) {
   // 工作时间进度条
   const workProgress = useMemo(() => {
     const parent = moment(endWork).valueOf() - moment(startWork).valueOf();
-    const child = Date.now() - moment(startWork).valueOf();
+    const reduceCount = Date.now() - moment(startWork).valueOf();
+    const child = reduceCount >= 0 ? reduceCount : 0;
     return +((child / parent) * 100).toFixed(2);
   }, [startWork, endWork]);
 
