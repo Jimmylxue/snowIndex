@@ -24,12 +24,8 @@ export const TaskTypeModal = ({
   onCancel,
   typeInfo,
 }: TProps) => {
-  useEffect(() => {
-    console.log(type);
-  }, [type]);
   const { mutateAsync } = useAddTaskType();
   const { mutateAsync: updateTaskType } = useUpdateTaskType();
-  const { mutateAsync: delTaskType } = useDelTaskType();
   const { queryClient } = config();
   const [form] = Form.useForm();
   useEffect(() => {
@@ -87,7 +83,7 @@ export const TaskTypeModal = ({
         }}>
         <Form.Item
           name='typeName'
-          rules={[{ required: true, message: 'Please input your username!' }]}>
+          rules={[{ required: true, message: '请输入类型名称!' }]}>
           <Input
             prefix={<UserOutlined className='site-form-item-icon' />}
             placeholder='类型名称'
@@ -95,7 +91,7 @@ export const TaskTypeModal = ({
         </Form.Item>
         <Form.Item
           name='desc'
-          rules={[{ required: true, message: 'Please input your password!' }]}>
+          rules={[{ required: true, message: '请输入类型描述!' }]}>
           <Input
             prefix={<LockOutlined className='site-form-item-icon' />}
             placeholder='类型描述'

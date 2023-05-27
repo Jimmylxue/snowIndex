@@ -48,13 +48,9 @@ export function TasksModal({
     }
   }, [show]);
 
-  useEffect(() => {
-    if (type === 'ADD') {
-      form.setFieldsValue({
-        typeId: selectTaskType,
-      });
-    }
-  }, [type, selectTaskType]);
+  form.setFieldsValue({
+    typeId: selectTaskType,
+  });
 
   return (
     <Modal
@@ -95,7 +91,7 @@ export function TasksModal({
         }}>
         <Form.Item
           name='taskName'
-          rules={[{ required: true, message: 'Please input your username!' }]}>
+          rules={[{ required: true, message: '请输入任务名称!' }]}>
           <Input
             prefix={<UserOutlined className='site-form-item-icon' />}
             placeholder='任务名称'
@@ -103,25 +99,15 @@ export function TasksModal({
         </Form.Item>
         <Form.Item
           name='taskContent'
-          rules={[{ required: true, message: 'Please input your password!' }]}>
+          rules={[{ required: true, message: '请输入任务描述!' }]}>
           <Input
             prefix={<LockOutlined className='site-form-item-icon' />}
             placeholder='描述'
           />
         </Form.Item>
-        {/* <Form.Item
-          name='password3'
-          rules={[{ required: true, message: 'Please input your password!' }]}>
-          <DatePicker
-            style={{
-              width: 150,
-            }}
-            placeholder='任务时间'
-          />
-        </Form.Item> */}
         <Form.Item
           name='typeId'
-          rules={[{ required: true, message: 'Please input your password!' }]}>
+          rules={[{ required: true, message: '请选择任务类型' }]}>
           <Select
             placeholder='任务类型'
             style={{

@@ -11,7 +11,7 @@ import {
 } from '@ant-design/icons';
 import { TaskTypeModal } from '../Tasks/TaskTypeModal';
 import { useAddTaskType, useDelTaskType } from '@/api/todolist/taskType';
-import { message, DatePicker } from 'antd';
+import { message, DatePicker, Empty, Spin } from 'antd';
 import {
   getStatusByIndex,
   getTaskTypeByIndex,
@@ -22,6 +22,7 @@ import dayjs from 'dayjs';
 import { useTodoList } from '@/hooks/todolist/useTodolist';
 import { TaskType } from '@/api/todolist/type';
 import { config } from '@/config/react-query';
+import { useUser } from '@/hooks/todolist/useAuth';
 
 const { RangePicker } = DatePicker;
 
@@ -39,8 +40,8 @@ type TProps = {
 };
 
 export function SliderBar({ menuShow, onSearchChange }: TProps) {
-  const { taskType: taskTypeList } = useTodoList();
-
+  const { taskType: taskTypeList, isFetchingTaskType } = useTodoList();
+  const { checkUserLoginBeforeFn } = useUser();
   const taskStatusListConst = [
     {
       statusName: '未完成',
@@ -168,13 +169,6 @@ export function SliderBar({ menuShow, onSearchChange }: TProps) {
       <div className='w-full px-3 py-3'>
         <div className=' flex justify-between items-center'>
           <div className=' font-bold text-base mb-1'>日期</div>
-          {/* <SButton
-            className='ml-2 cursor-pointer'
-            icon={<PlusOutlined className=' flex text-sm flex-shrink-0' />}
-            onClick={() => {
-              setTaskTypeModalShow(true);
-            }}
-          /> */}
         </div>
         {menuListConst.map((menu, index) => (
           <MenuItem
@@ -205,18 +199,11 @@ export function SliderBar({ menuShow, onSearchChange }: TProps) {
           </div>
         )}
       </div>
-
       <div className='w-full px-3 py-3'>
         <div className=' flex justify-between items-center'>
           <div className=' font-bold text-base mb-1'>状态</div>
-          {/* <SButton
-            className='ml-2 cursor-pointer'
-            icon={<PlusOutlined className=' flex text-sm flex-shrink-0' />}
-            onClick={() => {
-              setTaskTypeModalShow(true);
-            }}
-          /> */}
         </div>
+
         {taskStatusListConst.map((status, index) => (
           <MenuItem
             key={index}
@@ -238,56 +225,65 @@ export function SliderBar({ menuShow, onSearchChange }: TProps) {
         ))}
       </div>
 
-      <div className='px-3 py-3'>
-        <div className=' flex justify-between items-center'>
-          <div className=' font-bold text-base mb-1'>任务类型</div>
-          <SButton
-            className='ml-2 cursor-pointer'
-            icon={<PlusOutlined className=' flex text-sm flex-shrink-0' />}
-            onClick={() => {
-              setTaskTypeModalType('ADD');
-              selectTaskType.current = void 0;
-              setTaskTypeModalShow(true);
-            }}
-          />
-        </div>
-        <div>
-          {taskTypeList?.map((taskType, index) => (
-            <MenuItem
-              key={index}
-              showEdit
-              showDel
-              checked={index === taskTypeIndex}
-              icon={
-                <SlackOutlined
-                  className='text-lg '
-                  style={{
-                    color: '#3a8335',
-                  }}
-                />
-              }
-              text={taskType.typeName}
-              message={<></>}
+      <Spin tip='Loading...' spinning={isFetchingTaskType} className='h-full'>
+        <div className='px-3 py-3'>
+          <div className=' flex justify-between items-center'>
+            <div className=' font-bold text-base mb-1'>任务类型</div>
+            <SButton
+              className='ml-2 cursor-pointer'
+              icon={<PlusOutlined className=' flex text-sm flex-shrink-0' />}
               onClick={() => {
-                setTaskTypeModalType('ADD');
-                setTaskTypeIndex(index);
-              }}
-              onEdit={() => {
-                selectTaskType.current = taskType;
-                setTaskTypeModalType('EDIT');
-                setTaskTypeModalShow(true);
-              }}
-              onDel={async () => {
-                const res = await delTaskType({ typeId: taskType?.typeId! });
-                if (res.code === 200) {
-                  message.success('操作成功');
-                  queryClient.invalidateQueries('taskType');
+                if (checkUserLoginBeforeFn()) {
+                  setTaskTypeModalType('ADD');
+                  selectTaskType.current = void 0;
+                  setTaskTypeModalShow(true);
                 }
               }}
             />
-          ))}
+          </div>
+          <div>
+            {taskTypeList?.map((taskType, index) => (
+              <MenuItem
+                key={index}
+                showEdit
+                showDel
+                checked={index === taskTypeIndex}
+                icon={
+                  <SlackOutlined
+                    className='text-lg '
+                    style={{
+                      color: '#3a8335',
+                    }}
+                  />
+                }
+                text={taskType.typeName}
+                message={<></>}
+                onClick={() => {
+                  setTaskTypeModalType('ADD');
+                  setTaskTypeIndex(index);
+                }}
+                onEdit={() => {
+                  selectTaskType.current = taskType;
+                  setTaskTypeModalType('EDIT');
+                  setTaskTypeModalShow(true);
+                }}
+                onDel={async () => {
+                  const res = await delTaskType({ typeId: taskType?.typeId! });
+                  if (res.code === 200) {
+                    message.success('操作成功');
+                    queryClient.invalidateQueries('taskType');
+                  }
+                }}
+              />
+            ))}
+            {!taskTypeList?.length && (
+              <div className='mt-8'>
+                <Empty description='创建一个类型吧' />
+              </div>
+            )}
+          </div>
         </div>
-      </div>
+      </Spin>
 
       <TaskTypeModal
         type={taskTypeModalType}

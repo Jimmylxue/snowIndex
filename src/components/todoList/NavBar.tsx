@@ -4,7 +4,7 @@ import {
   PlusOutlined,
   SearchOutlined,
 } from '@ant-design/icons';
-import { Dropdown, Form, Input, MenuProps } from 'antd';
+import { Dropdown, Form, Input, MenuProps, Modal } from 'antd';
 import { Avatar } from './SAvatar';
 import { SButton } from './Button';
 import './index.css';
@@ -17,13 +17,24 @@ type TProps = {
 };
 
 export const NavBar = observer(({ onMenuClick, onAddTask }: TProps) => {
-  const { user, logOut, showLoginModal } = useUser();
+  const { user, logOut, showLoginModal, checkUserLoginBeforeFn } = useUser();
+  const [modal, contextHolder] = Modal.useModal();
 
   const loginItems: MenuProps['items'] = [
     {
       key: '1',
       label: (
-        <a target='_blank' rel='noopener noreferrer' onClick={logOut}>
+        <a
+          target='_blank'
+          rel='noopener noreferrer'
+          onClick={() => {
+            modal.confirm({
+              title: '确定退出登录吗',
+              okText: '确定',
+              cancelText: '取消',
+              onOk: logOut,
+            });
+          }}>
           退出登录
         </a>
       ),
@@ -34,7 +45,10 @@ export const NavBar = observer(({ onMenuClick, onAddTask }: TProps) => {
     {
       key: '1',
       label: (
-        <a target='_blank' rel='noopener noreferrer' onClick={showLoginModal}>
+        <a
+          target='_blank'
+          rel='noopener noreferrer'
+          onClick={checkUserLoginBeforeFn}>
           立即登录
         </a>
       ),
@@ -70,7 +84,14 @@ export const NavBar = observer(({ onMenuClick, onAddTask }: TProps) => {
           <SButton
             className='ml-2'
             icon={<PlusOutlined className=' flex text-xl flex-shrink-0' />}
-            onClick={onAddTask}
+            // onClick={onAddTask}
+            onClick={() => {
+              if (user?.id) {
+                onAddTask();
+                return;
+              }
+              showLoginModal();
+            }}
           />
           {/* <SButton
             className='ml-2'
@@ -89,6 +110,7 @@ export const NavBar = observer(({ onMenuClick, onAddTask }: TProps) => {
           </div>
         </div>
       </div>
+      {contextHolder}
     </div>
   );
 });

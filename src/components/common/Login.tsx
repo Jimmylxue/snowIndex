@@ -1,7 +1,6 @@
-import { useUserLogin } from '@/api/login';
 import { config } from '@/config/react-query';
-import { todoListAuth, useUser } from '@/hooks/todolist/useAuth';
-import { Button, Form, Input, Modal, message } from 'antd';
+import { useUser } from '@/hooks/todolist/useAuth';
+import { Button, Form, Input, Modal } from 'antd';
 import { useEffect, useState } from 'react';
 
 type TProps = {
@@ -67,15 +66,26 @@ export function Login({ show, onClose }: TProps) {
         <Form.Item
           label='手机号'
           name='phone'
-          rules={[{ required: true, message: '请输入手机号!' }]}>
+          rules={[
+            { required: true, message: '请输入手机号!' },
+            {
+              pattern:
+                /^1(3[0-9]|4[01456879]|5[0-3,5-9]|6[2567]|7[0-8]|8[0-9]|9[0-3,5-9])\d{8}$/,
+              message: '请输入正确的手机号',
+            },
+          ]}>
           <Input />
         </Form.Item>
 
         <Form.Item
           label='密码'
           name='password'
-          rules={[{ required: true, message: '请输入密码!' }]}>
-          <Input.Password />
+          rules={[
+            { required: true, message: '请输入密码!' },
+            { min: 6, message: '密码最少6位' },
+            { max: 12, message: '密码最多12位' },
+          ]}>
+          <Input.Password maxLength={12} />
         </Form.Item>
 
         <Form.Item wrapperCol={{ offset: 6, span: 16 }}>

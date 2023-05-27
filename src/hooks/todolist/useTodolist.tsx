@@ -1,9 +1,17 @@
 import { useTaskType } from '@/api/todolist';
 import { TaskType } from '@/api/todolist/type';
-import { FC, ReactNode, createContext, useContext, useState } from 'react';
+import {
+  FC,
+  ReactNode,
+  createContext,
+  useContext,
+  useEffect,
+  useState,
+} from 'react';
 
 type TodoListInfo = {
   taskType?: TaskType[];
+  isFetchingTaskType?: boolean;
 };
 
 export const TodoListContext = createContext<TodoListInfo>({});
@@ -15,9 +23,10 @@ type TProps = {
 export const TodoListProvider: FC<TProps> = (props) => {
   const [taskListInfo, setTaskListInfo] = useState<TodoListInfo>({
     taskType: undefined,
+    isFetchingTaskType: false,
   });
 
-  useTaskType(
+  const { isFetching } = useTaskType(
     'taskType',
     {
       userId: 1001,
@@ -30,6 +39,10 @@ export const TodoListProvider: FC<TProps> = (props) => {
       },
     },
   );
+
+  useEffect(() => {
+    setTaskListInfo((val) => ({ ...val, isFetchingTaskType: isFetching }));
+  }, [isFetching]);
 
   return (
     <TodoListContext.Provider value={taskListInfo!}>

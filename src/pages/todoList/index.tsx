@@ -22,7 +22,7 @@ export const TodoList = observer(() => {
   const selectTask = useRef<TaskItem>();
   const currentChooseTaskType = useRef<number>();
 
-  const { data, refetch, isLoading, isFetched } = useUserTask(
+  const { data, refetch, isFetching } = useUserTask(
     ['userTask', searchParams],
     {
       userId: 1001,
@@ -36,9 +36,6 @@ export const TodoList = observer(() => {
     {
       refetchOnWindowFocus: false,
       enabled: !!searchParams?.startTime && !!searchParams.taskType,
-      onSuccess(data) {
-        console.log('enddddd');
-      },
     },
   );
 
@@ -47,14 +44,6 @@ export const TodoList = observer(() => {
       currentChooseTaskType.current = searchParams?.taskType;
     }
   }, [searchParams]);
-
-  useEffect(() => {
-    console.log({ isLoading });
-  }, [isLoading]);
-
-  useEffect(() => {
-    console.log({ isFetched });
-  }, [isFetched]);
 
   return (
     <TodoListProvider>
@@ -79,7 +68,7 @@ export const TodoList = observer(() => {
             }}
           />
           <div className='flex-grow h-full snow-content'>
-            <Spin tip='Loading...' spinning={isLoading} className='h-full'>
+            <Spin tip='Loading...' spinning={isFetching} className='h-full'>
               <Content
                 searchParams={searchParams}
                 taskData={data?.result?.result || []}

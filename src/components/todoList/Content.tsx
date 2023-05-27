@@ -11,6 +11,7 @@ import {
 import { BellOutlined } from '@ant-design/icons';
 import EmptyImage from '@/assets/img/todolist/empty.jpg';
 import { config } from '@/config/react-query';
+import { useUser } from '@/hooks/todolist/useAuth';
 
 type TProps = {
   onEditTask: (type: 'ADD' | 'EDIT', task?: Task) => void;
@@ -28,6 +29,7 @@ export function Content({
   const { mutateAsync } = useUpdateTaskStatus();
   const { mutateAsync: delTask } = useDelTask();
   const { queryClient } = config();
+  const { checkUserLoginBeforeFn } = useUser();
 
   return (
     <div className='content w-full flex justify-center'>
@@ -116,7 +118,9 @@ export function Content({
           className='mt-3'
           // loading={true}
           onClick={() => {
-            onEditTask('ADD');
+            if (checkUserLoginBeforeFn()) {
+              onEditTask('ADD');
+            }
           }}>
           添加任务
         </Button>
