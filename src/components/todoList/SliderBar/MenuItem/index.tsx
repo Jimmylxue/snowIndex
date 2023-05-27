@@ -60,7 +60,7 @@ export const MenuItem: FC<TProps> = ({
                 onDel?.();
               }}>
               <span
-                className='snow-edit mr-2'
+                className='snow-edit mr-2 text-xs'
                 onClick={(e) => {
                   e.stopPropagation();
                 }}>
@@ -70,7 +70,7 @@ export const MenuItem: FC<TProps> = ({
           )}
           {showEdit && (
             <span
-              className='snow-edit'
+              className='snow-edit text-xs'
               onClick={(e) => {
                 e.stopPropagation();
                 onEdit?.();

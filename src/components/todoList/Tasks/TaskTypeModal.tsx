@@ -1,11 +1,7 @@
 import { Button, Form, Input, Modal, Popconfirm, message } from 'antd';
 import { UserOutlined, LockOutlined } from '@ant-design/icons';
-import { memo, useEffect } from 'react';
-import {
-  useAddTaskType,
-  useDelTaskType,
-  useUpdateTaskType,
-} from '@/api/todolist/taskType';
+import { useEffect } from 'react';
+import { useAddTaskType, useUpdateTaskType } from '@/api/todolist/taskType';
 import { config } from '@/config/react-query';
 import { TaskType } from '@/api/todolist/type';
 
@@ -48,6 +44,7 @@ export const TaskTypeModal = ({
       open={show}
       okText={type === 'ADD' ? '添加类型' : '编辑类型'}
       cancelText={'取消'}
+      forceRender
       onCancel={onCancel}
       footer={
         <div className='flex justify-end w-full'>

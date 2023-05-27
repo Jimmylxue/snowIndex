@@ -27,6 +27,7 @@ export function Login({ show, onClose }: TProps) {
       title={modalType === 'login' ? '用户登录' : '用户注册'}
       open={show}
       onCancel={onClose}
+      forceRender
       footer={null}>
       <Form
         form={form}
@@ -74,7 +75,7 @@ export function Login({ show, onClose }: TProps) {
               message: '请输入正确的手机号',
             },
           ]}>
-          <Input />
+          <Input maxLength={11} />
         </Form.Item>
 
         <Form.Item

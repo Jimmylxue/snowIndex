@@ -3,12 +3,8 @@ import { TaskItem } from './Tasks';
 import { TaskItem as Task } from '@/api/todolist/type';
 import { TSearchTaskParams } from './SliderBar/SliderBar';
 import { getFullTimeByIndex, getTimeTextByIndex } from './utils';
-import {
-  useDelTask,
-  useUpdateTask,
-  useUpdateTaskStatus,
-} from '@/api/todolist/task';
-import { BellOutlined } from '@ant-design/icons';
+import { useDelTask, useUpdateTaskStatus } from '@/api/todolist/task';
+import { BellOutlined, CheckCircleOutlined } from '@ant-design/icons';
 import EmptyImage from '@/assets/img/todolist/empty.jpg';
 import { config } from '@/config/react-query';
 import { useUser } from '@/hooks/todolist/useAuth';
@@ -73,6 +69,7 @@ export function Content({
             key={index}
             taskName={task.taskName}
             taskType={task.typeMessage?.typeName}
+            task={task}
             desc={task.taskContent}
             onClick={() => {
               onEditTask('EDIT', task);
@@ -85,11 +82,27 @@ export function Content({
               });
               if (res.code === 200) {
                 notification.info({
-                  message: `任务已完成`,
-                  description:
-                    'This is the content of the notification. This is the content of the notification. This is the content of the notification.',
+                  message: status ? `任务已完成` : '已恢复任务',
+                  description: (
+                    <>
+                      <p className='text-base'>{task.taskName}</p>
+                      <p className='text-xs'>{task.taskContent}</p>
+                    </>
+                  ),
                   placement: 'bottomLeft',
-                  icon: <BellOutlined />,
+                  icon: status ? (
+                    <CheckCircleOutlined
+                      style={{
+                        color: '#2ecc71',
+                      }}
+                    />
+                  ) : (
+                    <BellOutlined
+                      style={{
+                        color: '#f39c12',
+                      }}
+                    />
+                  ),
                 });
                 queryClient.invalidateQueries('userTask');
               }

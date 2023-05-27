@@ -1,28 +1,26 @@
-import React, { useCallback, useRef } from 'react';
+import { useCallback, useRef } from 'react';
 import classNames from 'classnames';
 import { MenuItem } from './MenuItem';
 import { useEffect, useState } from 'react';
 import { SButton } from '../Button';
-import {
-  PlusOutlined,
-  SlackOutlined,
-  CarryOutOutlined,
-  BulbOutlined,
-} from '@ant-design/icons';
+import { PlusOutlined, SlackOutlined } from '@ant-design/icons';
 import { TaskTypeModal } from '../Tasks/TaskTypeModal';
-import { useAddTaskType, useDelTaskType } from '@/api/todolist/taskType';
+import { useDelTaskType } from '@/api/todolist/taskType';
 import { message, DatePicker, Empty, Spin } from 'antd';
 import {
+  getCurrentMonthsTime,
+  getRandomColor,
   getStatusByIndex,
   getTaskTypeByIndex,
   getTimeByIndex,
   getTimeStringByDate,
 } from './core';
-import dayjs from 'dayjs';
 import { useTodoList } from '@/hooks/todolist/useTodolist';
 import { TaskType } from '@/api/todolist/type';
 import { config } from '@/config/react-query';
 import { useUser } from '@/hooks/todolist/useAuth';
+import moment from 'moment';
+import { menuListConst, taskStatusListConst } from './const';
 
 const { RangePicker } = DatePicker;
 
@@ -42,65 +40,6 @@ type TProps = {
 export function SliderBar({ menuShow, onSearchChange }: TProps) {
   const { taskType: taskTypeList, isFetchingTaskType } = useTodoList();
   const { checkUserLoginBeforeFn } = useUser();
-  const taskStatusListConst = [
-    {
-      statusName: '未完成',
-    },
-    {
-      statusName: '已完成',
-    },
-  ];
-
-  const menuListConst = [
-    {
-      icon: (
-        <CarryOutOutlined
-          className='text-lg flex flex-shrink-0'
-          style={{
-            color: '#3a8335',
-          }}
-        />
-      ),
-      text: '近7天',
-      message: 2,
-    },
-    {
-      icon: (
-        <CarryOutOutlined
-          className='text-lg flex flex-shrink-0'
-          style={{
-            color: '#3a8335',
-          }}
-        />
-      ),
-      text: '昨天',
-      message: 2,
-    },
-    {
-      icon: (
-        <CarryOutOutlined
-          className='text-lg flex flex-shrink-0'
-          style={{
-            color: '#3a8335',
-          }}
-        />
-      ),
-      text: '今天',
-      message: 3,
-    },
-    {
-      icon: (
-        <CarryOutOutlined
-          className='text-lg flex flex-shrink-0'
-          style={{
-            color: '#3a8335',
-          }}
-        />
-      ),
-      text: '自定义',
-      message: 2,
-    },
-  ];
 
   const [timeIndex, setTimeIndex] = useState<number>(0);
   const [taskTypeIndex, setTaskTypeIndex] = useState<number>(0);
@@ -129,8 +68,8 @@ export function SliderBar({ menuShow, onSearchChange }: TProps) {
     };
 
     if (timeIndex === 3 && !timeStr.current?.[0]) {
-      console.log('未选时间，不请求');
-      return;
+      // 未选时间 默认赋值一个月的时间
+      timeStr.current = getCurrentMonthsTime();
     }
 
     if (timeIndex === 3 && timeStr.current[0]) {
@@ -186,6 +125,12 @@ export function SliderBar({ menuShow, onSearchChange }: TProps) {
           <div className='mt-2'>
             <RangePicker
               format={'YYYY/MM/DD'}
+              defaultValue={[
+                moment(
+                  moment(new Date()).subtract(1, 'months').format('YYYY/MM/DD'),
+                ),
+                moment(new Date(), 'YYYY/MM/DD'),
+              ]}
               onChange={(date) => {
                 const res = date?.map((info) => info?.format('YYYY/MM/DD'));
                 const tempStr = [
@@ -194,6 +139,9 @@ export function SliderBar({ menuShow, onSearchChange }: TProps) {
                 ];
                 timeStr.current = tempStr;
                 paramsChangeFn();
+              }}
+              onOk={() => {
+                console.log('sss');
               }}
             />
           </div>
@@ -208,14 +156,7 @@ export function SliderBar({ menuShow, onSearchChange }: TProps) {
           <MenuItem
             key={index}
             checked={index === taskStatusIndex}
-            icon={
-              <BulbOutlined
-                className='text-lg '
-                style={{
-                  color: '#3a8335',
-                }}
-              />
-            }
+            icon={status.icon}
             text={status.statusName}
             message={<></>}
             onClick={() => {
@@ -252,7 +193,7 @@ export function SliderBar({ menuShow, onSearchChange }: TProps) {
                   <SlackOutlined
                     className='text-lg '
                     style={{
-                      color: '#3a8335',
+                      color: getRandomColor(index),
                     }}
                   />
                 }

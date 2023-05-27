@@ -59,6 +59,7 @@ export function TasksModal({
       okText={type === 'ADD' ? '添加任务' : '编辑任务'}
       cancelText={'取消'}
       onOk={form.submit}
+      forceRender
       onCancel={onCancel}>
       <Form
         form={form}

@@ -1,12 +1,19 @@
 import { Checkbox, Popconfirm } from 'antd';
 import { FC, HTMLAttributes } from 'react';
-import { DeleteOutlined, QuestionCircleOutlined } from '@ant-design/icons';
+import {
+  DeleteOutlined,
+  QuestionCircleOutlined,
+  DribbbleOutlined,
+} from '@ant-design/icons';
 import './index.less';
+import dayjs from 'dayjs';
+import { TaskItem as Task } from '@/api/todolist/type';
 
 interface TProps extends HTMLAttributes<HTMLDivElement> {
   taskName: string;
   desc: string;
   taskType: string;
+  task: Task;
   isComplete: 1 | 0;
   onCompleteTask: (status: boolean) => void;
   onDeleteTask: () => void;
@@ -17,6 +24,7 @@ export const TaskItem: FC<TProps> = ({
   desc,
   taskType,
   isComplete,
+  task,
   onCompleteTask,
   onClick,
   onDeleteTask,
@@ -35,8 +43,18 @@ export const TaskItem: FC<TProps> = ({
         </span>
       </div>
       <div className='px-6 text-xs'>{desc}</div>
-      <div className=' flex justify-end'>
-        <div className='text-xs'>{taskType}</div>
+      <div className=' flex justify-end mt-3'>
+        <div
+          className='text-xs'
+          style={{
+            color: '#f39c12',
+          }}>
+          <DribbbleOutlined className='mr-1' />
+          {taskType}
+        </div>
+      </div>
+      <div className='text-xs flex justify-end text-gray-500'>
+        {dayjs(+task.createTime).format('YYYY-MM-DD - h:mm:ss - a')}
       </div>
       <Popconfirm
         okText='确定'

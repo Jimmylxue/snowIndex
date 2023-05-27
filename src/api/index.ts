@@ -90,7 +90,6 @@ class RequestHttp {
         } // 全局错误信息拦截（防止下载文件得时候返回数据流，没有code，直接报错）
         if (data.code && data.code !== RequestEnums.SUCCESS) {
           // ElMessage.error(data) // 此处也可以使用组件提示报错信息
-          // return Promise.reject(data)
           message.error(data.message || data.result);
           return data;
         }
@@ -114,12 +113,18 @@ class RequestHttp {
       },
     );
   }
+
+  // code 是 http 请求的状态
   handleCode(code: number, data: TResponse): void {
+    console.log({ code, data });
     switch (code) {
       case 401:
-        // ElMessage.error('登录失败，请重新登录')
+        message.error('登录已过期，请重新登录');
         break;
       case 404:
+        message.error(data.message);
+        break;
+      case 400:
         message.error(data.message);
         break;
       default:
