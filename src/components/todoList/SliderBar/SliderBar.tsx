@@ -10,7 +10,7 @@ import {
   BulbOutlined,
 } from '@ant-design/icons';
 import { TaskTypeModal } from '../Tasks/TaskTypeModal';
-import { useAddTaskType } from '@/api/todolist/taskType';
+import { useAddTaskType, useDelTaskType } from '@/api/todolist/taskType';
 import { message, DatePicker } from 'antd';
 import {
   getStatusByIndex,
@@ -21,6 +21,7 @@ import {
 import dayjs from 'dayjs';
 import { useTodoList } from '@/hooks/todolist/useTodolist';
 import { TaskType } from '@/api/todolist/type';
+import { config } from '@/config/react-query';
 
 const { RangePicker } = DatePicker;
 
@@ -109,6 +110,9 @@ export function SliderBar({ menuShow, onSearchChange }: TProps) {
   );
   const timeStr = useRef<number[]>([0, 0]);
   const selectTaskType = useRef<TaskType>();
+
+  const { mutateAsync: delTaskType } = useDelTaskType();
+  const { queryClient } = config();
 
   const paramsChangeFn = () => {
     const [startTime, endTime] = getTimeByIndex(timeIndex);
@@ -251,7 +255,8 @@ export function SliderBar({ menuShow, onSearchChange }: TProps) {
           {taskTypeList?.map((taskType, index) => (
             <MenuItem
               key={index}
-              showEdit={true}
+              showEdit
+              showDel
               checked={index === taskTypeIndex}
               icon={
                 <SlackOutlined
@@ -271,6 +276,13 @@ export function SliderBar({ menuShow, onSearchChange }: TProps) {
                 selectTaskType.current = taskType;
                 setTaskTypeModalType('EDIT');
                 setTaskTypeModalShow(true);
+              }}
+              onDel={async () => {
+                const res = await delTaskType({ typeId: taskType?.typeId! });
+                if (res.code === 200) {
+                  message.success('操作成功');
+                  queryClient.invalidateQueries('taskType');
+                }
               }}
             />
           ))}

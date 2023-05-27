@@ -1,14 +1,19 @@
-import { Button, notification } from 'antd';
+import { Button, message, notification } from 'antd';
 import { TaskItem } from './Tasks';
 import { TaskItem as Task } from '@/api/todolist/type';
 import { TSearchTaskParams } from './SliderBar/SliderBar';
 import { getFullTimeByIndex, getTimeTextByIndex } from './utils';
-import { useUpdateTask } from '@/api/todolist/task';
+import {
+  useDelTask,
+  useUpdateTask,
+  useUpdateTaskStatus,
+} from '@/api/todolist/task';
 import { BellOutlined } from '@ant-design/icons';
 import EmptyImage from '@/assets/img/todolist/empty.jpg';
+import { config } from '@/config/react-query';
 
 type TProps = {
-  onEditTask: (type: 'ADD' | 'EDIT') => void;
+  onEditTask: (type: 'ADD' | 'EDIT', task?: Task) => void;
   taskData: Task[];
   searchParams?: TSearchTaskParams;
   refetchList: () => void;
@@ -20,7 +25,9 @@ export function Content({
   searchParams,
   refetchList,
 }: TProps) {
-  const { mutateAsync } = useUpdateTask();
+  const { mutateAsync } = useUpdateTaskStatus();
+  const { mutateAsync: delTask } = useDelTask();
+  const { queryClient } = config();
 
   return (
     <div className='content w-full flex justify-center'>
@@ -65,14 +72,15 @@ export function Content({
             taskName={task.taskName}
             taskType={task.typeMessage?.typeName}
             desc={task.taskContent}
-            onClick={() => onEditTask('EDIT')}
+            onClick={() => {
+              onEditTask('EDIT', task);
+            }}
             onCompleteTask={async (status) => {
               const res = await mutateAsync({
                 userId: 1001,
                 status: !!status ? 1 : 0,
                 taskId: task.taskId,
               });
-              refetchList();
               if (res.code === 200) {
                 notification.info({
                   message: `任务已完成`,
@@ -81,14 +89,26 @@ export function Content({
                   placement: 'bottomLeft',
                   icon: <BellOutlined />,
                 });
+                queryClient.invalidateQueries('userTask');
+              }
+            }}
+            onDeleteTask={async () => {
+              const res = await delTask({
+                taskId: task.taskId,
+              });
+              if (res.code === 200) {
+                message.success('删除成功');
+                queryClient.invalidateQueries('userTask');
               }
             }}
           />
         ))}
-        <div className=' w-full flex flex-col items-center justify-center mt-10'>
-          <img src={EmptyImage} alt='' />
-          <p>准备做点什么呢？😄</p>
-        </div>
+        {!taskData.length && (
+          <div className=' w-full flex flex-col items-center justify-center mt-10'>
+            <img src={EmptyImage} alt='' />
+            <p>准备做点什么呢？😄</p>
+          </div>
+        )}
 
         <Button
           block

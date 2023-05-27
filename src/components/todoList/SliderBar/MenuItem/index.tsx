@@ -1,6 +1,8 @@
 import { FC, HTMLAttributes, ReactNode } from 'react';
+import { DeleteOutlined, QuestionCircleOutlined } from '@ant-design/icons';
 import './index.less';
 import classNames from 'classnames';
+import { Popconfirm } from 'antd';
 
 interface TProps extends HTMLAttributes<HTMLDivElement> {
   icon: ReactNode;
@@ -9,6 +11,8 @@ interface TProps extends HTMLAttributes<HTMLDivElement> {
   checked?: boolean;
   showEdit?: boolean;
   onEdit?: () => void;
+  showDel?: boolean;
+  onDel?: () => void;
 }
 
 export const MenuItem: FC<TProps> = ({
@@ -18,7 +22,9 @@ export const MenuItem: FC<TProps> = ({
   className,
   checked,
   onEdit,
+  onDel,
   showEdit,
+  showDel,
   ...args
 }) => {
   return (
@@ -33,7 +39,7 @@ export const MenuItem: FC<TProps> = ({
           {icon}
           <span className='ml-2'>{text}</span>
         </div>
-        <div>
+        <div className='flex'>
           <span
             className={classNames('text-xs', {
               'snow-message-count': showEdit,
@@ -43,6 +49,25 @@ export const MenuItem: FC<TProps> = ({
             }}>
             {message}
           </span>
+          {showDel && (
+            <Popconfirm
+              okText='确定'
+              cancelText='取消'
+              title='确定删除该任务吗？'
+              icon={<QuestionCircleOutlined style={{ color: 'red' }} />}
+              onConfirm={(e) => {
+                e?.stopPropagation();
+                onDel?.();
+              }}>
+              <span
+                className='snow-edit mr-2'
+                onClick={(e) => {
+                  e.stopPropagation();
+                }}>
+                删除
+              </span>
+            </Popconfirm>
+          )}
           {showEdit && (
             <span
               className='snow-edit'

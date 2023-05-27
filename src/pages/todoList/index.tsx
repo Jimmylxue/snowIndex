@@ -1,5 +1,5 @@
 import { Content, NavBar, TasksModal } from '@/components/todoList';
-import { useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import './index.less';
 import {
   SliderBar,
@@ -11,13 +11,18 @@ import { Spin } from 'antd';
 import { Login } from '@/components/common/Login';
 import { observer } from 'mobx-react-lite';
 import { todoListAuth } from '@/hooks/todolist/useAuth';
+import { TaskItem } from '@/api/todolist/type';
 
 export const TodoList = observer(() => {
   const [menuShow, setMenuShow] = useState<boolean>(true);
   const [taskModalShow, setTaskModalShow] = useState<boolean>(false);
   const [searchParams, setSearchParams] = useState<TSearchTaskParams>();
 
-  const { data, refetch, isLoading } = useUserTask(
+  const taskModalType = useRef<'ADD' | 'EDIT'>('ADD');
+  const selectTask = useRef<TaskItem>();
+  const currentChooseTaskType = useRef<number>();
+
+  const { data, refetch, isLoading, isFetched } = useUserTask(
     ['userTask', searchParams],
     {
       userId: 1001,
@@ -31,8 +36,25 @@ export const TodoList = observer(() => {
     {
       refetchOnWindowFocus: false,
       enabled: !!searchParams?.startTime && !!searchParams.taskType,
+      onSuccess(data) {
+        console.log('enddddd');
+      },
     },
   );
+
+  useEffect(() => {
+    if (searchParams?.taskType) {
+      currentChooseTaskType.current = searchParams?.taskType;
+    }
+  }, [searchParams]);
+
+  useEffect(() => {
+    console.log({ isLoading });
+  }, [isLoading]);
+
+  useEffect(() => {
+    console.log({ isFetched });
+  }, [isFetched]);
 
   return (
     <TodoListProvider>
@@ -42,6 +64,9 @@ export const TodoList = observer(() => {
             setMenuShow((status) => !status);
           }}
           onAddTask={() => {
+            taskModalType.current = 'ADD';
+            selectTask.current = void 0;
+            currentChooseTaskType.current = void 0;
             setTaskModalShow(true);
           }}
         />
@@ -58,7 +83,10 @@ export const TodoList = observer(() => {
               <Content
                 searchParams={searchParams}
                 taskData={data?.result?.result || []}
-                onEditTask={() => {
+                onEditTask={(type, task) => {
+                  taskModalType.current = type;
+                  selectTask.current = task;
+                  currentChooseTaskType.current = searchParams?.taskType;
                   setTaskModalShow(true);
                 }}
                 refetchList={refetch}
@@ -67,6 +95,9 @@ export const TodoList = observer(() => {
           </div>
         </div>
         <TasksModal
+          type={taskModalType.current}
+          selectTask={selectTask.current}
+          selectTaskType={currentChooseTaskType.current}
           show={taskModalShow}
           onCancel={() => {
             setTaskModalShow(false);

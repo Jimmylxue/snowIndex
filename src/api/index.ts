@@ -83,9 +83,7 @@ class RequestHttp {
       (response: AxiosResponse) => {
         // 请求成功时
         const { data, config } = response; // 解构
-        console.log('data~~~', data);
         if (data.code === RequestEnums.OVERDUE) {
-          console.log('err');
           // 登录信息失效，应跳转到登录页面，并清空本地的token
           localStorage.setItem('token', ''); // router.replace({ //   path: '/login' // })
           return Promise.reject(data);

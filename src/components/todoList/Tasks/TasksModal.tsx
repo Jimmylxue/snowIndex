@@ -1,44 +1,96 @@
 import { DatePicker, Form, Input, Modal, Select, message } from 'antd';
 import { UserOutlined, LockOutlined } from '@ant-design/icons';
 import { useTodoList } from '@/hooks/todolist/useTodolist';
-import { useAddTask } from '@/api/todolist/task';
+import { useAddTask, useUpdateTask } from '@/api/todolist/task';
+import { config } from '@/config/react-query';
+import { TaskItem } from '@/api/todolist/type';
+import { useEffect } from 'react';
 
 type TProps = {
+  type: 'ADD' | 'EDIT';
+  selectTask?: TaskItem;
+  selectTaskType?: number;
   show: boolean;
   onOk: () => void;
   onCancel: () => void;
 };
 
-export function TasksModal({ show, onOk, onCancel }: TProps) {
+export function TasksModal({
+  show,
+  onOk,
+  onCancel,
+  type,
+  selectTask,
+  selectTaskType,
+}: TProps) {
   const [form] = Form.useForm();
 
   const { taskType } = useTodoList();
+  const { queryClient } = config();
 
   const { mutateAsync } = useAddTask();
+  const { mutateAsync: updateTask } = useUpdateTask();
 
-  const confirm = () => {
-    form.submit();
-  };
+  useEffect(() => {
+    if (selectTask) {
+      const { taskName, taskContent, typeId } = selectTask;
+      form.setFieldsValue({
+        taskName,
+        taskContent,
+        typeId,
+      });
+    }
+  }, [selectTask]);
+
+  useEffect(() => {
+    if (!show) {
+      form.resetFields();
+    }
+  }, [show]);
+
+  useEffect(() => {
+    if (type === 'ADD') {
+      form.setFieldsValue({
+        typeId: selectTaskType,
+      });
+    }
+  }, [type, selectTaskType]);
 
   return (
     <Modal
-      title='添加任务'
+      title={type === 'ADD' ? '添加任务' : '编辑任务'}
       open={show}
-      okText={'添加任务'}
+      okText={type === 'ADD' ? '添加任务' : '编辑任务'}
       cancelText={'取消'}
-      onOk={confirm}
+      onOk={form.submit}
       onCancel={onCancel}>
       <Form
         form={form}
         name='horizontal_login'
         onFinish={async () => {
           const params = form.getFieldsValue();
-          const res = await mutateAsync({ ...params, userId: 1001 });
-          if (res.code === 200) {
-            message.success('任务添加成功');
+          if (type === 'ADD') {
+            const res = await mutateAsync({ ...params });
+            if (res.code === 200) {
+              message.success('任务添加成功');
+              queryClient.invalidateQueries('userTask');
+            } else {
+              message.error('任务添加失败');
+            }
           } else {
-            message.error('任务添加失败');
+            // 编辑逻辑
+            const res = await updateTask({
+              ...params,
+              taskId: selectTask?.taskId,
+            });
+            if (res.code === 200) {
+              message.success('任务编辑成功');
+              queryClient.invalidateQueries('userTask');
+            } else {
+              message.error('任务编辑失败');
+            }
           }
+
           onOk();
         }}>
         <Form.Item

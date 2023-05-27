@@ -55,20 +55,6 @@ export const TaskTypeModal = ({
       onCancel={onCancel}
       footer={
         <div className='flex justify-end w-full'>
-          <Popconfirm
-            title='确定要删除这个任务吗？'
-            onConfirm={async () => {
-              const res = await delTaskType({ typeId: typeInfo?.typeId! });
-              if (res.code === 200) {
-                message.success('操作成功');
-                onCancel();
-                queryClient.invalidateQueries('taskType');
-              }
-            }}
-            okText='确定'
-            cancelText='取消'>
-            <Button danger>删除任务</Button>
-          </Popconfirm>
           <Button type='primary' onClick={form.submit}>
             {' '}
             {type === 'ADD' ? '添加类型' : '编辑类型'}

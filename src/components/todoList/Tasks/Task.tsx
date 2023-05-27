@@ -9,6 +9,7 @@ interface TProps extends HTMLAttributes<HTMLDivElement> {
   taskType: string;
   isComplete: 1 | 0;
   onCompleteTask: (status: boolean) => void;
+  onDeleteTask: () => void;
 }
 
 export const TaskItem: FC<TProps> = ({
@@ -18,6 +19,7 @@ export const TaskItem: FC<TProps> = ({
   isComplete,
   onCompleteTask,
   onClick,
+  onDeleteTask,
 }) => {
   return (
     <div className='snow-task-item relative px-2 py-2 rounded-md'>
@@ -25,7 +27,6 @@ export const TaskItem: FC<TProps> = ({
         <Checkbox
           checked={isComplete === 1}
           onChange={(e) => {
-            console.log();
             onCompleteTask(e.target.checked);
             // todo 完成任务
           }}></Checkbox>
@@ -41,11 +42,9 @@ export const TaskItem: FC<TProps> = ({
         okText='确定'
         cancelText='取消'
         title='确定删除该任务吗？'
-        icon={<QuestionCircleOutlined style={{ color: 'red' }} />}>
-        <DeleteOutlined
-          className='snow-delete-btn absolute right-2 top-1/2 -translate-y-1/2 text-base cursor-pointer'
-          onClick={() => {}}
-        />
+        icon={<QuestionCircleOutlined style={{ color: 'red' }} />}
+        onConfirm={onDeleteTask}>
+        <DeleteOutlined className='snow-delete-btn absolute right-2 top-1/2 -translate-y-1/2 text-base cursor-pointer' />
       </Popconfirm>
     </div>
   );
