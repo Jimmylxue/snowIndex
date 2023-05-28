@@ -6,12 +6,13 @@ import {
   TSearchTaskParams,
 } from '@/components/todoList/SliderBar/SliderBar';
 import { TodoListProvider } from '@/hooks/todolist/useTodolist';
-import { useUserTask } from '@/api/todolist';
+import { SearchProvider } from '@/hooks/todolist/useSearch';
+import { useUserTask } from '@/api/todolist/task';
 import { Spin } from 'antd';
 import { Login } from '@/components/common/Login';
 import { observer } from 'mobx-react-lite';
 import { todoListAuth } from '@/hooks/todolist/useAuth';
-import { TaskItem } from '@/api/todolist/type';
+import { TaskItem } from '@/api/todolist/task/type';
 
 export const TodoList = observer(() => {
   const [menuShow, setMenuShow] = useState<boolean>(true);
@@ -47,60 +48,62 @@ export const TodoList = observer(() => {
 
   return (
     <TodoListProvider>
-      <div className=' w-screen h-screen flex flex-col'>
-        <NavBar
-          onMenuClick={() => {
-            setMenuShow((status) => !status);
-          }}
-          onAddTask={() => {
-            taskModalType.current = 'ADD';
-            selectTask.current = void 0;
-            currentChooseTaskType.current = void 0;
-            setTaskModalShow(true);
-          }}
-        />
-        <div className=' w-full flex flex-grow'>
-          <SliderBar
-            menuShow={menuShow}
-            onSearchChange={(searchParams) => {
-              setSearchParams(searchParams);
-              // refetch();
+      <SearchProvider>
+        <div className=' w-screen h-screen flex flex-col'>
+          <NavBar
+            onMenuClick={() => {
+              setMenuShow((status) => !status);
+            }}
+            onAddTask={() => {
+              taskModalType.current = 'ADD';
+              selectTask.current = void 0;
+              currentChooseTaskType.current = void 0;
+              setTaskModalShow(true);
             }}
           />
-          <div className='flex-grow h-full snow-content'>
-            <Spin tip='Loading...' spinning={isFetching} className='h-full'>
-              <Content
-                searchParams={searchParams}
-                taskData={data?.result?.result || []}
-                onEditTask={(type, task) => {
-                  taskModalType.current = type;
-                  selectTask.current = task;
-                  currentChooseTaskType.current = searchParams?.taskType;
-                  setTaskModalShow(true);
-                }}
-                refetchList={refetch}
-              />
-            </Spin>
+          <div className=' w-full flex flex-grow'>
+            <SliderBar
+              menuShow={menuShow}
+              onSearchChange={(searchParams) => {
+                setSearchParams(searchParams);
+                // refetch();
+              }}
+            />
+            <div className='flex-grow h-full snow-content'>
+              <Spin tip='Loading...' spinning={isFetching} className='h-full'>
+                <Content
+                  searchParams={searchParams}
+                  taskData={data?.result?.result || []}
+                  onEditTask={(type, task) => {
+                    taskModalType.current = type;
+                    selectTask.current = task;
+                    currentChooseTaskType.current = searchParams?.taskType;
+                    setTaskModalShow(true);
+                  }}
+                  refetchList={refetch}
+                />
+              </Spin>
+            </div>
           </div>
+          <TasksModal
+            type={taskModalType.current}
+            selectTask={selectTask.current}
+            selectTaskType={currentChooseTaskType.current}
+            show={taskModalShow}
+            onCancel={() => {
+              setTaskModalShow(false);
+            }}
+            onOk={() => {
+              refetch();
+              setTaskModalShow(false);
+            }}
+          />
         </div>
-        <TasksModal
-          type={taskModalType.current}
-          selectTask={selectTask.current}
-          selectTaskType={currentChooseTaskType.current}
-          show={taskModalShow}
-          onCancel={() => {
-            setTaskModalShow(false);
-          }}
-          onOk={() => {
-            refetch();
-            setTaskModalShow(false);
-          }}
+        <Login
+          show={todoListAuth.shouldLogin}
+          onClose={() => todoListAuth.setShouldLoginStatus(false)}
         />
-      </div>
-      <Login
-        show={todoListAuth.shouldLogin}
-        onClose={() => todoListAuth.setShouldLoginStatus(false)}
-      />
+      </SearchProvider>
     </TodoListProvider>
   );
 });

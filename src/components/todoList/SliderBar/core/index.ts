@@ -1,4 +1,4 @@
-import { TaskType } from '@/api/todolist/type';
+import { TaskType } from '@/api/todolist/taskType/type';
 import dayjs from 'dayjs';
 
 export function getTimeByIndex(timeIndex: number) {

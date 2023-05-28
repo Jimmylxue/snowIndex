@@ -3,7 +3,7 @@ import { UserOutlined, LockOutlined } from '@ant-design/icons';
 import { useEffect } from 'react';
 import { useAddTaskType, useUpdateTaskType } from '@/api/todolist/taskType';
 import { config } from '@/config/react-query';
-import { TaskType } from '@/api/todolist/type';
+import { TaskType } from '@/api/todolist/taskType/type';
 
 type TProps = {
   type: 'ADD' | 'EDIT';
@@ -75,8 +75,6 @@ export const TaskTypeModal = ({
               onCancel();
             }
           }
-
-          console.log(params);
         }}>
         <Form.Item
           name='typeName'

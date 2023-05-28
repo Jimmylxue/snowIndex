@@ -1,3 +1,18 @@
+import { TaskType } from '../taskType/type';
+
+export type TaskItem = {
+  taskId: number;
+  userId: number;
+  typeId: number;
+  status: 1 | 0;
+  taskName: string;
+  taskContent: string;
+  completeTime: string;
+  createTime: string;
+  updateTime: string;
+  typeMessage: TaskType;
+};
+
 export type TAddTaskParams = {
   userId?: number;
   typeId: number;
@@ -22,4 +37,15 @@ export type TUpdateTaskParams = {
 
 export type TDelTaskParams = {
   taskId: number;
+};
+
+export type TUserTaskList = {
+  page: number;
+  result: TaskItem[];
+  pageSize: number;
+  typeId?: number;
+};
+
+export type TSearchTaskParams = {
+  taskName: string;
 };

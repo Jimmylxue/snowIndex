@@ -7,7 +7,7 @@ import {
 } from '@ant-design/icons';
 import './index.less';
 import dayjs from 'dayjs';
-import { TaskItem as Task } from '@/api/todolist/type';
+import { TaskItem as Task } from '@/api/todolist/task/type';
 
 interface TProps extends HTMLAttributes<HTMLDivElement> {
   taskName: string;

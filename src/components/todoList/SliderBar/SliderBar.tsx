@@ -16,11 +16,12 @@ import {
   getTimeStringByDate,
 } from './core';
 import { useTodoList } from '@/hooks/todolist/useTodolist';
-import { TaskType } from '@/api/todolist/type';
+import { TaskType } from '@/api/todolist/taskType/type';
 import { config } from '@/config/react-query';
 import { useUser } from '@/hooks/todolist/useAuth';
 import moment from 'moment';
 import { menuListConst, taskStatusListConst } from './const';
+import { useSearchInfo } from '@/hooks/todolist/useSearch';
 
 const { RangePicker } = DatePicker;
 
@@ -50,11 +51,22 @@ export function SliderBar({ menuShow, onSearchChange }: TProps) {
   );
   const timeStr = useRef<number[]>([0, 0]);
   const selectTaskType = useRef<TaskType>();
+  const dateRangeValue = useRef<[moment.Moment, moment.Moment]>([
+    moment(moment(new Date()).subtract(1, 'months').format('YYYY/MM/DD')),
+    moment(new Date(), 'YYYY/MM/DD'),
+  ]);
 
   const { mutateAsync: delTaskType } = useDelTaskType();
   const { queryClient } = config();
 
+  const { searchInfo, setSearchInfo } = useSearchInfo();
+
   const paramsChangeFn = () => {
+    if (searchInfo?.taskId) {
+      console.log('搜索数据 无需请求');
+      return;
+    }
+
     const [startTime, endTime] = getTimeByIndex(timeIndex);
     const { status } = getStatusByIndex(taskStatusIndex);
     const { taskType } = getTaskTypeByIndex(taskTypeIndex, taskTypeList!);
@@ -80,15 +92,43 @@ export function SliderBar({ menuShow, onSearchChange }: TProps) {
     onSearchChange(params);
   };
 
+  // index 变化触发请求
   useEffect(() => {
     paramsChangeFn();
   }, [timeIndex, taskStatusIndex, taskTypeIndex]);
 
+  // 初次进入默认请求
   useEffect(() => {
     if (taskTypeList?.length) {
       paramsChangeFn();
     }
   }, [taskTypeList]);
+
+  // 搜索任务时 默认赋值
+  useEffect(() => {
+    if (!taskTypeList || !searchInfo?.taskId) {
+      return;
+    }
+    const searchItem = searchInfo;
+    setTaskStatusIndex(searchItem.status);
+    const taskTypeIndex = taskTypeList?.findIndex(
+      (taskType) => taskType.typeId === searchItem.typeId,
+    );
+    setTaskTypeIndex(taskTypeIndex!);
+    dateRangeValue.current = [
+      moment(+searchItem.createTime),
+      moment(+searchItem.createTime),
+    ];
+    const res = dateRangeValue.current?.map((info) =>
+      info?.format('YYYY/MM/DD'),
+    );
+    const tempStr = [
+      getTimeStringByDate(res?.[0]!, 'start'),
+      getTimeStringByDate(res?.[1]!, 'end'),
+    ];
+    timeStr.current = tempStr;
+    setTimeIndex(3);
+  }, [taskTypeList, searchInfo]);
 
   const onTaskTypeOk = useCallback(() => {
     setTaskTypeModalShow(false);
@@ -117,6 +157,7 @@ export function SliderBar({ menuShow, onSearchChange }: TProps) {
             text={menu.text}
             message={<></>}
             onClick={() => {
+              setSearchInfo(undefined as any);
               setTimeIndex(index);
             }}
           />
@@ -125,12 +166,8 @@ export function SliderBar({ menuShow, onSearchChange }: TProps) {
           <div className='mt-2'>
             <RangePicker
               format={'YYYY/MM/DD'}
-              defaultValue={[
-                moment(
-                  moment(new Date()).subtract(1, 'months').format('YYYY/MM/DD'),
-                ),
-                moment(new Date(), 'YYYY/MM/DD'),
-              ]}
+              defaultValue={dateRangeValue.current}
+              value={dateRangeValue.current}
               onChange={(date) => {
                 const res = date?.map((info) => info?.format('YYYY/MM/DD'));
                 const tempStr = [
@@ -138,11 +175,14 @@ export function SliderBar({ menuShow, onSearchChange }: TProps) {
                   getTimeStringByDate(res?.[1]!, 'end'),
                 ];
                 timeStr.current = tempStr;
+                setSearchInfo(undefined as any);
+                dateRangeValue.current = [
+                  moment(+tempStr[0]),
+                  moment(+tempStr[1]),
+                ];
                 paramsChangeFn();
               }}
-              onOk={() => {
-                console.log('sss');
-              }}
+              onOk={() => {}}
             />
           </div>
         )}
@@ -160,6 +200,7 @@ export function SliderBar({ menuShow, onSearchChange }: TProps) {
             text={status.statusName}
             message={<></>}
             onClick={() => {
+              setSearchInfo(undefined as any);
               setTaskStatusIndex(index);
             }}
           />
@@ -200,6 +241,7 @@ export function SliderBar({ menuShow, onSearchChange }: TProps) {
                 text={taskType.typeName}
                 message={<></>}
                 onClick={() => {
+                  setSearchInfo(undefined as any);
                   setTaskTypeModalType('ADD');
                   setTaskTypeIndex(index);
                 }}

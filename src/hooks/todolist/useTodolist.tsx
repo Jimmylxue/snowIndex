@@ -1,5 +1,5 @@
-import { useTaskType } from '@/api/todolist';
-import { TaskType } from '@/api/todolist/type';
+import { useTaskType } from '@/api/todolist/taskType';
+import { TaskType } from '@/api/todolist/taskType/type';
 import {
   FC,
   ReactNode,

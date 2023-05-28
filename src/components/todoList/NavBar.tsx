@@ -4,12 +4,18 @@ import {
   PlusOutlined,
   SearchOutlined,
 } from '@ant-design/icons';
-import { Dropdown, Form, Input, MenuProps, Modal } from 'antd';
+import { Dropdown, Input, MenuProps, Modal } from 'antd';
 import { Avatar } from './SAvatar';
 import { SButton } from './Button';
 import './index.css';
 import { useUser } from '@/hooks/todolist/useAuth';
 import { observer } from 'mobx-react-lite';
+import { useCallback, useState } from 'react';
+import { TaskItem } from '@/api/todolist/task/type';
+import { debounce } from 'lodash';
+import { useSearchTask } from '@/api/todolist/task';
+import './style.less';
+import { useSearchInfo } from '@/hooks/todolist/useSearch';
 
 type TProps = {
   onMenuClick: () => void;
@@ -19,6 +25,10 @@ type TProps = {
 export const NavBar = observer(({ onMenuClick, onAddTask }: TProps) => {
   const { user, logOut, showLoginModal, checkUserLoginBeforeFn } = useUser();
   const [modal, contextHolder] = Modal.useModal();
+  const [searchList, setSearchList] = useState<TaskItem[]>([]);
+  const { mutateAsync } = useSearchTask();
+  const { setSearchInfo } = useSearchInfo();
+  const [searchText, setSearchText] = useState('');
 
   const loginItems: MenuProps['items'] = [
     {
@@ -55,6 +65,27 @@ export const NavBar = observer(({ onMenuClick, onAddTask }: TProps) => {
     },
   ];
 
+  const searchFn = useCallback(
+    debounce(async (e) => {
+      const searchValue = e.target.value;
+      setSearchText(searchValue);
+      if (!searchValue) {
+        return;
+      }
+
+      const res = await mutateAsync({ taskName: searchValue });
+      if (res.code === 200) {
+        setSearchList(res.result.result);
+      }
+    }, 500),
+    [],
+  );
+
+  const changeFn = (e: any) => {
+    setSearchText(e.target.value);
+    searchFn(e);
+  };
+
   return (
     <div
       className='w-full px-5'
@@ -74,17 +105,48 @@ export const NavBar = observer(({ onMenuClick, onAddTask }: TProps) => {
             className='ml-2'
             icon={<HomeOutlined className=' flex text-xl flex-shrink-0' />}
           />
-          <Input
-            className='dz-input ml-4 border-r-2'
-            placeholder='请输入'
-            prefix={<SearchOutlined />}
-          />
+          <div className=' relative'>
+            <Input
+              className='dz-input ml-4 border-r-2 w-full'
+              placeholder='请输入'
+              value={searchText}
+              prefix={<SearchOutlined />}
+              onChange={changeFn}
+              style={{
+                width: 300,
+              }}
+            />
+            {!!searchList.length && (
+              <div
+                className=' absolute left-0 top-8 ml-4 bg-white z-30'
+                style={{
+                  width: 300,
+                }}>
+                {searchList.map((task, index) => (
+                  <div
+                    key={index}
+                    className='snow-search-item-hover text-black flex justify-between py-2 px-2 text-xs cursor-pointer'
+                    onClick={() => {
+                      setSearchInfo(task);
+                      setSearchList([]);
+                      setSearchText('');
+                    }}>
+                    <div>
+                      {task.taskName.length > 18
+                        ? task.taskName.slice(0, 18) + '...'
+                        : task.taskName}
+                    </div>
+                    <div>{task.typeMessage.typeName}</div>
+                  </div>
+                ))}
+              </div>
+            )}
+          </div>
         </div>
         <div className='flex items-center'>
           <SButton
             className='ml-2'
             icon={<PlusOutlined className=' flex text-xl flex-shrink-0' />}
-            // onClick={onAddTask}
             onClick={() => {
               if (user?.id) {
                 onAddTask();
@@ -93,19 +155,9 @@ export const NavBar = observer(({ onMenuClick, onAddTask }: TProps) => {
               showLoginModal();
             }}
           />
-          {/* <SButton
-            className='ml-2'
-            icon={<ChromeOutlined className=' flex text-xl flex-shrink-0' />}
-          /> */}
           <div className='ml-2'>
             <Dropdown menu={{ items: user ? loginItems : logoutItem }}>
-              <Avatar
-                onClick={() => {
-                  console.log('hello world');
-                }}
-                userName={user?.username!}
-                avatar={user?.avatar}
-              />
+              <Avatar userName={user?.username!} avatar={user?.avatar} />
             </Dropdown>
           </div>
         </div>

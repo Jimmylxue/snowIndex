@@ -15,6 +15,11 @@ interface Result {
   msg: string;
 }
 
+export type ClientError = {
+  code: number;
+  message: string;
+};
+
 // 请求响应参数，包含data
 interface ResultData<T = any> extends Result {
   result?: T;
@@ -104,7 +109,6 @@ class RequestHttp {
           return;
         }
         if (response) {
-          console.log(response);
           this.handleCode(response.status, response.data);
         }
         if (!window.navigator.onLine) {
@@ -116,7 +120,6 @@ class RequestHttp {
 
   // code 是 http 请求的状态
   handleCode(code: number, data: TResponse): void {
-    console.log({ code, data });
     switch (code) {
       case 401:
         message.error('登录已过期，请重新登录');

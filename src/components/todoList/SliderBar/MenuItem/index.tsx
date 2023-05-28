@@ -1,5 +1,5 @@
 import { FC, HTMLAttributes, ReactNode } from 'react';
-import { DeleteOutlined, QuestionCircleOutlined } from '@ant-design/icons';
+import { QuestionCircleOutlined } from '@ant-design/icons';
 import './index.less';
 import classNames from 'classnames';
 import { Popconfirm } from 'antd';

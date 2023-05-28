@@ -1,11 +1,40 @@
 import { ClientError } from '@/api/location';
-import { UseMutationOptions, useMutation } from 'react-query';
+import {
+  QueryKey,
+  UseMutationOptions,
+  UseQueryOptions,
+  useMutation,
+  useQuery,
+} from 'react-query';
 import {
   TAddTaskTypeParams,
   TDelTaskTypeParams,
   TUpdateTaskTypeParams,
+  TaskType,
 } from './type';
 import { post } from '../..';
+
+export function useTaskType(
+  queryKey: QueryKey,
+  variable: {
+    userId: number;
+  },
+  config?: UseQueryOptions<
+    {
+      code: number;
+      result?: TaskType[];
+    },
+    ClientError
+  >,
+) {
+  return useQuery<
+    {
+      code: number;
+      result?: TaskType[];
+    },
+    ClientError
+  >(queryKey, () => post('/taskType/list', variable), config);
+}
 
 export function useAddTaskType(
   options?: UseMutationOptions<

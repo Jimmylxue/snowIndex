@@ -1,6 +1,6 @@
 import { Button, message, notification } from 'antd';
 import { TaskItem } from './Tasks';
-import { TaskItem as Task } from '@/api/todolist/type';
+import { TaskItem as Task } from '@/api/todolist/task/type';
 import { TSearchTaskParams } from './SliderBar/SliderBar';
 import { getFullTimeByIndex, getTimeTextByIndex } from './utils';
 import { useDelTask, useUpdateTaskStatus } from '@/api/todolist/task';
@@ -8,6 +8,8 @@ import { BellOutlined, CheckCircleOutlined } from '@ant-design/icons';
 import EmptyImage from '@/assets/img/todolist/empty.jpg';
 import { config } from '@/config/react-query';
 import { useUser } from '@/hooks/todolist/useAuth';
+import { useSearchInfo } from '@/hooks/todolist/useSearch';
+import { useMemo } from 'react';
 
 type TProps = {
   onEditTask: (type: 'ADD' | 'EDIT', task?: Task) => void;
@@ -26,6 +28,16 @@ export function Content({
   const { mutateAsync: delTask } = useDelTask();
   const { queryClient } = config();
   const { checkUserLoginBeforeFn } = useUser();
+  const { searchInfo, setSearchInfo } = useSearchInfo();
+
+  const isSearch = searchInfo?.taskId; // 是否时搜索
+
+  const taskList = useMemo(() => {
+    if (searchInfo?.taskId) {
+      return [searchInfo];
+    }
+    return taskData;
+  }, [searchInfo, taskData]);
 
   return (
     <div className='content w-full flex justify-center'>
@@ -63,7 +75,7 @@ export function Content({
         </div>
         {/* 任务项 */}
         {/* {data?.result?.result?.map((task, index) => ( */}
-        {taskData?.map((task, index) => (
+        {taskList?.map((task, index) => (
           <TaskItem
             isComplete={task.status}
             key={index}
@@ -125,18 +137,30 @@ export function Content({
           </div>
         )}
 
-        <Button
-          block
-          type='primary'
-          className='mt-3'
-          // loading={true}
-          onClick={() => {
-            if (checkUserLoginBeforeFn()) {
-              onEditTask('ADD');
-            }
-          }}>
-          添加任务
-        </Button>
+        {isSearch ? (
+          <Button
+            block
+            type='primary'
+            className='mt-3'
+            onClick={() => {
+              setSearchInfo(undefined as any);
+              queryClient.invalidateQueries('userTask');
+            }}>
+            恢复搜索
+          </Button>
+        ) : (
+          <Button
+            block
+            type='primary'
+            className='mt-3'
+            onClick={() => {
+              if (checkUserLoginBeforeFn()) {
+                onEditTask('ADD');
+              }
+            }}>
+            添加任务
+          </Button>
+        )}
       </div>
     </div>
   );

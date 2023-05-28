@@ -1,12 +1,52 @@
 import { ClientError } from '@/api/location';
-import { UseMutationOptions, useMutation } from 'react-query';
+import {
+  QueryKey,
+  UseMutationOptions,
+  UseQueryOptions,
+  useMutation,
+  useQuery,
+} from 'react-query';
 import { post } from '../..';
 import {
   TAddTaskParams,
   TDelTaskParams,
+  TSearchTaskParams,
   TUpdateTaskParams,
   TUpdateTaskStatusParams,
+  TUserTaskList,
 } from './type';
+
+export function useUserTask(
+  queryKey: QueryKey,
+  variable: {
+    userId: number;
+    page: number;
+    pageSize: number;
+    typeId?: number;
+    startTime?: number;
+    endTime?: number;
+    status?: number;
+  },
+  config?: UseQueryOptions<
+    {
+      code: number;
+      message: number;
+
+      result?: TUserTaskList;
+    },
+    ClientError
+  >,
+) {
+  return useQuery<
+    {
+      code: number;
+      message: number;
+
+      result?: TUserTaskList;
+    },
+    ClientError
+  >(queryKey, () => post('/task/list', variable), config);
+}
 
 export function useAddTask(
   options?: UseMutationOptions<
@@ -86,4 +126,24 @@ export function useDelTask(
     ClientError,
     TDelTaskParams
   >((data) => post('task/del', data), options);
+}
+
+export function useSearchTask(
+  options?: UseMutationOptions<
+    {
+      code: number;
+      result: TUserTaskList;
+    },
+    ClientError,
+    TSearchTaskParams
+  >,
+) {
+  return useMutation<
+    {
+      code: number;
+      result: TUserTaskList;
+    },
+    ClientError,
+    TSearchTaskParams
+  >((data) => post('task/search', data), options);
 }
