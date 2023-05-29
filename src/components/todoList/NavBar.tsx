@@ -157,7 +157,11 @@ export const NavBar = observer(({ onMenuClick, onAddTask }: TProps) => {
           />
           <div className='ml-2'>
             <Dropdown menu={{ items: user ? loginItems : logoutItem }}>
-              <Avatar userName={user?.username!} avatar={user?.avatar} />
+              <Avatar
+                userName={user?.username!}
+                avatar={user?.avatar}
+                showAvatar={false}
+              />
             </Dropdown>
           </div>
         </div>
