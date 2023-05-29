@@ -4,9 +4,12 @@ import { config } from '@/config/react-query';
 import { message } from 'antd';
 import { makeAutoObservable } from 'mobx';
 import { useEffect } from 'react';
+import { QueryClient } from 'react-query';
 
 class Auth {
   shouldLogin: boolean = false;
+
+  queryClient?: QueryClient;
 
   user?: TLoginUser;
 
@@ -18,8 +21,15 @@ class Auth {
     this.shouldLogin = status;
   }
 
-  setLoginUser(user: TLoginUser) {
+  setLoginUser(user?: TLoginUser) {
     this.user = user;
+    if (!user) {
+      this.queryClient?.clear(); // 清空所有数据
+    }
+  }
+
+  saveQueryClient(client: QueryClient) {
+    this.queryClient = client;
   }
 }
 
@@ -29,6 +39,10 @@ export function useUser() {
   const { mutateAsync } = useUserLogin();
   const { mutateAsync: registerFn } = useUserRegister();
   const { queryClient } = config();
+
+  useEffect(() => {
+    todoListAuth.saveQueryClient(queryClient);
+  }, [queryClient]);
 
   useEffect(() => {
     try {

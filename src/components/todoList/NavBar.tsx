@@ -1,13 +1,11 @@
 import {
   UnorderedListOutlined,
-  HomeOutlined,
   PlusOutlined,
   SearchOutlined,
 } from '@ant-design/icons';
 import { Dropdown, Input, MenuProps, Modal } from 'antd';
 import { Avatar } from './SAvatar';
 import { SButton } from './Button';
-import './index.css';
 import { useUser } from '@/hooks/todolist/useAuth';
 import { observer } from 'mobx-react-lite';
 import { useCallback, useState } from 'react';

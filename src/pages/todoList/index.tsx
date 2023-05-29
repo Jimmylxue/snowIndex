@@ -11,14 +11,14 @@ import { useUserTask } from '@/api/todolist/task';
 import { Spin } from 'antd';
 import { Login } from '@/components/common/Login';
 import { observer } from 'mobx-react-lite';
-import { todoListAuth } from '@/hooks/todolist/useAuth';
+import { todoListAuth, useUser } from '@/hooks/todolist/useAuth';
 import { TaskItem } from '@/api/todolist/task/type';
+import { config } from '@/config/react-query';
 
 export const TodoList = observer(() => {
   const [menuShow, setMenuShow] = useState<boolean>(true);
   const [taskModalShow, setTaskModalShow] = useState<boolean>(false);
   const [searchParams, setSearchParams] = useState<TSearchTaskParams>();
-
   const taskModalType = useRef<'ADD' | 'EDIT'>('ADD');
   const selectTask = useRef<TaskItem>();
   const currentChooseTaskType = useRef<number>();
@@ -49,7 +49,7 @@ export const TodoList = observer(() => {
   return (
     <TodoListProvider>
       <SearchProvider>
-        <div className=' w-screen h-screen flex flex-col'>
+        <div className=' w-screen h-screen flex flex-col overflow-hidden'>
           <NavBar
             onMenuClick={() => {
               setMenuShow((status) => !status);

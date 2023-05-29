@@ -16,9 +16,7 @@ import { post } from '../..';
 
 export function useTaskType(
   queryKey: QueryKey,
-  variable: {
-    userId: number;
-  },
+  variable: {},
   config?: UseQueryOptions<
     {
       code: number;
