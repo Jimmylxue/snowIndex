@@ -22,6 +22,7 @@ export const TodoList = observer(() => {
   const taskModalType = useRef<'ADD' | 'EDIT'>('ADD');
   const selectTask = useRef<TaskItem>();
   const currentChooseTaskType = useRef<number>();
+  const { user } = useUser();
 
   const { data, refetch, isFetching } = useUserTask(
     ['userTask', searchParams],
@@ -36,7 +37,8 @@ export const TodoList = observer(() => {
     },
     {
       refetchOnWindowFocus: false,
-      enabled: !!searchParams?.startTime && !!searchParams.taskType,
+      enabled:
+        !!searchParams?.startTime && !!searchParams.taskType && !!user?.id,
     },
   );
 

@@ -49,8 +49,12 @@ export function useUser() {
       const user = JSON.parse(localStorage.getItem('login-user')!);
       if (user) {
         todoListAuth.setLoginUser(user);
+      } else {
+        todoListAuth.setShouldLoginStatus(true);
       }
-    } catch {}
+    } catch {
+      todoListAuth.setShouldLoginStatus(true);
+    }
   }, []);
 
   const login = async (params: { phone: string; password: string }) => {
