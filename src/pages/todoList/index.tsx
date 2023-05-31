@@ -8,17 +8,24 @@ import {
 import { TodoListProvider } from '@/hooks/todolist/useTodolist';
 import { SearchProvider } from '@/hooks/todolist/useSearch';
 import { useUserTask } from '@/api/todolist/task';
-import { Spin } from 'antd';
+import { Pagination, Spin } from 'antd';
 import { Login } from '@/components/common/Login';
 import { observer } from 'mobx-react-lite';
 import { todoListAuth, useUser } from '@/hooks/todolist/useAuth';
 import { TaskItem } from '@/api/todolist/task/type';
-import { config } from '@/config/react-query';
 
 export const TodoList = observer(() => {
   const [menuShow, setMenuShow] = useState<boolean>(true);
   const [taskModalShow, setTaskModalShow] = useState<boolean>(false);
   const [searchParams, setSearchParams] = useState<TSearchTaskParams>();
+  const [pageParams, setPageParams] = useState<{
+    page: number;
+    pageSize: number;
+  }>({
+    page: 1,
+    pageSize: 10,
+  });
+
   const taskModalType = useRef<'ADD' | 'EDIT'>('ADD');
   const selectTask = useRef<TaskItem>();
   const currentChooseTaskType = useRef<number>();
@@ -27,13 +34,12 @@ export const TodoList = observer(() => {
   const { data, refetch, isFetching } = useUserTask(
     ['userTask', searchParams],
     {
-      userId: 1001,
-      page: 1,
-      pageSize: 15,
       status: searchParams?.status,
       startTime: searchParams?.startTime,
       endTime: searchParams?.endTime,
       typeId: searchParams?.taskType,
+      page: pageParams.page,
+      pageSize: pageParams.pageSize,
     },
     {
       refetchOnWindowFocus: false,
@@ -84,6 +90,24 @@ export const TodoList = observer(() => {
                   }}
                   refetchList={refetch}
                 />
+                <div
+                  className=' flex w-full justify-end '
+                  style={{
+                    width: 800,
+                    margin: '0 auto',
+                    marginTop: 10,
+                  }}>
+                  <Pagination
+                    defaultCurrent={data?.result?.page}
+                    total={data?.result?.total}
+                    onChange={(pageData) => {
+                      setPageParams((params) => ({
+                        ...params,
+                        page: pageData,
+                      }));
+                    }}
+                  />
+                </div>
               </Spin>
             </div>
           </div>

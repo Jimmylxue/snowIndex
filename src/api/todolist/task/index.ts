@@ -19,7 +19,6 @@ import {
 export function useUserTask(
   queryKey: QueryKey,
   variable: {
-    userId: number;
     page: number;
     pageSize: number;
     typeId?: number;
