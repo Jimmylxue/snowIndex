@@ -28,7 +28,7 @@ export const TodoListProvider: FC<TProps> = (props) => {
   });
   const { user } = useUser();
 
-  const { isFetching } = useTaskType(
+  const { data, isFetching } = useTaskType(
     'taskType',
     {},
     {
@@ -39,6 +39,14 @@ export const TodoListProvider: FC<TProps> = (props) => {
       },
     },
   );
+
+  useEffect(() => {
+    if (data) {
+      setTaskListInfo((info) => ({ ...info, taskType: data.result }));
+    } else {
+      setTaskListInfo((info) => ({ ...info, taskType: [] }));
+    }
+  }, [data]);
 
   useEffect(() => {
     setTaskListInfo((val) => ({ ...val, isFetchingTaskType: isFetching }));
