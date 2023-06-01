@@ -99,10 +99,6 @@ export const NavBar = observer(({ onMenuClick, onAddTask }: TProps) => {
             }
             onClick={onMenuClick}
           />
-          {/* <SButton
-            className='ml-2'
-            icon={<HomeOutlined className=' flex text-xl flex-shrink-0' />}
-          /> */}
           <div className=' relative'>
             <Input
               className='dz-input ml-4 border-r-2 w-full'
