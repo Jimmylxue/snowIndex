@@ -1,4 +1,3 @@
-import { todoListAuth } from '@/hooks/todolist/useAuth';
 import { message } from 'antd';
 import axios, {
   AxiosInstance,
@@ -49,8 +48,6 @@ type TResponse = {
 
 const handle401 = debounce(() => {
   message.error('未登录 请重新登录');
-  todoListAuth.setShouldLoginStatus(true);
-  todoListAuth.setLoginUser(undefined);
   localStorage.setItem('login-user', '');
 }, 500);
 

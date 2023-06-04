@@ -2,7 +2,7 @@
 
 > reference from **coder_yupi**, github:[SnowIndex](https://github.com/Jimmylxue/snowIndex)
 
-在线体验：[传送门](http://www.jimmyxuexue.top:668)
+在线体验：[传送门](https://index.jimmyxuexue.top)
 
 ![](https://vitepress-source.oss-cn-beijing.aliyuncs.com/typoraimage-20221202143109571.png)
 
@@ -16,7 +16,7 @@
 
 ### 快速上手
 
-打开网站：[传送门](http://www.jimmyxuexue.top:668)
+打开网站：[传送门](https://index.jimmyxuexue.top)
 
 ```
 baidu 前端开发
@@ -27,7 +27,7 @@ help => 查看帮助文档
 
 目前已支持 30+指令：
 
-[指令文档传送门](http://www.jimmyxuexue.top:999/snowIndex/guide/introduce.html)
+[指令文档传送门](http://blog.jimmyxuexue.top/snowIndex/guide/introduce.html)
 
 > 不断完善中......
 

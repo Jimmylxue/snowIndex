@@ -196,6 +196,10 @@ export function useCommand() {
         gameExecute(commandBody!, terminal, instruct);
         return;
 
+      case 'todolist':
+        window.open('https://tdl.jimmyxuexue.top', 'snow-todoList');
+        return;
+
       default:
         terminal.addInstructRecord({ type: 'INSTRUCT', instruct });
         terminal.focusInput();

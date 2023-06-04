@@ -1,5 +1,4 @@
 import { config } from '@/config/react-query';
-import { useUser } from '@/hooks/todolist/useAuth';
 import { encrypt } from '@/utils/encrypt';
 import { Button, Form, Input, Modal } from 'antd';
 import { useEffect, useState } from 'react';
@@ -10,7 +9,7 @@ type TProps = {
 };
 
 export function Login({ show, onClose }: TProps) {
-  const { login, register } = useUser();
+  // const { login, register } = useUser();
   const { queryClient } = config();
   const [form] = Form.useForm();
   const [modalType, setModalType] = useState<'login' | 'register'>('login');
@@ -37,24 +36,24 @@ export function Login({ show, onClose }: TProps) {
         wrapperCol={{ span: 16 }}
         initialValues={{ remember: true }}
         onFinish={async () => {
-          const params = form.getFieldsValue();
-          if (modalType === 'login') {
-            params.password = await encrypt(params.password);
-            const status = await login(params);
-            if (status) {
-              // 重新触发一些请求
-              queryClient.invalidateQueries('userTask');
-              queryClient.invalidateQueries('taskType');
-              onClose();
-            }
-          } else {
-            params.password = btoa(params.password + 'snow-todoList');
-            const status = await register(params);
-            if (status) {
-              form.resetFields();
-              setModalType('login');
-            }
-          }
+          // const params = form.getFieldsValue();
+          // if (modalType === 'login') {
+          //   params.password = await encrypt(params.password);
+          //   const status = await login(params);
+          //   if (status) {
+          //     // 重新触发一些请求
+          //     queryClient.invalidateQueries('userTask');
+          //     queryClient.invalidateQueries('taskType');
+          //     onClose();
+          //   }
+          // } else {
+          //   params.password = btoa(params.password + 'snow-todoList');
+          //   const status = await register(params);
+          //   if (status) {
+          //     form.resetFields();
+          //     setModalType('login');
+          //   }
+          // }
         }}
         autoComplete='off'>
         {modalType === 'register' && (

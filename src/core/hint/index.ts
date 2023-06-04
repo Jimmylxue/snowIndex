@@ -30,6 +30,7 @@ import { jumpCommand } from '@/core/execute/tool/jump';
 import { chatroomCommand } from '../execute/system/chatroom';
 import { bgAutoCommand } from '../execute/tool/bgAuto';
 import { gameCommand } from '@/core/execute/system/game';
+import { todoListCommand } from '@/core/execute/tool/todoList';
 
 export type TSystemCommandType = {
   start: string;
@@ -84,4 +85,5 @@ export const commandList = [
   chatroomCommand,
   bgAutoCommand,
   gameCommand,
+  todoListCommand,
 ] as TSystemCommandType[];
