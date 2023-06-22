@@ -109,8 +109,13 @@ export const uploadError = ({
    * window.bota(str) 将 str 转换为 base64 编码的字符串
    *  可以通过 window.atob() 方法进行解码
    */
-  const str = window.btoa(JSON.stringify(info));
-  const host = 'http://localhost:9999/catch/upload';
+  let str = '';
+  try {
+    str = btoa(JSON.stringify(info));
+  } catch (error) {
+    console.log('err', info);
+  }
+  const host = import.meta.env.VITE_APP_API_BASE_URL + '/catch/upload';
   new Image().src = `${host}?info=${str}`; // 通过 IMG 是最快的上报和发请求的方式 因为不需要引入第三方的库
 };
 

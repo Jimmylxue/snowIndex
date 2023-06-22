@@ -200,6 +200,12 @@ export function useCommand() {
         window.open('https://tdl.jimmyxuexue.top', 'snow-todoList');
         return;
 
+      case 'error':
+        const user = null;
+        // @ts-ignore
+        user.getName();
+        return;
+
       default:
         terminal.addInstructRecord({ type: 'INSTRUCT', instruct });
         terminal.focusInput();

@@ -1,5 +1,5 @@
 import { useTerminal } from '@/components/useTerminal';
-import { memo } from 'react';
+import { memo, useEffect } from 'react';
 import { Setting } from '@/components/Setting';
 import { useBackground } from '@/hooks/useBackground';
 

@@ -13,6 +13,7 @@
     "test": "jest",
     "test:w": "jest --watch",
     "upload:map": "node uploadMap.js",
+    "upload-prod:map": "node uploadMapProd.js",
     "prepare": "husky install",
     "lint": "prettier --check ."
   },
