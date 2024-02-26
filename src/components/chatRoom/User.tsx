@@ -15,7 +15,7 @@ export default memo(({ user }: TProps) => {
           width: 40,
           height: 40,
         }}
-        className='border-r-2 overflow-hidden'
+        className='border-r-2 overflow-hidden rounded'
       />
       <span className='ml-2'>{user.name}</span>
     </div>

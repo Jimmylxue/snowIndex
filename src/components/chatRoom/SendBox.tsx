@@ -35,7 +35,7 @@ export default memo(({ user }: TProps) => {
         }}
         onInput={(e) => {
           // @ts-ignore
-          setText(e.nativeEvent.value);
+          setText(e.target.value);
         }}
       />
     </div>

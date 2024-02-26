@@ -26,6 +26,7 @@ export default memo(() => {
       <div className='slider w-1/5 relative overflow-hidden flex flex-col h-full'>
         <div className=' flex flex-col justify-center items-center m-1'>
           <img
+            className=' w-full rounded'
             src='https://img1.baidu.com/it/u=4050463138,1499422748&fm=253&app=138&size=w931&n=0&f=JPEG&fmt=auto?sec=1673974800&t=db34835adc90ef962e8848d96deb5683'
             alt=''
           />
@@ -65,7 +66,10 @@ export default memo(() => {
         </p>
         <Content>
           {messageList.map((message, index) => (
-            <Message message={message} key={index}></Message>
+            <Message
+              message={message}
+              key={index}
+              loginUser={loginUser}></Message>
           ))}
         </Content>
         <SendBox user={loginUser}></SendBox>
