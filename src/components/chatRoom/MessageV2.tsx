@@ -14,7 +14,7 @@ export default memo(({ message }: TProps) => {
   /**
    * 是否是自己发的信息
    */
-  const isMe = message.fromSocketId === loginUser?.socketId;
+  const isMe = message.fromUserId === loginUser?.userId;
 
   if ([MESSAGE_TYPE.登录消息, MESSAGE_TYPE.登出消息].includes(type)) {
     return (

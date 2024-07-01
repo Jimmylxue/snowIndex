@@ -1,8 +1,8 @@
-import { TSomeOneMessage, TUser } from '@/types/TSocket';
+import { TSomeOneMessage, TUserV2 } from '@/types/TSocket';
 import { cloneDeep } from 'lodash';
 
-function findUserItemByFromSocketId(socketId: string, userList: TUser[]) {
-  const index = userList.findIndex((user) => user.socketId === socketId);
+function findUserItemByFromSocketId(userId: number, userList: TUserV2[]) {
+  const index = userList.findIndex((user) => user.userId === userId);
   return { user: userList[index], userIndex: index };
 }
 
@@ -11,14 +11,11 @@ function findUserItemByFromSocketId(socketId: string, userList: TUser[]) {
  */
 export function handleReceivePreChatRecordText(
   socketData: TSomeOneMessage,
-  userList: TUser[],
+  userList: TUserV2[],
 ) {
-  const fromSocketId = socketData.fromSocketId;
+  const fromUserId = socketData.fromUserId;
 
-  const { user, userIndex } = findUserItemByFromSocketId(
-    fromSocketId,
-    userList,
-  );
+  const { user, userIndex } = findUserItemByFromSocketId(fromUserId, userList);
 
   if (user) {
     const _userList = cloneDeep(userList);
@@ -32,11 +29,11 @@ export function handleReceivePreChatRecordText(
  */
 export function handleSelfSendPreChatRecordText(
   socketData: TSomeOneMessage,
-  userList: TUser[],
+  userList: TUserV2[],
 ) {
-  const toSocketId = socketData.toSocketId;
+  const toUserId = socketData.toUserId;
 
-  const { user, userIndex } = findUserItemByFromSocketId(toSocketId, userList);
+  const { user, userIndex } = findUserItemByFromSocketId(toUserId, userList);
 
   if (user) {
     const _userList = cloneDeep(userList);

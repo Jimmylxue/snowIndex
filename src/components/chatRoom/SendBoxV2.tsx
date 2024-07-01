@@ -1,8 +1,9 @@
 import { memo, useState } from 'react';
 import { Input } from 'antd';
 import { useSocket } from '@/hooks/useSocket';
-import { MESSAGE_TYPE, TUser } from '@/types/TSocket';
+import { MESSAGE_TYPE, TSomeOneMessage, TUser } from '@/types/TSocket';
 import { useSocketContext } from '@/hooks/chatRoom/useChatRooV2';
+import { saveChatRecord } from '@/hooks/chatRoom/core/chatHistory';
 const { Search } = Input;
 
 type TProps = {};
@@ -16,7 +17,7 @@ export default memo(({}: TProps) => {
   return (
     <div className=' w-3/4 mt-5'>
       <Search
-        placeholder='input search text'
+        placeholder='说点什么呢~'
         allowClear
         enterButton='发送'
         size='large'
@@ -29,10 +30,11 @@ export default memo(({}: TProps) => {
             type: MESSAGE_TYPE.个人消息 as any,
             text,
             createTime: +Date.now(),
-            toSocketId: currentChatUser?.socketId!,
-            fromSocketId: loginUser?.socketId!,
-          };
+            toUserId: currentChatUser?.userId,
+            fromUserId: loginUser?.userId,
+          } as TSomeOneMessage;
           updateChatMessageList?.(textItem);
+          saveChatRecord(textItem.toUserId, textItem);
           socket.emit('sendSomeOneMessage', textItem);
           setText('');
         }}

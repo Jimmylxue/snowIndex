@@ -23,7 +23,7 @@ const Root = function () {
             <Router>
               <Routes>
                 <Route path='/' element={<App />} />
-                <Route path='/chatRoom' element={<ChatRoom />} />
+                {/* <Route path='/chatRoom' element={<ChatRoom />} /> */}
                 <Route path='/chatRoomV2' element={<ChatRoomV2 />} />
                 {/* <Route path='*' element={<App />}></Route> */}
               </Routes>

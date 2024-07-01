@@ -1,4 +1,4 @@
-import { TMessage, TSomeOneMessage, TUser } from '@/types/TSocket';
+import { TMessageV2, TSomeOneMessage, TUser, TUserV2 } from '@/types/TSocket';
 import {
   ReactNode,
   createContext,
@@ -12,16 +12,17 @@ import {
   handleReceivePreChatRecordText,
   handleSelfSendPreChatRecordText,
 } from './core/chatSomeOne';
+import { getChatRecord, saveChatRecord } from './core/chatHistory';
 
 type TSocketContext = {
-  loginUser?: TUser;
+  loginUser?: TUserV2;
   messageList: TSomeOneMessage[];
-  userList: TUser[];
+  userList: TUserV2[];
   /**
    * 当前正在聊的用户
    */
-  currentChatUser?: TUser;
-  setCurrentChatUser?: (user: TUser) => void;
+  currentChatUser?: TUserV2;
+  setCurrentChatUser?: (user: TUserV2) => void;
   updateChatMessageList?: (message: TSomeOneMessage) => void;
 };
 
@@ -60,16 +61,16 @@ export function useSocketContext() {
 }
 
 export function useChatRoom() {
-  const [loginUser, setLoginUser] = useState<TUser>();
-  const [currentChatUser, setChatUser] = useState<TUser>();
+  const [loginUser, setLoginUser] = useState<TUserV2>();
+  const [currentChatUser, setChatUser] = useState<TUserV2>();
   const [messageList, setMessageList] = useState<TSomeOneMessage[]>([]);
-  const [userList, setUserList] = useState<TUser[]>([]);
+  const [userList, setUserList] = useState<TUserV2[]>([]);
   const loginRef = useRef<boolean>(false);
 
   const socket = useSocket();
 
   useEffect(() => {
-    const handleLogInAndOutMessage = (payload: TMessage) => {
+    const handleLogInAndOutMessage = (payload: TMessageV2) => {
       if (!loginUser?.socketId) {
         setLoginUser(payload.memberInfo);
       }
@@ -83,6 +84,7 @@ export function useChatRoom() {
         setUserList(_userList);
       }
       setMessageList((preList) => [...preList, socketData]);
+      saveChatRecord(socketData.fromUserId, socketData);
     };
     if (socket) {
       socket.on('loginAndLogOut', handleLogInAndOutMessage); // 监听消息
@@ -102,11 +104,12 @@ export function useChatRoom() {
     };
   }, [socket]);
 
-  // useEffect(() => {
-  //   if (socket && !loginRef.current) {
-  //     socket.emit('login');
-  //   }
-  // }, []);
+  useEffect(() => {
+    if (currentChatUser?.userId) {
+      const historyChatRecord = getChatRecord(currentChatUser?.userId);
+      setMessageList(historyChatRecord);
+    }
+  }, [currentChatUser]);
 
   useEffect(() => {
     if (document!.getElementById('content')) {
@@ -115,7 +118,7 @@ export function useChatRoom() {
     }
   }, [messageList.length]);
 
-  const setCurrentChatUser = (user: TUser) => {
+  const setCurrentChatUser = (user: TUserV2) => {
     setChatUser(user);
   };
 
