@@ -1,16 +1,20 @@
-import { MESSAGE_TYPE, TMessage, TUser } from '@/types/TSocket';
+import { useSocketContext } from '@/hooks/chatRoom/useChatRooV2';
+import { MESSAGE_TYPE, TSomeOneMessage } from '@/types/TSocket';
 import moment from 'moment';
 import { memo } from 'react';
 
 type TProps = {
-  message: TMessage;
-  loginUser?: TUser;
+  message: TSomeOneMessage;
 };
 
-export default memo(({ message, loginUser }: TProps) => {
+export default memo(({ message }: TProps) => {
   const { type } = message;
+  const { loginUser, currentChatUser } = useSocketContext();
 
-  const isMe = message.memberInfo.socketId === loginUser?.socketId;
+  /**
+   * 是否是自己发的信息
+   */
+  const isMe = message.fromSocketId === loginUser?.socketId;
 
   if ([MESSAGE_TYPE.登录消息, MESSAGE_TYPE.登出消息].includes(type)) {
     return (
@@ -28,7 +32,7 @@ export default memo(({ message, loginUser }: TProps) => {
           style={{
             color: '#e9e9ef',
           }}>
-          {message.memberInfo?.name}
+          {loginUser?.name}
         </div>
         <div
           className='flex items-center px-4 ml-3 w-fit py-2 rounded'
@@ -44,7 +48,7 @@ export default memo(({ message, loginUser }: TProps) => {
       </div>
       <img
         className=' rounded'
-        src={message?.memberInfo?.avatar}
+        src={loginUser?.avatar}
         alt='user'
         style={{
           width: 50,
@@ -56,7 +60,7 @@ export default memo(({ message, loginUser }: TProps) => {
     <div className='message flex items-start my-5'>
       <img
         className=' rounded'
-        src={message?.memberInfo?.avatar}
+        src={currentChatUser?.avatar}
         alt='user'
         style={{
           width: 50,
@@ -69,7 +73,7 @@ export default memo(({ message, loginUser }: TProps) => {
           style={{
             color: '#e9e9ef',
           }}>
-          {message.memberInfo?.name}
+          {currentChatUser?.name}
         </div>
         <div
           className='flex items-center px-4 ml-3 w-fit py-2 rounded'

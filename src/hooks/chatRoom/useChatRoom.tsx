@@ -14,7 +14,8 @@ export function useChatRoom() {
     const handleMessage = (payload: TMessage) => {
       const { type } = payload;
       switch (type) {
-        case MESSAGE_TYPE.登录登出消息:
+        case MESSAGE_TYPE.登录消息:
+        case MESSAGE_TYPE.登出消息:
           if (!loginUser?.socketId) {
             setLoginUser(payload.memberInfo);
           }
@@ -25,7 +26,7 @@ export function useChatRoom() {
     if (socket) {
       socket.on('message', handleMessage); // 监听消息
       return () => {
-        socket.off('message', handleMessage);
+        socket.off();
       };
     }
   }, [socket, loginUser]);

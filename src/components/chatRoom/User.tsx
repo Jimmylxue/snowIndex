@@ -3,11 +3,12 @@ import { memo } from 'react';
 
 type TProps = {
   user: TUser;
+  showChatRecord?: boolean;
 };
 
-export default memo(({ user }: TProps) => {
+export default memo(({ user, showChatRecord = false }: TProps) => {
   return (
-    <div className=' flex items-center my-3'>
+    <div className=' flex items-center py-2'>
       <img
         src={user.avatar}
         alt=''
@@ -15,9 +16,16 @@ export default memo(({ user }: TProps) => {
           width: 40,
           height: 40,
         }}
-        className='border-r-2 overflow-hidden rounded'
+        className='border-r-2 overflow-hidden rounded flex-shrink-0'
       />
-      <span className='ml-2'>{user.name}</span>
+      <div className=''>
+        <div className='ml-2 truncate w-[170px]'>{user.name}</div>
+        {showChatRecord && user.preChatRecordText && (
+          <div className='ml-2 truncate w-[170px]'>
+            {user.preChatRecordText}
+          </div>
+        )}
+      </div>
     </div>
   );
 });

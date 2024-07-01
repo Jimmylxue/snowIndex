@@ -10,6 +10,7 @@ import 'tailwindcss/tailwind.css';
 import './index.css';
 import './var.less';
 import { config } from './config/react-query';
+import ChatRoomV2 from './pages/chatRoomV2';
 
 const Root = function () {
   const { queryClient, QueryClientProvider } = config();
@@ -23,6 +24,7 @@ const Root = function () {
               <Routes>
                 <Route path='/' element={<App />} />
                 <Route path='/chatRoom' element={<ChatRoom />} />
+                <Route path='/chatRoomV2' element={<ChatRoomV2 />} />
                 {/* <Route path='*' element={<App />}></Route> */}
               </Routes>
             </Router>
