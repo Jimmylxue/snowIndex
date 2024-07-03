@@ -12,7 +12,11 @@ import {
   handleReceivePreChatRecordText,
   handleSelfSendPreChatRecordText,
 } from './core/chatSomeOne';
-import { getChatRecord, saveChatRecord } from './core/chatHistory';
+import {
+  getChatRecord,
+  matchUserChatRecord,
+  saveChatRecord,
+} from './core/chatHistory';
 
 type TSocketContext = {
   loginUser?: TUserV2;
@@ -74,7 +78,8 @@ export function useChatRoom() {
       if (!loginUser?.socketId) {
         setLoginUser(payload.memberInfo);
       }
-      setUserList(payload.userList || []);
+      const _userList = matchUserChatRecord(payload.userList);
+      setUserList(_userList || []);
     };
 
     const handleSomeOneMessage = (socketData: TSomeOneMessage) => {
@@ -94,6 +99,10 @@ export function useChatRoom() {
       };
     }
   }, [socket, loginUser, userList]);
+
+  useEffect(() => {
+    // setUserList(_userList);
+  }, [userList]);
 
   useEffect(() => {
     if (socket && !loginRef.current) {
