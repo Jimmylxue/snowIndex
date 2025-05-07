@@ -353,7 +353,7 @@ export function useTerminal(): TSnowTerminal {
       )}
 
       <div
-        className={classNames('relative z-10 overflow-auto text-white', {
+        className={classNames('relative z-10 overflow-auto text-white pb-4', {
           'mt-8': !baseConfig?.timeShow,
         })}
         id='snow-terminal-main-contain'

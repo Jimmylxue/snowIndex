@@ -5,12 +5,12 @@ import {
   Date,
   History,
   Weather,
-  HelpNode,
   InfoNode,
   Shortcut,
   Time,
   Varbook,
   Gobang,
+  HelpNodeV2,
 } from '@/components/index';
 import { HelpInstructNode } from './Help';
 
@@ -40,7 +40,7 @@ export default memo(({ currentRecord, historyRecord, hostname }: TProps) => {
           {rec.instruct}
         </div>
       ) : rec.type === 'HELP' ? (
-        <HelpNode />
+        <HelpNodeV2 />
       ) : rec.type === 'INFO' ? (
         <InfoNode />
       ) : rec.type === 'WEATHER' ? (

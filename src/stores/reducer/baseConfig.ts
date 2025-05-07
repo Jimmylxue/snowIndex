@@ -23,7 +23,7 @@ const defaultState: TBaseConfigType = {
   jumpList: [],
   is996: false,
   workingHour: ['9:00', '18:00'],
-  salary: 13000,
+  salary: 3000,
 };
 const baseConfigReducer = ((
   state = defaultState,

@@ -52,40 +52,76 @@ export type TSystemCommandType = {
   }[];
 };
 
-export const commandList = [
-  searchCommand,
-  baiduCommand,
-  googleCommand,
-  githubCommand,
-  juejinCommand,
-  zhihuCommand,
-  biliCommand,
-  bgCommand,
-  helpCommand,
-  resetCommand,
-  infoCommand,
-  clearCommand,
-  authorShowCommand,
-  welcomeCommand,
-  weatherCommand,
-  wangYiYunCommand,
-  historyCommand,
-  bingBgCommand,
-  dateCommand,
-  gotoCommand,
-  hintShowCommand,
-  hostnameCommand,
-  fanyiCommand,
-  shortcutCommand,
-  timeCommand,
-  varbookCommand,
-  pingCommand,
-  timeShowCommand,
-  npmCommand,
-  jumpCommand,
-  chatroomCommand,
-  bgAutoCommand,
-  gameCommand,
-  todoListCommand,
-  errorCommand,
-] as TSystemCommandType[];
+export const commandGroups: {
+  type: string;
+  name: string;
+  commands: any[];
+}[] = [
+  {
+    type: 'SEARCH',
+    name: '搜索类',
+    commands: [
+      searchCommand,
+      baiduCommand,
+      googleCommand,
+      githubCommand,
+      juejinCommand,
+      zhihuCommand,
+      biliCommand,
+      wangYiYunCommand,
+      npmCommand,
+      gotoCommand,
+    ],
+  },
+  {
+    type: 'TOOLS',
+    name: '工具类',
+    commands: [
+      fanyiCommand,
+      jumpCommand,
+      weatherCommand,
+      pingCommand,
+      varbookCommand,
+    ],
+  },
+  {
+    type: 'SYSTEM',
+    name: '系统类',
+    commands: [
+      dateCommand,
+      infoCommand,
+      shortcutCommand,
+      helpCommand,
+      clearCommand,
+      resetCommand,
+      historyCommand,
+    ],
+  },
+  {
+    type: 'STYLE',
+    name: '风格类',
+    commands: [
+      hostnameCommand,
+      welcomeCommand,
+      authorShowCommand,
+      timeCommand,
+      timeShowCommand,
+      hintShowCommand,
+      bgCommand,
+      bingBgCommand,
+      bgAutoCommand,
+    ],
+  },
+  {
+    type: 'ENTERTAINMENT',
+    name: '娱乐类',
+    commands: [gameCommand],
+  },
+];
+
+console.log(JSON.stringify(commandGroups));
+
+export const commandList = commandGroups.reduce(
+  (all, item) => all.concat(...(item.commands || [])),
+  [],
+) as TSystemCommandType[];

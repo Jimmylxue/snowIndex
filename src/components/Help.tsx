@@ -1,25 +1,5 @@
 import { commandList } from '@/core/hint';
-import { memo } from 'react';
 import { languageMap } from '@/types/TBaiduFanyi';
-
-export default memo(() => {
-  return (
-    <div className='mt-1 mb-2'>
-      <p className='mb-2'>
-        ⭐️ 使用 [help 命令英文名] 可以查询某命令的具体用法，如：help search
-      </p>
-      <div className=' '>
-        {commandList.map((command, index) => (
-          <div key={index} className='flex  '>
-            <div className=' w-1/5 p-2'>{command.start}</div>
-            <div className=' w-1/4 p-2'>{command.desc}</div>
-            <div className='p-2'>{command.hint}</div>
-          </div>
-        ))}
-      </div>
-    </div>
-  );
-});
 
 function FanyiList() {
   return (
