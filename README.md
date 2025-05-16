@@ -1,56 +1,42 @@
-# SnowIndex - 极客范儿的浏览器主页
+# SnowIndex - 极客范儿的浏览器主页 🚀
 
-> reference from **coder_yupi**, github:[SnowIndex](https://github.com/Jimmylxue/snowIndex)
+[![GitHub license](https://img.shields.io/github/license/Jimmylxue/snowIndex)](https://github.com/Jimmylxue/snowIndex/blob/main/LICENSE)
+[![GitHub stars](https://img.shields.io/github/stars/Jimmylxue/snowIndex)](https://github.com/Jimmylxue/snowIndex/stargazers)
+[![GitHub issues](https://img.shields.io/github/issues/Jimmylxue/snowIndex)](https://github.com/Jimmylxue/snowIndex/issues)
 
-在线体验：[传送门](https://index.jimmyxuexue.top)
+> 灵感来源于 **coder_yupi** 的 yuIndex 项目，感谢开源分享 ❤️  
+> 原项目地址：[yuIndex](https://github.com/Jimmylxue/snowIndex)
 
-![](https://vitepress-source.oss-cn-beijing.aliyuncs.com/typoraimage-20221202143109571.png)
+## ✨ 在线体验
 
-![image-20220814122056794](https://vitepress-source.oss-cn-beijing.aliyuncs.com/typoraimage-20220814122056794.png)
+👉 [立即体验 SnowIndex](https://index.jimmyxuexue.top)
 
-⭐️ 虽说 鱼皮 已经做了一个功能更加强大的版本，使用体验上肯定 yuIndex 要完胜 snowIndex，但是我还是觉得这个东西太吸引我了，于是我毅然决然也决定做一个（这并不能说抄袭，毕竟我也给 yuIndex 贡献过代码）这里我采用和 yuIndex 不同的技术栈再实现一遍，也能学习到鹅厂大佬的编码方式（高度抽象）
+![SnowIndex 主界面](https://github.com/user-attachments/assets/9f2013b2-00cc-4b1e-89b0-8f620cc6cc15)
+![SnowIndex 功能演示](https://github.com/user-attachments/assets/cbd5c1b6-b63e-463c-b7ac-ae07c389a277)
 
-## 关于 SnowIndex
+## 🌟 项目特色
 
-就是一个将**大而全的功能全部继承在一个小而美的网页**上的一个浏览器主页，可不断继续开发，完善和添加更多的功能！
+- **极简设计**：干净清爽的极客风格界面
+- **高效工作流**：30+ 快捷指令提升效率
+- **高度可扩展**：模块化设计，轻松添加新功能
+- **跨平台**：浏览器即用，无需安装
 
-### 快速上手
+> 💡 虽然 yuIndex 功能更强大，但 SnowIndex 采用不同的技术栈实现，提供了独特的用户体验和代码抽象方式。
 
-打开网站：[传送门](https://index.jimmyxuexue.top)
+## 🚀 快速开始
 
-```
-baidu 前端开发
-github snowIndex
-按键 Ctrl + L 清屏
-help => 查看帮助文档
-```
+### 在线使用
+直接访问：[https://index.jimmyxuexue.top](https://index.jimmyxuexue.top)
 
-目前已支持 30+指令：
+### 浏览器插件安装
+1. 前往 [Release 页面](https://github.com/Jimmylxue/snowIndex/releases) 下载最新版本
+2. 解压下载的文件
+3. 在浏览器扩展管理页面启用"开发者模式"
+4. 点击"加载已解压的扩展程序"，选择解压后的文件夹
 
-[指令文档传送门](http://blog.jimmyxuexue.top/snowIndex/guide/introduce.html)
-
-> 不断完善中......
-
-## 技术栈
-
-### 前端
-
-- React
-- vite3
-- tailwindcss
-- antd
-- redux
-- jest
-
-### 后端
-
-- Nest.js
-- MySql
-
-**依赖服务**
-
-- 聚合数据 api
-
-## 致谢
-
-感谢 程序员鱼皮 的开源与分享
+### 基础指令示例
+```bash
+baidu 前端开发          # 使用百度搜索
+github snowIndex       # 在GitHub搜索
+help                   # 查看帮助文档
+Ctrl + L               # 清屏
