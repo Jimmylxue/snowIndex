@@ -17,7 +17,7 @@ export function useBackground({ terminal }: TProps) {
 
   const changeBingBg = useCallback(async () => {
     const res = await get<string>(`bingBg/today?UHD=true`);
-    terminal.changeBackGround(res?.result!);
+    terminal.changeBackGround(res!);
   }, [terminal]);
 
   useEffect(() => {

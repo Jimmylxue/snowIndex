@@ -119,8 +119,6 @@ export const commandGroups: {
   },
 ];
 
-console.log(JSON.stringify(commandGroups));
-
 export const commandList = commandGroups.reduce(
   (all, item) => all.concat(...(item.commands || [])),
   [],

@@ -20,9 +20,9 @@ export type ClientError = {
 };
 
 // 请求响应参数，包含data
-interface ResultData<T = any> extends Result {
-  result?: T;
-}
+// interface ResultData<T = any> extends Result {
+//   result?: T;
+// }
 const URL: string = import.meta.env.VITE_APP_API_BASE_URL;
 // const URL: string = 'http://127.0.0.1:9999'
 enum RequestEnums {
@@ -97,8 +97,7 @@ class RequestHttp {
           message.error(data.message || data.result);
           return data;
         }
-
-        return data;
+        return data.result;
       },
       (error: AxiosError<TResponse>) => {
         // 请求失败时
@@ -136,16 +135,16 @@ class RequestHttp {
   }
 
   // 常用方法封装
-  get<T>(url: string, params?: object): Promise<ResultData<T>> {
+  get<T>(url: string, params?: object): Promise<T> {
     return this.service.get(url, { params });
   }
   post<T, P>(url: string, params?: P): Promise<T> {
     return this.service.post(url, params);
   }
-  put<T>(url: string, params?: object): Promise<ResultData<T>> {
+  put<T>(url: string, params?: object): Promise<T> {
     return this.service.put(url, params);
   }
-  delete<T>(url: string, params?: object): Promise<ResultData<T>> {
+  delete<T>(url: string, params?: object): Promise<T> {
     return this.service.delete(url, { params });
   }
 }

@@ -13,7 +13,7 @@ export async function bingBgExecute(instruct: string, terminal: TSnowTerminal) {
   const res = await get<string>(
     `bingBg/today?UHD=${bgParams.uhd ? 'true' : 'false'}`,
   );
-  terminal.changeBackGround(res?.result!);
+  terminal.changeBackGround(res!);
 }
 
 export const bingBgCommand = {

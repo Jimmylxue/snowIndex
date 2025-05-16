@@ -1,30 +1,37 @@
-import { useMutation, UseMutationOptions } from 'react-query';
-// import { ClientError } from '..'
-// import { post } from '../request'
-import { AddOrderParams, AddOrderResult } from './types';
+import { QueryKey, useQuery, UseQueryOptions } from 'react-query';
+import { ClientError, get } from '..';
 
-type ClientError = {};
+export type TBingBgItem = {
+  bot: number;
+  copyright: string;
+  copyrightlink: string;
+  drk: number;
+  enddate: string;
+  fullstartdate: string;
+  hs: any[];
+  hsh: string;
+  quiz: string;
+  startdate: string;
+  title: string;
+  top: number;
+  url: string;
+  urlbase: string;
+  wp: boolean;
+};
 
-// export function useChangeBackground(
-// 	options?: UseMutationOptions<
-// 		{
-// 			code: number
-// 			msg: string
-// 			result: AddOrderResult
-// 			traceId: string
-// 		},
-// 		ClientError,
-// 		AddOrderParams
-// 	>
-// ) {
-// 	return useMutation<
-// 		{
-// 			code: number
-// 			msg: string
-// 			result: AddOrderResult
-// 			traceId: string
-// 		},
-// 		ClientError,
-// 		AddOrderParams
-// 	>(data => get('background/base', data), options)
-// }
+export function useBingBgWeekList(
+  queryKey: QueryKey,
+  config?: UseQueryOptions<
+    {
+      images: TBingBgItem[];
+    },
+    ClientError
+  >,
+) {
+  return useQuery<
+    {
+      images: TBingBgItem[];
+    },
+    ClientError
+  >(queryKey, () => get('/bingBg/weekList'), config);
+}
