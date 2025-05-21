@@ -112,23 +112,19 @@ export async function fanyiExecute(
   console.log('instruct--------', instruct);
   console.log('analyze-------------------↓', fanyiParams);
 
-  const res = await post<TBaiduFanyi, TRequestParams>('translate/base', {
-    q: fanyiParams._,
-    from: fanyiParams.from,
-    to: fanyiParams.to,
-  });
-
-  console.log('fanyi_res~~~', res);
-  if (res.code === 200) {
-    // 接口翻译成功
+  try {
+    const res = await post<TBaiduFanyi, TRequestParams>('translate/base', {
+      q: fanyiParams._,
+      from: fanyiParams.from,
+      to: fanyiParams.to,
+    });
     terminal.showSuccess(
-      `翻译结果：${res.result?.trans_result?.[0].dst}`,
+      `翻译结果：${res.trans_result?.[0].dst}`,
       fullInstruct,
     );
-  } else {
-    // 接口翻译失败
+  } catch (error) {
     terminal.showError(
-      `${res.result?.message}：${res.result?.result.error_code} - ${res.result?.result.error_msg}`,
+      `翻译失败 输入: fanyi --help 查看帮助信息`,
       fullInstruct,
     );
   }

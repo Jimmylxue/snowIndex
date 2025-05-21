@@ -43,22 +43,19 @@ export const languageMap = {
 export type TShortEn = keyof typeof LanguageShort;
 
 export type TBaiduFanyi = {
-  code: number;
+  from: TShortEn;
+  to: TShortEn;
+  trans_result: [
+    {
+      src: 'string';
+      dst: 'string';
+    },
+  ];
+  // 失败
+  message: string;
   result: {
-    from: TShortEn;
-    to: TShortEn;
-    trans_result: [
-      {
-        src: 'string';
-        dst: 'string';
-      },
-    ];
-    // 失败
-    message: string;
-    result: {
-      error_code: string;
-      error_msg: string;
-    };
+    error_code: string;
+    error_msg: string;
   };
 };
 
